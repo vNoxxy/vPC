@@ -1,2 +1,10 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Fichiers lus par Windows : fins de ligne Windows (CRLF)
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+*.nss text eol=crlf
+
+*.jpg binary
+*.png binary
