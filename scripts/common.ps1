@@ -231,6 +231,14 @@ function Try-SetUserReg {
 # Applications (winget)
 # --------------------------------------------------------------------------
 
+# Applications que vPC peut installer (utilisé par la restauration pour les retirer).
+$script:VpcApps = @(
+    [pscustomobject]@{ Id = 'Seelen.SeelenUI';     Name = 'Seelen UI (dock + barre du haut)';     Processes = @('seelen-ui', 'slu') }
+    [pscustomobject]@{ Id = 'Nilesoft.Shell';      Name = 'Nilesoft Shell (menu clic droit)';     Processes = @() }
+    [pscustomobject]@{ Id = 'QL-Win.QuickLook';    Name = 'QuickLook (aperçu avec Espace)';       Processes = @('QuickLook') }
+    [pscustomobject]@{ Id = 'Microsoft.PowerToys'; Name = 'PowerToys (recherche, Peek, etc.)';    Processes = @() }
+)
+
 function Test-Winget { return [bool](Get-Command winget -ErrorAction SilentlyContinue) }
 
 function Test-PackageInstalled([string]$Id) {
@@ -251,6 +259,65 @@ function Start-InstalledApp([string]$NamePattern) {
         Start-Sleep -Seconds 1
     }
     return $false
+}
+
+function Show-NativeTaskbar {
+    # Seelen UI met la barre des tâches Windows en « masquage automatique » et la cache.
+    # Il ne la remet que s'il se ferme proprement : après une désinstallation, on la remet nous-mêmes.
+    if (-not ('VPC.Taskbar' -as [type])) {
+        Add-Type -TypeDefinition @'
+using System;
+using System.Runtime.InteropServices;
+namespace VPC {
+    public static class Taskbar {
+        [StructLayout(LayoutKind.Sequential)]
+        struct RECT { public int Left, Top, Right, Bottom; }
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct APPBARDATA {
+            public uint cbSize; public IntPtr hWnd; public uint uCallbackMessage;
+            public uint uEdge; public RECT rc; public IntPtr lParam;
+        }
+
+        [DllImport("shell32.dll")]
+        static extern UIntPtr SHAppBarMessage(uint dwMessage, ref APPBARDATA pData);
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        static extern IntPtr FindWindowEx(IntPtr parent, IntPtr after, string cls, string title);
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        public static int ShowAll() {
+            const uint ABM_SETSTATE = 0x0A;
+            const int ABS_ALWAYSONTOP = 0x02;   // = pas de masquage automatique
+            const int SW_SHOW = 5;
+            int count = 0;
+            foreach (string cls in new[] { "Shell_TrayWnd", "Shell_SecondaryTrayWnd" }) {
+                IntPtr h = IntPtr.Zero;
+                while ((h = FindWindowEx(IntPtr.Zero, h, cls, null)) != IntPtr.Zero) {
+                    APPBARDATA d = new APPBARDATA();
+                    d.cbSize = (uint)Marshal.SizeOf(typeof(APPBARDATA));
+                    d.hWnd = h;
+                    d.lParam = (IntPtr)ABS_ALWAYSONTOP;
+                    SHAppBarMessage(ABM_SETSTATE, ref d);
+                    ShowWindow(h, SW_SHOW);
+                    count++;
+                }
+            }
+            return count;
+        }
+    }
+}
+'@
+    }
+    return [VPC.Taskbar]::ShowAll()
+}
+
+function Remove-DesktopShortcut([string]$Name) {
+    foreach ($folder in @([Environment]::GetFolderPath('Desktop'), [Environment]::GetFolderPath('CommonDesktopDirectory'))) {
+        if (-not $folder) { continue }
+        $lnk = Join-Path $folder "$Name.lnk"
+        if (Test-Path -LiteralPath $lnk) { Remove-Item -LiteralPath $lnk -Force -ErrorAction SilentlyContinue }
+    }
 }
 
 function Find-NilesoftDir {

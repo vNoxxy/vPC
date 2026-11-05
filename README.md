@@ -70,7 +70,13 @@ Si tu préfères ne pas installer Seelen UI :
 
 ## Tout annuler
 
-Double-clique sur **`Restaurer.bat`**. Il remet comme avant le thème, les couleurs, la barre des tâches, le fond d'écran, les curseurs et le menu clic droit, puis te propose de désinstaller les applications ajoutées par vPC.
+Double-clique sur **`Restaurer.bat`**. Il :
+
+1. **désinstalle les applications** ajoutées par vPC (dock et barre du haut, menu clic droit, aperçu rapide…), avec une question par application. Si tu appuies sur **Entrée**, c'est **oui** pour celles que vPC a installées, et **non** pour celles qui étaient peut-être déjà là avant (PowerToys, par exemple) ;
+2. remet comme avant le thème, les couleurs, la barre des tâches, le fond d'écran et les curseurs ;
+3. réaffiche la barre des tâches Windows (le dock la cachait).
+
+Tu peux relancer `Restaurer.bat` autant de fois que tu veux, par exemple si tu avais d'abord gardé des applications.
 
 Avant toute modification, l'installateur sauvegarde l'état d'origine dans `%LOCALAPPDATA%\vPC\sauvegarde`. Relancer l'installateur n'écrase pas cette sauvegarde.
 
@@ -84,6 +90,9 @@ Avant toute modification, l'installateur sauvegarde l'état d'origine dans `%LOC
 | Certaines couleurs ne sont pas à jour | Déconnecte-toi puis reconnecte-toi à ta session Windows. |
 | Le bouton Widgets est toujours là | Windows le verrouille parfois : clic droit sur la barre des tâches > *Paramètres de la barre des tâches* > désactive **Widgets**. |
 | Le dock n'apparaît pas | Lance **Seelen UI** depuis le menu Démarrer. |
+| Après la restauration, la barre du haut ou le dock est encore là | Relance `Restaurer.bat` et réponds **o** à « Désinstaller Seelen UI ». Ou bien : *Paramètres > Applications > Applications installées* > **Seelen UI** > Désinstaller. |
+| La barre des tâches Windows a disparu | *Paramètres > Personnalisation > Barre des tâches > Comportements de la barre des tâches* : décoche **Masquer automatiquement la barre des tâches**. |
+| Le menu clic droit a encore « Terminal », « File manage », « Atteindre » | C'est Nilesoft Shell : relance `Restaurer.bat` et désinstalle-le, puis redémarre le PC. |
 
 ## Ce que le script modifie
 
