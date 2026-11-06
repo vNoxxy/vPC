@@ -1,0 +1,808 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------------------------------
+ * The design system of vodystudio.fr, taken over for this portfolio.
+ *
+ * Rounded sheets on a near-black ink: a hairline frame, numbered section tags, wide Syne capitals,
+ * accent words in a rounded selection frame with round handles. Buttons, tags, section tags and the
+ * navbar's pieces are pills; cards, panels and fields take large radii. No drop shadows, blurred
+ * glows, glass or gradients: color stays flat, the hero's curved planes included.
+ *
+ * Sections alternate between a dark "ink" tone and a light "paper" tone. A tone class only sets
+ * custom properties (+ its own background/text color); everything inside reads them, so the same
+ * component works on both tones and a tone can be nested.
+ * ---------------------------------------------------------------------------------------- */
+:root {
+  --r-field: 14px;
+  --r-card: 24px;
+  --r-panel: 32px;
+  --r-sheet: 40px;
+  /* Vody's own blue, the default accent. A category page overrides these (accentStyle). */
+  --accent: #2485ea;
+  --accent-deep: #1d6cbe;
+  --accent-fill: #1e6fc3;
+  --accent-on: #ffffff;
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-soft: cubic-bezier(0.4, 0, 1, 1);
+  color-scheme: dark;
+}
+
+html {
+  background: #09090c;
+}
+
+body {
+  margin: 0;
+  background: #09090c;
+  color: #fff;
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Grid items may shrink below their content (long words, code) instead of pushing the page wider. */
+.grid > * {
+  min-width: 0;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+@layer components {
+  .site {
+    /* Numbers the section tags (.kicker) of a page: 01, 02, 03... */
+    counter-reset: sheet;
+  }
+
+  .tone-dark {
+    /* Ink carries a trace of the page's own color, so each category has its own black. */
+    --bg: color-mix(in srgb, var(--accent) 3%, #09090c);
+    --fg: #ffffff;
+    --fg-muted: rgba(255, 255, 255, 0.64);
+    --fg-faint: rgba(255, 255, 255, 0.52);
+    --line: rgba(255, 255, 255, 0.1);
+    --line-strong: rgba(255, 255, 255, 0.22);
+    --card: rgba(255, 255, 255, 0.032);
+    --card-hover: rgba(255, 255, 255, 0.07);
+    --accent-text: color-mix(in srgb, var(--accent) 88%, #fff);
+    background-color: var(--bg);
+    color: var(--fg);
+  }
+
+  .tone-light {
+    /* Paper and its cards are off-white on purpose, never pure #fff. */
+    --bg: #f1f2f4;
+    --fg: #0b0c10;
+    --fg-muted: #535968;
+    --fg-faint: #646a78;
+    --line: rgba(11, 12, 16, 0.11);
+    --line-strong: rgba(11, 12, 16, 0.24);
+    --card: #fafafa;
+    --card-hover: #fafafa;
+    --accent-text: var(--accent-deep);
+    background-color: var(--bg);
+    color: var(--fg);
+  }
+
+  /* A surface filled with the accent itself (the big panels): everything on it takes the color that
+   * reads on that fill. */
+  .tone-accent {
+    --bg: var(--accent-fill);
+    --fg: var(--accent-on);
+    --fg-muted: color-mix(in srgb, var(--accent-on) 92%, transparent);
+    --fg-faint: color-mix(in srgb, var(--accent-on) 80%, transparent);
+    --line: color-mix(in srgb, var(--accent-on) 22%, transparent);
+    --line-strong: color-mix(in srgb, var(--accent-on) 42%, transparent);
+    --card: color-mix(in srgb, var(--accent-on) 10%, transparent);
+    --card-hover: color-mix(in srgb, var(--accent-on) 17%, transparent);
+    --accent-text: var(--accent-on);
+    background-color: var(--bg);
+    color: var(--fg);
+  }
+
+  /* Page container. The hairlines on both edges run through every stacked section: the frame of
+   * the sheet. */
+  .guides {
+    @apply mx-auto w-full max-w-[1240px] border-x px-5 sm:px-8 lg:px-12;
+    border-color: var(--line);
+  }
+
+  /* Registration crosses where the frame meets the top of a section, once the frame sits inside
+   * the viewport (on a phone it is the screen edge and a cross there would overflow). */
+  @media (min-width: 1264px) {
+    .guides::before,
+    .guides::after {
+      content: "";
+      position: absolute;
+      top: -5px;
+      width: 9px;
+      height: 9px;
+      background:
+        linear-gradient(#7f8594, #7f8594) center / 1px 100% no-repeat,
+        linear-gradient(#7f8594, #7f8594) center / 100% 1px no-repeat;
+      pointer-events: none;
+    }
+
+    .guides::before {
+      left: -5px;
+    }
+
+    .guides::after {
+      right: -5px;
+    }
+  }
+
+  .h-hero,
+  .h-section,
+  .h-card,
+  .h-wordmark {
+    font-family: "Syne", "Plus Jakarta Sans", sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    overflow-wrap: break-word;
+  }
+
+  .h-section {
+    font-size: clamp(19px, 2.75vw, 37px);
+    line-height: 1.14;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .h-card {
+    font-size: clamp(18px, 1.85vw, 25px);
+    line-height: 1.18;
+    text-wrap: balance;
+  }
+
+  /* A name across the hero (Wordmark sizes it from its length). */
+  .h-wordmark {
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+  }
+
+  /* The headline under a wordmark, in two tones: its accent words in a light tint of the accent. */
+  .h-subline {
+    font-size: clamp(22px, 2.6vw, 34px);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .h-subline .mark-plain {
+    color: color-mix(in srgb, var(--accent) 45%, #fff);
+    white-space: normal;
+  }
+
+  /* A dimension line, as on a technical drawing: a hairline between two ticks, the label in the
+   * middle. */
+  .dim-line {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--fg-muted);
+  }
+
+  .dim-line::before,
+  .dim-line::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line-strong);
+  }
+
+  .dim-line > span {
+    @apply font-tech text-[11px] font-bold uppercase tracking-[0.16em];
+  }
+
+  .dim-line > span::before,
+  .dim-line > span::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 1px;
+    height: 13px;
+    margin-top: -6.5px;
+    background: var(--line-strong);
+  }
+
+  .dim-line > span::before {
+    left: 0;
+  }
+
+  .dim-line > span::after {
+    right: 0;
+  }
+
+  /* Over the hero's planes the main call to action is white, and an outlined one keeps the ink
+   * behind it, so both read on any color. */
+  .hero-actions .btn-outline {
+    background: var(--bg);
+  }
+
+  /* The accent words of a headline (written as *word*), framed like a text layer selected in an
+   * editor: outline, tint, and a handle on each corner (two hang off the empty <i> inside). */
+  .mark {
+    position: relative;
+    display: inline-block;
+    margin: -0.1em 0.07em;
+    padding: 0.13em 0.26em 0.05em;
+    border: 1.5px solid var(--accent-text);
+    border-radius: 0.3em;
+    background: color-mix(in srgb, var(--accent-text) 11%, transparent);
+    color: var(--accent-text);
+    font-style: normal;
+    line-height: 1;
+  }
+
+  .mark::before,
+  .mark::after,
+  .mark > i::before,
+  .mark > i::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border: 1.5px solid var(--accent-text);
+    border-radius: 50%;
+    background: var(--bg);
+  }
+
+  .mark::before {
+    left: -5px;
+    top: -5px;
+  }
+
+  .mark::after {
+    right: -5px;
+    bottom: -5px;
+  }
+
+  .mark > i::before {
+    right: -5px;
+    top: -5px;
+  }
+
+  .mark > i::after {
+    left: -5px;
+    bottom: -5px;
+  }
+
+  /* The same accent words inside running text: just the color. */
+  .mark-plain {
+    color: var(--accent-text);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  /* Outlined display numerals (step numbers, the 404). */
+  .outline-num {
+    font-family: "Syne", sans-serif;
+    font-weight: 800;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--accent-text);
+  }
+
+  /* Section tag: a pill holding its number in a chip, then the label. */
+  .kicker {
+    @apply inline-flex max-w-full items-center gap-2.5 rounded-full border py-1 pl-1 pr-3.5 text-left text-[11px] font-bold uppercase leading-[1.5] tracking-[0.14em];
+    border-color: color-mix(in srgb, var(--accent-text) 45%, transparent);
+    color: var(--accent-text);
+  }
+
+  .kicker::before {
+    counter-increment: sheet;
+    content: counter(sheet, decimal-leading-zero);
+    @apply flex shrink-0 items-center rounded-full px-2 py-px font-tech tracking-[0.04em];
+    background: color-mix(in srgb, var(--accent-text) 17%, transparent);
+  }
+
+  /* A label in the same pill, without a number (the hero's own tag). */
+  .kicker-plain::before {
+    display: none;
+  }
+
+  .kicker-plain {
+    @apply pl-3.5;
+  }
+
+  .lede {
+    @apply text-[16px] leading-[1.65] sm:text-[17px];
+    color: var(--fg-muted);
+  }
+
+  .card {
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    background: var(--card);
+  }
+
+  /* A ruled list: rows separated by hairlines, closed by a frame. */
+  .rows {
+    @apply overflow-hidden border;
+    border-radius: var(--r-card);
+    border-color: var(--line-strong);
+    background: var(--card);
+  }
+
+  .rows > * + * {
+    border-top: 1px solid var(--line);
+  }
+
+  .tag {
+    @apply inline-flex h-6 items-center gap-1.5 whitespace-nowrap rounded-full border px-2.5 text-[10.5px] font-bold uppercase tracking-[0.1em];
+    border-color: var(--line-strong);
+    color: var(--fg-muted);
+  }
+
+  .tag-accent {
+    border-color: color-mix(in srgb, var(--accent-text) 45%, transparent);
+    color: var(--accent-text);
+  }
+
+  /* Buttons are pills; under the pointer they lift a little (see "Motion"). */
+  .btn {
+    @apply inline-flex h-11 shrink-0 items-center justify-center gap-2.5 whitespace-nowrap rounded-full px-6 text-[12.5px] font-bold uppercase tracking-[0.07em];
+  }
+
+  .btn:focus-visible {
+    outline: 2px solid var(--accent-text);
+    outline-offset: 2px;
+  }
+
+  .btn-lg {
+    @apply h-[50px] px-7 text-[13px];
+  }
+
+  .btn-sm {
+    @apply h-9 px-4 text-[11.5px];
+  }
+
+  .btn-accent {
+    background: var(--accent-fill);
+    color: var(--accent-on);
+  }
+
+  .btn-accent:hover {
+    background: color-mix(in srgb, var(--accent-fill) 86%, var(--accent-on));
+  }
+
+  /* Maximum-contrast button: white on dark sections, ink on light ones. */
+  .btn-solid {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  .btn-solid:hover {
+    background: color-mix(in srgb, var(--fg) 84%, var(--bg));
+  }
+
+  .btn-outline {
+    border: 1px solid var(--line-strong);
+    background: var(--card);
+    color: var(--fg);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--fg);
+  }
+
+  /* Inline text link. */
+  .link {
+    color: var(--accent-text);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .link:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  /* One floating group of the header (the mark, the links, a button): a pill on solid ink. */
+  .nav-pill {
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--bg);
+  }
+
+  /* A paper section drawn as a rounded sheet laid on the ink. Clipped, not hidden, so a sticky
+   * column inside still sticks. */
+  .sheet {
+    margin-inline: 8px;
+    border-radius: 28px;
+    overflow: clip;
+  }
+
+  @media (min-width: 640px) {
+    .sheet {
+      margin-inline: 12px;
+      border-radius: var(--r-sheet);
+    }
+  }
+
+  /* A card that leads somewhere rises under the pointer and takes the accent on its edge. */
+  .lift {
+    transition:
+      transform 320ms var(--ease-out-quint),
+      border-color 300ms ease-out,
+      background-color 300ms ease-out;
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .lift:hover {
+      transform: translateY(-4px);
+      border-color: color-mix(in srgb, var(--accent-text) 55%, transparent);
+    }
+  }
+
+  .field-label {
+    @apply mb-2 block text-[11.5px] font-bold uppercase tracking-[0.1em];
+    color: var(--fg-muted);
+  }
+
+  .field {
+    @apply h-12 w-full border px-4 text-[14.5px];
+    border-radius: var(--r-field);
+    border-color: var(--line-strong);
+    background: var(--bg);
+    color: var(--fg);
+  }
+
+  :where(textarea).field {
+    height: auto;
+    min-height: 140px;
+    padding-block: 12px;
+  }
+
+  .field::placeholder {
+    color: var(--fg-faint);
+  }
+
+  .field:focus {
+    border-color: var(--accent-text);
+    outline: 2px solid var(--accent-text);
+    outline-offset: 1px;
+  }
+
+  /* A command or a piece of code, in the ink of the page whatever the tone around it. */
+  .code {
+    @apply overflow-x-auto whitespace-pre border p-4 font-tech text-[12.5px] leading-[1.7] sm:p-5;
+    border-radius: var(--r-field);
+    border-color: rgba(255, 255, 255, 0.12);
+    background: #0d0e12;
+    color: rgba(255, 255, 255, 0.86);
+  }
+
+  .code-inline {
+    @apply rounded-md px-1.5 py-0.5 font-tech text-[0.88em];
+    background: color-mix(in srgb, var(--fg) 8%, transparent);
+  }
+
+  /* A table of the student's work, ruled like the rest of the sheet. */
+  .data-table {
+    @apply w-full border-collapse text-left text-[13.5px] leading-snug;
+  }
+
+  .data-table th {
+    @apply whitespace-nowrap px-4 py-3 font-tech text-[10.5px] font-bold uppercase tracking-[0.1em];
+    color: var(--fg-faint);
+    background: color-mix(in srgb, var(--fg) 4%, transparent);
+  }
+
+  .data-table td {
+    @apply px-4 py-3 align-top;
+    color: var(--fg-muted);
+  }
+
+  .data-table tr + tr td,
+  .data-table thead + tbody tr:first-child td {
+    border-top: 1px solid var(--line);
+  }
+
+  .data-table td:first-child {
+    color: var(--fg);
+    font-weight: 600;
+  }
+}
+
+/* A row that scrolls by on a loop. The track holds its items twice and slides by half its width;
+ * it stops under the pointer, and stays put for people who ask for less motion. */
+.marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 12px;
+  padding-right: 12px;
+  animation: marquee var(--marquee-duration, 60s) linear infinite;
+}
+
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+/* ------------------------------------------------------------------------------------------
+ * Motion: ease-out, no bounce; what opens and closes stays short (≤ 340 ms). All of it stops for
+ * prefers-reduced-motion (end of the file).
+ * ---------------------------------------------------------------------------------------- */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes page-out {
+  to {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes page-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@keyframes drift {
+  to {
+    transform: translateY(-18px);
+  }
+}
+
+@keyframes pulse-dot {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* What a filter brings in rises into place, one item after the other (delay set per item: --i). */
+[data-anim="rise"] {
+  animation: rise-in 340ms var(--ease-out-quint) backwards;
+  animation-delay: calc(min(var(--i, 0), 12) * 35ms);
+}
+
+[data-anim="menu"] {
+  transform-origin: top right;
+  animation: menu-in 180ms var(--ease-out-quint) backwards;
+}
+
+[data-anim="fade"] {
+  animation: fade-in 180ms var(--ease-out-quint) backwards;
+}
+
+/* The filled segment of a segmented control slides to the chosen one. */
+.seg-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  transition:
+    transform 280ms var(--ease-out-quint),
+    width 280ms var(--ease-out-quint),
+    height 280ms var(--ease-out-quint);
+}
+
+/* Page changes are view transitions: the page being left sinks away while the next one rises in.
+ * The header keeps its own name so it stays put. */
+::view-transition-old(root) {
+  animation: page-out 180ms var(--ease-in-soft) both;
+}
+
+::view-transition-new(root) {
+  animation: page-rise 300ms var(--ease-out-quint) 60ms both;
+}
+
+.vt-site-header {
+  view-transition-name: site-header;
+}
+
+/* Scroll reveal (lib/motion.ts): a block that starts below the fold waits a little lower and
+ * transparent, then rises into place once scrolled to. */
+[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(22px);
+}
+
+[data-reveal="in"] {
+  transition:
+    opacity 500ms var(--ease-out-quint),
+    transform 600ms var(--ease-out-quint);
+}
+
+input,
+textarea,
+select,
+button,
+a,
+.btn,
+.field {
+  transition-property: color, background-color, border-color, outline-color, opacity, transform;
+  transition-duration: 150ms, 150ms, 150ms, 150ms, 150ms, 280ms;
+  transition-timing-function: ease-out, ease-out, ease-out, ease-out, ease-out, var(--ease-out-quint);
+}
+
+/* A button lifts a little under the pointer and presses in when clicked. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn:active {
+    transform: translateY(0) scale(0.98);
+  }
+}
+
+/* The hero's curved planes, in flat tones of the accent (HeroPlanes). Taller than their section so
+ * their slow drift never shows an edge. */
+.hero-planes {
+  position: absolute;
+  left: 0;
+  top: -24px;
+  width: 100%;
+  height: calc(100% + 48px);
+  pointer-events: none;
+  animation: drift 8s ease-in-out infinite alternate;
+}
+
+.hero-planes .p1 {
+  fill: var(--accent-fill);
+}
+
+.hero-planes .p2 {
+  fill: color-mix(in srgb, var(--accent-fill) 52%, #09090c);
+}
+
+.hero-planes .p3 {
+  fill: color-mix(in srgb, var(--accent-fill) 78%, #fff);
+}
+
+.hero-planes .edge {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.28);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.anim-pulse {
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-anim],
+  .hero-planes,
+  .anim-pulse,
+  .marquee-track {
+    animation: none !important;
+  }
+
+  .marquee {
+    overflow-x: auto;
+    mask-image: none;
+  }
+
+  .btn,
+  .lift {
+    transform: none !important;
+  }
+
+  .seg-indicator {
+    transition: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ------------------------------------------------------------------------------------------
+ * Print: the CV page prints as an A4 sheet (Ctrl+P → "Enregistrer au format PDF"); the rest of the
+ * site prints its content without the header, footer or animations.
+ * ---------------------------------------------------------------------------------------- */
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  /* A dark color scheme would paint the page margins black. */
+  :root {
+    color-scheme: light;
+  }
+
+  html,
+  body,
+  .site {
+    background: #fff !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .print-sheet {
+    margin: 0 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+  }
+
+  /* The CV fits one A4 page. */
+  .print-sheet article {
+    zoom: 0.74;
+  }
+
+  .print-sheet .guides {
+    border: 0 !important;
+    max-width: none !important;
+    padding: 0 !important;
+  }
+}
