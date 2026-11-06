@@ -1,14 +1,48 @@
 import { Link, useParams } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faArrowRight, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
-import { Blocks } from "../components/Blocks";
+import { faArrowLeft, faArrowRight, faArrowUpRightFromSquare, faFileArrowDown } from "@fortawesome/free-solid-svg-icons";
 import SiteLayout from "../components/Layout";
-import { Inline, PageHero, ReviewMark, Section } from "../components/ui";
+import { Inline, PageHero, Section } from "../components/ui";
 import { CATEGORY_BY_KEY, COMPETENCES } from "../data/competences";
 import { REALISATIONS, REALISATION_BY_SLUG, periodLabel } from "../data/realisations";
+import type { Realisation } from "../data/types";
+import { documentsFor, type Doc } from "../lib/documents";
 import NotFoundPage from "./NotFoundPage";
 
-/** One réalisation, told like the AP Portfolio fiche: why, what I did, what it proves — then the work itself. */
+const docLabel = (d: Doc) => `Télécharger${d.suffix ? ` — ${d.suffix}` : ""} · ${d.ext}`;
+
+/**
+ * The TP as handed in, to download. While the site runs locally, a TP whose file is not there yet says
+ * which document to export and under which name; once deployed, it simply shows nothing.
+ */
+function DocumentPanel({ r, docs }: { r: Realisation; docs: Doc[] }) {
+  if (docs.length === 0) {
+    if (!import.meta.env.DEV || !r.drive) return null;
+    return (
+      <div className="rounded-[var(--r-card)] border border-dashed border-amber-500/70 bg-amber-400/10 p-6 sm:p-7">
+        <p className="font-tech text-[10.5px] font-bold uppercase tracking-[0.12em] text-amber-500">Document à déposer · visible en local seulement</p>
+        <p className="mt-3 text-[15px] leading-relaxed">
+          Exporte « {r.drive} » en PDF et enregistre-le sous <code className="code-inline">documents/{r.slug}.pdf</code>.
+        </p>
+      </div>
+    );
+  }
+  return (
+    <div className="tone-accent rounded-[var(--r-card)] p-6 sm:p-7">
+      <p className="font-tech text-[10.5px] font-bold uppercase tracking-[0.12em] text-[var(--fg-faint)]">Le document</p>
+      <p className="mt-3 text-[16px] font-semibold leading-relaxed">Le TP tel que je l'ai rendu, avec mes réponses et mes procédures.</p>
+      <div className="mt-5 flex flex-wrap gap-3">
+        {docs.map((d) => (
+          <a key={d.url} href={d.url} download={d.downloadName} className="btn btn-solid h-auto min-h-11 max-w-full whitespace-normal py-3 text-center">
+            <FontAwesomeIcon icon={faFileArrowDown} /> {docLabel(d)}
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** One réalisation, told like the AP Portfolio fiche: why, what I did, what it proves, and the document to download. */
 export default function RealisationPage() {
   const { slug = "" } = useParams();
   const r = REALISATION_BY_SLUG.get(slug);
@@ -19,6 +53,7 @@ export default function RealisationPage() {
   const prev = REALISATIONS[index - 1];
   const next = REALISATIONS[index + 1];
   const shownCompetences = COMPETENCES.filter((c) => r.competences[c.key]?.length);
+  const docs = documentsFor(r.slug);
 
   const story: { label: string; text: string }[] = [
     { label: "Contexte", text: r.context },
@@ -45,6 +80,11 @@ export default function RealisationPage() {
             <Link to="/realisations" viewTransition className="btn btn-lg btn-outline">
               <FontAwesomeIcon icon={faArrowLeft} /> Toutes les réalisations
             </Link>
+            {docs[0] && (
+              <a href={docs[0].url} download={docs[0].downloadName} className="btn btn-lg btn-solid">
+                <FontAwesomeIcon icon={faFileArrowDown} /> Télécharger le document
+              </a>
+            )}
             {r.live && (
               <a href={r.live.href} target="_blank" rel="noopener noreferrer" className="btn btn-lg btn-solid">
                 {r.live.label} <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
@@ -131,7 +171,10 @@ export default function RealisationPage() {
           </div>
           <div>
             <h2 className="h-section lg:mt-[62px]">Preuves</h2>
-            <ul className="rows mt-8">
+            <div className="mt-8 [&:empty]:hidden">
+              <DocumentPanel r={r} docs={docs} />
+            </div>
+            <ul className="rows mt-6">
               {r.proofs.map((p, i) => (
                 <li key={p} className="flex gap-4 p-5 sm:p-6">
                   <span className="font-tech text-[12px] font-bold text-[var(--fg-faint)]">{String(i + 1).padStart(2, "0")}</span>
@@ -168,45 +211,13 @@ export default function RealisationPage() {
           <div key={c.title} className="mt-12">
             <p className="font-tech text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--fg-faint)]">Extrait de code</p>
             <h3 className="mt-2 text-[15px] font-extrabold uppercase tracking-[0.05em]">{c.title}</h3>
-            <div className="mt-4">
-              <Blocks blocks={[{ code: c.code, lang: c.lang }]} />
+            <div className="relative mt-4">
+              <span className="absolute right-3 top-2.5 font-tech text-[10px] font-bold uppercase tracking-[0.12em] text-white/40">{c.lang}</span>
+              <pre className="code">{c.code}</pre>
             </div>
           </div>
         ))}
       </Section>
-
-      {/* The work as handed in, dossier by dossier. */}
-      {r.work && (
-        <Section tone="light">
-          <p className="kicker">Mon travail</p>
-          <h2 className="h-section mt-6">Les réponses, dossier par dossier</h2>
-          <div className="mt-10 space-y-12">
-            {r.work.map((part) => (
-              <div key={part.title}>
-                <h3 className="text-[14px] font-extrabold uppercase tracking-[0.08em]">{part.title}</h3>
-                {part.intro && <p className="mt-2 max-w-[760px] text-[14.5px] leading-relaxed text-[var(--fg-muted)]">{part.intro}</p>}
-                <ol className="rows mt-5">
-                  {part.answers.map((a, i) => (
-                    <li key={i} className="grid gap-4 p-5 sm:p-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.6fr)] lg:gap-8 lg:p-7">
-                      <div>
-                        {a.n && <span className="font-tech text-[12px] font-bold text-[var(--accent-text)]">{a.n}</span>}
-                        <p className="mt-1 text-[15px] font-bold leading-snug">
-                          <Inline text={a.q} />
-                          {a.added && <ReviewMark kind="added" note={a.note} />}
-                          {a.fixed && <ReviewMark kind="fixed" note={a.note} />}
-                        </p>
-                      </div>
-                      <div className="min-w-0">
-                        <Blocks blocks={a.a} />
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            ))}
-          </div>
-        </Section>
-      )}
 
       {/* The neighbours in the list, to read on. */}
       <Section tone="dark" divider innerClassName="py-12">

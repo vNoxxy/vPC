@@ -206,19 +206,3 @@ export function Monogram({ className = "h-9 w-9" }: { className?: string }) {
     </span>
   );
 }
-
-/**
- * Marks what was written or corrected for the portfolio where a TP was unfinished, so that Timéo can
- * read it again. Only while the site runs locally (`npm run dev`): the deployed site never shows it.
- */
-export function ReviewMark({ kind, note }: { kind: "added" | "fixed"; note?: string }) {
-  if (!import.meta.env.DEV) return null;
-  return (
-    <span
-      title={note}
-      className="ml-2 inline-flex h-5 items-center rounded-full border border-amber-500/60 bg-amber-400/15 px-2 align-middle font-tech text-[9.5px] font-bold uppercase tracking-[0.08em] text-amber-600"
-    >
-      {kind === "added" ? "À relire · ajouté" : "À relire · corrigé"}
-    </span>
-  );
-}

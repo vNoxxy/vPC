@@ -6,39 +6,6 @@ export type CategoryKey = "bloc1" | "bloc2" | "bloc3" | "ap" | "perso";
 /** The six competencies of the E4 synthesis table (see competences.ts). */
 export type CompetenceKey = "patrimoine" | "incidents" | "presence" | "projet" | "service" | "devpro";
 
-/**
- * A piece of an answer: a paragraph, or a list, numbered steps, a table, or a block of code.
- * Inline `code` is written between backticks inside the text.
- */
-export type Block =
-  | string
-  | { list: string[] }
-  | { steps: string[] }
-  | { table: { head: string[]; rows: string[][] } }
-  | { code: string; lang?: string };
-
-/**
- * One answer of a TP, as handed in.
- * - `added`: written for the portfolio where the TP was unfinished — to be read again by Timéo.
- * - `fixed`: Timéo's answer, corrected or completed; `note` says what changed.
- * Both only show a marker when the site runs locally (`npm run dev`), never once deployed.
- */
-export interface Answer {
-  n?: string;
-  q: string;
-  a: Block[];
-  added?: boolean;
-  fixed?: boolean;
-  note?: string;
-}
-
-/** A "Dossier" or "Mission" of a TP. */
-export interface Part {
-  title: string;
-  intro?: string;
-  answers: Answer[];
-}
-
 export interface CodeProof {
   title: string;
   lang: string;
@@ -47,7 +14,8 @@ export interface CodeProof {
 
 /**
  * One réalisation, told like the AP Portfolio asks: why (context, need), what I did (contribution,
- * tools, difficulty, solution), what it proves (competencies, proofs, assessment).
+ * tools, difficulty, solution), what it proves (competencies, proofs, assessment). The work itself is
+ * not copied here: its document is downloaded from the fiche (documents/<slug>.pdf, see lib/documents.ts).
  */
 export interface Realisation {
   slug: string;
@@ -75,7 +43,8 @@ export interface Realisation {
   /** Screenshots shown as proofs: files put in public/preuves/, e.g. { src: "/preuves/glpi-tickets.png", caption: "…" }. */
   shots?: { src: string; caption: string }[];
   bilan: string;
-  work?: Part[];
+  /** The TP's document in my Drive: exported as documents/<slug>.pdf, it gets its download button. */
+  drive?: string;
   /** A link to see it live (the Vody Studio projects). */
   live?: { label: string; href: string };
   featured?: boolean;

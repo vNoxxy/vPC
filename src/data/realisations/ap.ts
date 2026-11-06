@@ -9,6 +9,7 @@ export const AP: Realisation[] = [
     category: "ap",
     from: "18/09/26",
     format: "Exercice individuel",
+    drive: "AP - Exercices 02 | Timeo Vaast",
     context: "Atelier de professionnalisation sur la veille informatique. Le responsable informatique veut suivre les mises à jour et les correctifs de sécurité de Windows.",
     need: "Préparer cette veille : en fixer les objectifs, choisir des sources de qualité, choisir un outil de curation et décider comment diffuser l'information.",
     contribution: "J'ai défini les objectifs, comparé six types de sources sur quatre critères, comparé trois agrégateurs, puis choisi les cibles et les canaux de diffusion.",
@@ -18,64 +19,6 @@ export const AP: Realisation[] = [
     competences: { devpro: [1, 0] },
     proofs: ["Le document « AP — Exercices 02 » : objectifs, tableaux comparatifs et diffusion.", "La page Veille de ce portfolio, qui applique cette méthode à mon sujet."],
     bilan: "Une veille se prépare comme un projet : sans objectif ni sources choisies, on accumule des articles sans rien en tirer. J'ai repris la même méthode pour ma veille sur l'IA et la cybersécurité.",
-    work: [
-      {
-        title: "Dossier 1 — Préparer la veille",
-        answers: [
-          {
-            n: "1.1",
-            q: "Objectifs de la veille demandée par le responsable",
-            a: [
-              "Détecter le plus vite possible toute mise à jour, tout correctif de sécurité (patch) et toute faille concernant Windows ; anticiper les risques de sécurité, suivre les mises à jour officielles et assurer la continuité de service ; rester sur un périmètre précis, documenter et transmettre l'information.",
-            ],
-          },
-          {
-            n: "1.2",
-            q: "Comparer les sources d'information",
-            a: [
-              {
-                table: {
-                  head: ["Source", "Rapidité", "Fiabilité", "Actualité", "Pertinence"],
-                  rows: [
-                    ["Flux RSS / Atom", "Très rapide", "Bonne si la source est officielle (Microsoft, CERT-FR)", "Très bonne", "Très bonne : on choisit ses flux"],
-                    ["Newsletters", "Rapide (quotidienne ou hebdomadaire)", "Bonne (éditeurs, ANSSI)", "Bonne", "Bonne"],
-                    ["Forums, communautés", "Variable", "Moyenne : à vérifier", "Bonne", "Moyenne : des retours de terrain utiles"],
-                    ["Réseaux sociaux", "Très rapide", "Faible, sauf comptes officiels", "Très bonne", "Moyenne : beaucoup de bruit"],
-                    ["Syndication et curation", "Rapide", "Celle des sources choisies", "Très bonne", "Très bonne : tout est regroupé"],
-                    ["Alertes push et pull", "Immédiate (push)", "Bonne si officielles", "Très bonne", "Très bonne : seulement ce qui est surveillé"],
-                  ],
-                },
-              },
-            ],
-            fixed: true,
-            note: "Complété : le tableau d'origine n'avait que deux cases remplies (flux RSS).",
-          },
-          {
-            n: "1.3",
-            q: "Comparer trois outils de curation",
-            a: [
-              {
-                table: {
-                  head: ["Outil", "Appréciation"],
-                  rows: [
-                    ["Netvibes", "Complet, mais complexe."],
-                    ["Symbaloo", "Simple, mais pas automatisé pour la veille."],
-                    ["Feedly", "Bon et adapté : c'est celui que je retiens."],
-                  ],
-                },
-              },
-            ],
-          },
-          {
-            n: "1.4",
-            q: "Diffuser l'information : cibles, canaux et supports",
-            a: [
-              "Cibles : le responsable informatique, les techniciens et administrateurs, et parfois les utilisateurs. Canaux : un e-mail ou une newsletter interne, un outil collaboratif avec alerte instantanée pour l'urgent, et un point en réunion d'équipe.",
-            ],
-          },
-        ],
-      },
-    ],
   },
   {
     slug: "ce-portfolio",
