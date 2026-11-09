@@ -3,6 +3,7 @@ import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import SiteLayout from "../components/Layout";
 import { Monogram, Section } from "../components/ui";
 import { EDUCATION, EXPERIENCE, INTERESTS, LANGUAGES, PROFILE, SKILLS } from "../data/profile";
+import { siteAddress } from "../lib/site";
 
 function Heading({ children }: { children: string }) {
   return <h2 className="border-b border-[var(--line-strong)] pb-2 font-tech text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--accent-text)]">{children}</h2>;
@@ -44,7 +45,7 @@ export default function CvPage() {
                 </a>
               </li>
               <li>{PROFILE.driving}</li>
-              <li>Portfolio : {typeof window === "undefined" ? "" : window.location.host}</li>
+              <li>Portfolio : {siteAddress()}</li>
             </ul>
           </header>
 

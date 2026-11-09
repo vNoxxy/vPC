@@ -6,7 +6,7 @@
   "description": "Portfolio BTS SIO de Timéo Vaast, au style de Vody Studio.",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/spa-pages.mjs",
     "preview": "vite preview",
     "lint": "oxlint src"
   },

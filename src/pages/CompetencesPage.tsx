@@ -9,6 +9,7 @@ import { PROFILE, SKILLS } from "../data/profile";
 import { REALISATIONS, periodLabel } from "../data/realisations";
 import type { CompetenceKey, Realisation } from "../data/types";
 import { ACCENTS, accentStyle } from "../lib/accents";
+import { siteAddress } from "../lib/site";
 
 const SHORT: Record<CompetenceKey, string> = {
   patrimoine: "Patrimoine informatique",
@@ -46,7 +47,7 @@ export default function CompetencesPage() {
             ["Nom et prénom", "VAAST Timéo"],
             ["Centre de formation", PROFILE.school],
             ["Option", "SLAM"],
-            ["Portfolio", typeof window === "undefined" ? "" : window.location.host],
+            ["Portfolio", siteAddress()],
           ].map(([k, v]) => (
             <div key={k}>
               <dt className="field-label">{k}</dt>

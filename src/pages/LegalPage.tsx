@@ -4,9 +4,9 @@ import { PROFILE } from "../data/profile";
 
 /** Who publishes the site and who hosts it. Moving to another host means changing HOST below. */
 const HOST = {
-  name: "Vercel Inc.",
-  address: "440 N Barranca Ave #4133, Covina, CA 91723, États-Unis",
-  site: "https://vercel.com",
+  name: "GitHub, Inc. (GitHub Pages)",
+  address: "88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis",
+  site: "https://github.com",
 };
 
 export default function LegalPage() {

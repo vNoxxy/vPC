@@ -7,6 +7,7 @@ import { CATEGORY_BY_KEY, COMPETENCES } from "../data/competences";
 import { REALISATIONS, REALISATION_BY_SLUG, periodLabel } from "../data/realisations";
 import type { Realisation } from "../data/types";
 import { documentsFor, type Doc } from "../lib/documents";
+import { withBase } from "../lib/site";
 import NotFoundPage from "./NotFoundPage";
 
 const docLabel = (d: Doc) => `Télécharger${d.suffix ? ` — ${d.suffix}` : ""} · ${d.ext}`;
@@ -196,8 +197,8 @@ export default function RealisationPage() {
               {r.shots.map((shot) => (
                 <li key={shot.src}>
                   <figure className="card overflow-hidden">
-                    <a href={shot.src} target="_blank" rel="noopener noreferrer">
-                      <img src={shot.src} alt={shot.caption} loading="lazy" className="w-full bg-white/5 object-cover" />
+                    <a href={withBase(shot.src)} target="_blank" rel="noopener noreferrer">
+                      <img src={withBase(shot.src)} alt={shot.caption} loading="lazy" className="w-full bg-white/5 object-cover" />
                     </a>
                     <figcaption className="p-4 text-[13.5px] leading-relaxed text-[var(--fg-muted)]">{shot.caption}</figcaption>
                   </figure>

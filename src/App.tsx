@@ -21,6 +21,9 @@ function Root() {
   );
 }
 
+/** "/vPC/" on GitHub Pages, "/" elsewhere: the router's paths below are relative to it. */
+const basename = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
+
 export const router = createBrowserRouter([
   {
     element: <Root />,
@@ -38,4 +41,4 @@ export const router = createBrowserRouter([
       { path: "*", element: <NotFoundPage /> },
     ],
   },
-]);
+], { basename });

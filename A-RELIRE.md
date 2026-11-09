@@ -49,8 +49,10 @@ C'est ce que le jury téléchargera. D'après le texte que j'ai pu lire dans ton
   l'ANSSI (mars 2026, sur cyber.gouv.fr). Ajoute surtout **tes** articles, en haut de `JOURNAL`.
 - **Ce portfolio** : sa fiche dit qu'il a été développé avec l'aide d'un assistant IA (Claude Code). Garde-le ou
   reformule, mais reste transparent si on te pose la question.
-- **Mentions légales** : l'hébergeur indiqué est Vercel. Si tu passes par Netlify, change `HOST` dans
-  `src/pages/LegalPage.tsx`.
+- **Mentions légales** : l'hébergeur indiqué est GitHub (GitHub Pages). Si tu changes d'hébergeur, change
+  `HOST` dans `src/pages/LegalPage.tsx`.
+- **Dépôt public** : pour GitHub Pages, le dépôt devient public, ce fichier compris (il cite l'INERIS et les
+  prénoms de tes camarades). Supprime-le une fois relu si tu préfères.
 
 ## 4. Pas intégré
 

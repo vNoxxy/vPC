@@ -20,14 +20,23 @@ npm run preview    # sert dist/ comme en ligne
 
 ## Mettre en ligne
 
-**Vercel** (recommandé) : vercel.com → *Add New… → Project* → importer le dépôt GitHub `vnoxxy/vpc`. Vercel
-reconnaît Vite tout seul (build `npm run build`, dossier `dist`). Chaque push sur `main` met le site à jour.
+Le site est publié par **GitHub Pages** : le workflow `.github/workflows/pages.yml` le construit et le met
+en ligne à chaque push sur `main`, à l'adresse **https://vnoxxy.github.io/vPC/**. On peut aussi le relancer à
+la main : onglet *Actions* → *GitHub Pages* → *Run workflow*.
 
-**Netlify** : app.netlify.com → *Add new site → Import an existing project* → le dépôt. Les réglages sont
-déjà dans `netlify.toml`. Pense alors à changer l'hébergeur dans `src/pages/LegalPage.tsx`.
+À faire une seule fois, dans les réglages du dépôt sur github.com :
 
-Dans les deux cas, `vercel.json` / `netlify.toml` renvoient toutes les adresses vers `index.html`, pour que
-`/realisations/glpi` s'ouvre directement.
+1. **Rendre le dépôt public** (*Settings → General → Danger Zone → Change visibility*) : GitHub Pages ne publie
+   un dépôt privé qu'avec un abonnement GitHub Pro.
+2. **Choisir GitHub Actions comme source** (*Settings → Pages → Build and deployment → Source : GitHub Actions*).
+
+GitHub Pages ne sait pas renvoyer toutes les adresses vers `index.html` : après le build,
+`scripts/spa-pages.mjs` en dépose une copie à chaque adresse du site (`dist/realisations/glpi/index.html`…)
+et dans `404.html`. Le site est servi sous `/vPC/` : la variable `BASE_PATH` du workflow le dit à Vite et au
+routeur. Avec un nom de domaine à toi, mets `BASE_PATH: /`.
+
+Vercel et Netlify marchent aussi (`vercel.json`, `netlify.toml`, sans `BASE_PATH`) ; change alors
+l'hébergeur dans `src/pages/LegalPage.tsx`.
 
 ## Modifier le contenu
 
