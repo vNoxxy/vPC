@@ -1,7 +1,12 @@
 import { Link } from "react-router";
 import SiteLayout from "../components/Layout";
+import SlideDeck from "../components/SlideDeck";
 import { Facts, PageHead, Row, SectionHead } from "../components/ui";
 import { AXES, JOURNAL, SOURCES, TOOLS, VEILLE } from "../data/veille";
+import { DOCUMENTS } from "../lib/documents";
+
+/** The presentation's PDF, kept with the AP documents. */
+const PDF = DOCUMENTS.find((d) => d.ext === "PDF" && d.name.includes("diaporama"));
 
 const STAGES = ["Planifier sa veille", "Sélectionner des ressources", "Collecter l'information", "Analyser l'information", "Diffuser l'information"];
 
@@ -34,7 +39,15 @@ export default function VeillePage() {
         }
       />
 
+      {/* The presentation itself, as given in AP. */}
       <section className="wrap">
+        <SectionHead title="Le diaporama" note="La présentation en atelier, 16 diapositives" />
+        <div className="pt-7">
+          <SlideDeck pdf={PDF} />
+        </div>
+      </section>
+
+      <section className="wrap mt-24">
         <SectionHead title="Pourquoi ce sujet" />
         <p className="max-w-[920px] pt-7 text-[clamp(21px,2.3vw,28px)] font-medium leading-[1.35] tracking-[-0.02em]">{VEILLE.why}</p>
         <ol className="mt-10 flex flex-wrap gap-x-8 gap-y-2 text-[15px] text-soft">

@@ -151,6 +151,23 @@ body {
     color: #fff;
   }
 
+  /* A round outlined button for an arrow (the slides' previous and next). */
+  .btn-round {
+    @apply inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border text-[18px];
+    border-color: var(--rule);
+    background: #fff;
+    transition: border-color 160ms ease-out;
+  }
+
+  .btn-round:hover:not(:disabled) {
+    border-color: var(--ink);
+  }
+
+  .btn-round:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
   .dot {
     @apply inline-block h-[9px] w-[9px] shrink-0 rounded-full;
   }
@@ -236,6 +253,25 @@ body {
 .index-row:hover .dot,
 .index-row:focus-visible .dot {
   box-shadow: 0 0 0 2px #fff;
+}
+
+/* The slides of the watch (components/SlideDeck.tsx): each a 1920×1080 section, scaled to the page. */
+.deck-canvas {
+  width: 1920px;
+  height: 1080px;
+  transform-origin: top left;
+}
+
+.deck-canvas > section {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+}
+
+.deck-canvas table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
 /* The arrow of a line slides toward where it leads. */

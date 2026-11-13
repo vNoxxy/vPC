@@ -49,6 +49,7 @@ Tout le texte est dans `src/data/` ; les pages ne font que l'afficher.
 | Le parcours, les stages, les langues, les outils | `src/data/profile.ts` |
 | Les compétences E4 et les blocs | `src/data/competences.ts` |
 | La veille (axes, sources, journal) | `src/data/veille.ts` |
+| Le diaporama de la veille | `src/data/veille-deck/` : une diapo par fichier HTML (1920×1080), le style dans `deck.css`, l'ordre dans `deck.json` ; son PDF est dans `public/documents/1 - Mes TP et exercices/4 - AP/` |
 | Les captures d'écran d'un projet | les images dans `public/images/`, puis `cover` ou `shots` dans `perso.ts` |
 
 ### Les documents

@@ -35,6 +35,12 @@ const label = (name: string) => name.replace(/^\d+\s*[-–.)_]\s*/, "").trim() |
 
 const byName = (a: string, b: string) => a.localeCompare(b, "fr", { numeric: true, sensitivity: "base" });
 
+/**
+ * A file name as a piece of address: spaces and accents encoded, but the punctuation a path may hold left as
+ * it is. Some servers don't decode "%2C" and would miss "TP 1, poste Windows 10.docx".
+ */
+const pathSegment = (name: string) => encodeURIComponent(name).replace(/%(2C|3B|3D|2B|24|26|40|3A)/g, (code) => decodeURIComponent(code));
+
 /** Sorted by the files' own paths, so the ordering numbers decide. */
 const sorted = FILES.slice().sort((a, b) => byName(a.path, b.path));
 
@@ -49,7 +55,7 @@ const docs = sorted.map(({ path, size }) => {
     section: parts.length > 1 ? label(parts[0]) : OTHERS,
     doc: {
       path,
-      url: withBase(`/documents/${parts.map(encodeURIComponent).join("/")}`),
+      url: withBase(`/documents/${parts.map(pathSegment).join("/")}`),
       name,
       downloadName: `${group ? `${group} - ` : ""}${name}${ext ? `.${ext}` : ""}`,
       ext: ext.toUpperCase(),

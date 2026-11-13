@@ -1,0 +1,354 @@
+/* The portfolio's look: paper, ink, Vody blue, hairlines; the blocs' colours only as dots. */
+.dk {
+  background: #f1f2f4;
+  color: #0b0c10;
+  font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+  padding: 128px 128px 160px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.dk-night {
+  background: #0b0c10;
+  color: #f1f2f4;
+}
+
+.dk-blue {
+  background: #1d6cbe;
+  color: #f7f8fa;
+}
+
+/* Type scale: 160 / 72 / 44 / 32 / 24. */
+.dk-display {
+  font-size: 160px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.dk-title {
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.dk-statement {
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+.dk-lead {
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: #2f3440;
+}
+
+.dk-h3 {
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.dk-label {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.dk-body {
+  font-size: 32px;
+  line-height: 1.45;
+  color: #2f3440;
+}
+
+.dk-small {
+  font-size: 24px;
+  line-height: 1.45;
+  color: #5b616d;
+}
+
+.dk-mono {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-weight: 500;
+}
+
+.dk-night .dk-lead,
+.dk-night .dk-body {
+  color: #c9cdd4;
+}
+
+.dk-night .dk-small {
+  color: #9aa0ab;
+}
+
+.dk-blue .dk-small {
+  color: #f7f8fa;
+}
+
+.dk-accent {
+  color: #1d6cbe;
+}
+
+.dk-night .dk-accent {
+  color: #7cb8f5;
+}
+
+/* A slide's heading: its title over a strong rule, a bloc's dot before it when it has one. */
+.dk-head {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding-bottom: 36px;
+  border-bottom: 2px solid #0b0c10;
+}
+
+.dk-night .dk-head {
+  border-bottom-color: #f1f2f4;
+}
+
+.dk-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 14px;
+  flex-shrink: 0;
+}
+
+.dk-red {
+  background: #e5242f;
+}
+
+.dk-orange {
+  background: #f0702a;
+}
+
+.dk-green {
+  background: #3dbb7c;
+}
+
+.dk-violet {
+  background: #8f6fe8;
+}
+
+.dk-vody {
+  background: #2485ea;
+}
+
+/* Rows: a label on the left, its text on the right, between hairlines. */
+.dk-rows {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #d6d9df;
+}
+
+.dk-row {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 56px;
+  padding: 30px 0;
+  border-bottom: 1px solid #d6d9df;
+  align-items: baseline;
+}
+
+.dk-cols2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px 72px;
+}
+
+.dk-cols3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 56px;
+}
+
+.dk-card {
+  border-top: 2px solid #0b0c10;
+  padding-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.dk-night .dk-card {
+  border-top-color: #f1f2f4;
+}
+
+.dk-card-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dk-card-top .dk-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+}
+
+/* The five steps of the watch. */
+.dk-steps {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.dk-step {
+  border-top: 2px solid #0b0c10;
+  padding-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dk-num {
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #1d6cbe;
+}
+
+/* The prompt injection, drawn as three boxes. */
+.dk-flow {
+  display: grid;
+  grid-template-columns: 1fr 120px 1fr 120px 1fr;
+  align-items: center;
+}
+
+.dk-box {
+  background: #fbfbf8;
+  border: 2px solid #0b0c10;
+  border-radius: 32px;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dk-box-alert {
+  border-color: #e5242f;
+}
+
+.dk-quote {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.45;
+  color: #b3161f;
+}
+
+/* The journal, as a timeline: one column per article on a single rule. */
+.dk-timeline {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.dk-tl {
+  position: relative;
+  border-top: 2px solid #0b0c10;
+  padding: 44px 40px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dk-tl-dot {
+  position: absolute;
+  top: -12px;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 11px;
+  background: #2485ea;
+}
+
+.dk-table {
+  font-size: 28px;
+  color: #2f3440;
+}
+
+.dk-table th {
+  font-size: 24px;
+  font-weight: 700;
+  color: #5b616d;
+  text-align: left;
+  padding: 14px 24px 14px 0;
+  border-bottom: 2px solid #0b0c10;
+}
+
+.dk-table td {
+  text-align: left;
+  padding: 14px 24px 14px 0;
+  border-bottom: 1px solid #d6d9df;
+}
+
+/* The four reflexes of the answer. */
+.dk-rule {
+  display: flex;
+  gap: 28px;
+  align-items: baseline;
+  border-top: 1px solid #3a3f4a;
+  padding-top: 28px;
+}
+
+.dk-rule-num {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-weight: 500;
+  font-size: 32px;
+  color: #7cb8f5;
+}
+
+.dk-cover {
+  padding: 128px;
+  gap: 40px;
+}
+
+.dk-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 40px;
+}
+
+.dk-spacer {
+  flex: 1;
+}
+
+.dk-bar {
+  width: 160px;
+  height: 12px;
+  border-radius: 6px;
+  background: #2485ea;
+}
+
+/* The footer band: who, and the page. */
+.dk-foot {
+  position: absolute;
+  left: 128px;
+  bottom: 64px;
+  width: 1664px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Things arrive on the slide one after the other, within a second. */
+@keyframes dk-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+.dk-in {
+  animation: dk-rise 520ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 110ms);
+}
