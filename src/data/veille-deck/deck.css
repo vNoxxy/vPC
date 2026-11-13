@@ -1,31 +1,77 @@
-/* The portfolio's look: paper, ink, Vody blue, hairlines; the blocs' colours only as dots. */
+/* « Salle de crise » : nuit et grille fine, Syne de Vody Studio en très gros, un aplat de couleur par angle. */
 .dk {
-  background: #f1f2f4;
-  color: #0b0c10;
+  background: #0b0c10;
+  color: #f1f2f4;
   font-family: 'Plus Jakarta Sans', Arial, sans-serif;
   padding: 128px 128px 160px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 56px;
+  gap: 48px;
 }
 
-.dk-night {
-  background: #0b0c10;
-  color: #f1f2f4;
+.dk-open {
+  padding: 128px;
 }
 
-.dk-blue {
+/* Full-bleed colours: the question, and one per angle. */
+.dk-bg-blue {
   background: #1d6cbe;
   color: #f7f8fa;
 }
 
-/* Type scale: 160 / 72 / 44 / 32 / 24. */
+.dk-bg-red {
+  background: #ef3d47;
+  color: #0b0c10;
+}
+
+.dk-bg-orange {
+  background: #f0702a;
+  color: #0b0c10;
+}
+
+.dk-bg-green {
+  background: #3dbb7c;
+  color: #0b0c10;
+}
+
+.dk-bg-violet {
+  background: #8f6fe8;
+  color: #0b0c10;
+}
+
+/* The faint drafting grid behind the night slides, always the first child. */
+.dk-grid {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1920px;
+  height: 1080px;
+}
+
+/* Type scale: 360 / 104 / 72 / 44 / 32 / 24. */
+.dk-syne {
+  font-family: 'Syne', 'Arial Black', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.dk-mega {
+  font-size: 360px;
+  line-height: 0.8;
+}
+
 .dk-display {
-  font-size: 160px;
+  font-size: 104px;
+  line-height: 0.98;
+}
+
+.dk-statement {
+  font-size: 104px;
   font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.05em;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
 }
 
 .dk-title {
@@ -35,45 +81,48 @@
   letter-spacing: -0.04em;
 }
 
-.dk-statement {
-  font-size: 72px;
-  font-weight: 700;
-  line-height: 1.12;
-  letter-spacing: -0.035em;
-}
-
 .dk-lead {
   font-size: 44px;
   font-weight: 500;
   line-height: 1.3;
   letter-spacing: -0.02em;
-  color: #2f3440;
+  color: #b4b9c3;
 }
 
 .dk-h3 {
   font-size: 44px;
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.12;
   letter-spacing: -0.03em;
 }
 
 .dk-label {
   font-size: 32px;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.25;
   letter-spacing: -0.02em;
 }
 
 .dk-body {
   font-size: 32px;
-  line-height: 1.45;
-  color: #2f3440;
+  line-height: 1.4;
+  color: #b4b9c3;
 }
 
 .dk-small {
   font-size: 24px;
   line-height: 1.45;
-  color: #5b616d;
+  color: #b4b9c3;
+}
+
+.dk-tag {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.4;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #8a909c;
 }
 
 .dk-mono {
@@ -81,235 +130,141 @@
   font-weight: 500;
 }
 
-.dk-night .dk-lead,
-.dk-night .dk-body {
-  color: #c9cdd4;
+/* On the coloured slides the text is ink. */
+.dk-bg-red .dk-lead,
+.dk-bg-red .dk-tag,
+.dk-bg-orange .dk-lead,
+.dk-bg-orange .dk-tag,
+.dk-bg-green .dk-lead,
+.dk-bg-green .dk-tag,
+.dk-bg-violet .dk-lead,
+.dk-bg-violet .dk-tag {
+  color: #0b0c10;
 }
 
-.dk-night .dk-small {
-  color: #9aa0ab;
-}
-
-.dk-blue .dk-small {
+.dk-bg-blue .dk-lead,
+.dk-bg-blue .dk-tag {
   color: #f7f8fa;
 }
 
-.dk-accent {
-  color: #1d6cbe;
-}
-
-.dk-night .dk-accent {
+/* Accent inks for the night: each angle keeps its colour. */
+.dk-c-blue {
   color: #7cb8f5;
 }
 
-/* A slide's heading: its title over a strong rule, a bloc's dot before it when it has one. */
+.dk-c-red {
+  color: #ff5a63;
+}
+
+.dk-c-orange {
+  color: #ff8a4c;
+}
+
+.dk-c-green {
+  color: #4fd18f;
+}
+
+.dk-c-violet {
+  color: #a990ff;
+}
+
+/* A content slide's heading: dot, title, and the angle on the right. */
 .dk-head {
   display: flex;
   align-items: center;
   gap: 28px;
-  padding-bottom: 36px;
-  border-bottom: 2px solid #0b0c10;
-}
-
-.dk-night .dk-head {
-  border-bottom-color: #f1f2f4;
+  padding-bottom: 32px;
+  border-bottom: 2px solid #262931;
 }
 
 .dk-dot {
   width: 28px;
   height: 28px;
-  border-radius: 14px;
+  border-radius: 50%;
   flex-shrink: 0;
 }
 
-.dk-red {
-  background: #e5242f;
-}
-
-.dk-orange {
-  background: #f0702a;
-}
-
-.dk-green {
-  background: #3dbb7c;
-}
-
-.dk-violet {
-  background: #8f6fe8;
-}
-
-.dk-vody {
+.dk-f-blue {
   background: #2485ea;
 }
 
-/* Rows: a label on the left, its text on the right, between hairlines. */
-.dk-rows {
-  display: flex;
-  flex-direction: column;
-  border-top: 1px solid #d6d9df;
+.dk-f-red {
+  background: #ff5a63;
 }
 
-.dk-row {
-  display: grid;
-  grid-template-columns: 400px 1fr;
-  gap: 56px;
-  padding: 30px 0;
-  border-bottom: 1px solid #d6d9df;
-  align-items: baseline;
+.dk-f-orange {
+  background: #ff8a4c;
 }
 
-.dk-cols2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px 72px;
+.dk-f-green {
+  background: #4fd18f;
 }
 
-.dk-cols3 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 56px;
+.dk-f-violet {
+  background: #a990ff;
 }
 
-.dk-card {
-  border-top: 2px solid #0b0c10;
-  padding-top: 32px;
+/* Panels and tiles. */
+.dk-panel {
+  background: #14161c;
+  border: 1px solid #262931;
+  border-radius: 32px;
+  padding: 44px;
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
-.dk-night .dk-card {
-  border-top-color: #f1f2f4;
-}
-
-.dk-card-top {
+.dk-tile {
+  border-radius: 32px;
+  padding: 40px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 16px;
 }
 
-.dk-card-top .dk-dot {
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
+.dk-tile .dk-label,
+.dk-tile .dk-tag {
+  color: #0b0c10;
 }
 
-/* The five steps of the watch. */
-.dk-steps {
+.dk-cols2 {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 40px;
 }
 
-.dk-step {
-  border-top: 2px solid #0b0c10;
-  padding-top: 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.dk-num {
-  font-size: 72px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: #1d6cbe;
-}
-
-/* The prompt injection, drawn as three boxes. */
-.dk-flow {
+.dk-cols3 {
   display: grid;
-  grid-template-columns: 1fr 120px 1fr 120px 1fr;
-  align-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 32px;
 }
 
-.dk-box {
-  background: #fbfbf8;
-  border: 2px solid #0b0c10;
-  border-radius: 32px;
-  padding: 36px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.dk-box-alert {
-  border-color: #e5242f;
-}
-
-.dk-quote {
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 1.45;
-  color: #b3161f;
-}
-
-/* The journal, as a timeline: one column per article on a single rule. */
-.dk-timeline {
+.dk-cols4 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 24px;
 }
 
-.dk-tl {
-  position: relative;
-  border-top: 2px solid #0b0c10;
-  padding: 44px 40px 0 0;
+.dk-split {
+  display: grid;
+  grid-template-columns: 760px 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.dk-rows {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  border-top: 1px solid #262931;
 }
 
-.dk-tl-dot {
-  position: absolute;
-  top: -12px;
-  left: 0;
-  width: 22px;
-  height: 22px;
-  border-radius: 11px;
-  background: #2485ea;
-}
-
-.dk-table {
-  font-size: 28px;
-  color: #2f3440;
-}
-
-.dk-table th {
-  font-size: 24px;
-  font-weight: 700;
-  color: #5b616d;
-  text-align: left;
-  padding: 14px 24px 14px 0;
-  border-bottom: 2px solid #0b0c10;
-}
-
-.dk-table td {
-  text-align: left;
-  padding: 14px 24px 14px 0;
-  border-bottom: 1px solid #d6d9df;
-}
-
-/* The four reflexes of the answer. */
-.dk-rule {
+.dk-row {
   display: flex;
-  gap: 28px;
-  align-items: baseline;
-  border-top: 1px solid #3a3f4a;
-  padding-top: 28px;
-}
-
-.dk-rule-num {
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
-  font-weight: 500;
-  font-size: 32px;
-  color: #7cb8f5;
-}
-
-.dk-cover {
-  padding: 128px;
-  gap: 40px;
+  flex-direction: column;
+  gap: 8px;
+  padding: 26px 0;
+  border-bottom: 1px solid #262931;
 }
 
 .dk-between {
@@ -321,6 +276,215 @@
 
 .dk-spacer {
   flex: 1;
+}
+
+/* A host for pinned drawings. */
+.dk-host {
+  position: relative;
+}
+
+.dk-pin {
+  position: absolute;
+  box-sizing: border-box;
+}
+
+/* Diagram nodes. */
+.dk-node {
+  position: absolute;
+  box-sizing: border-box;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  background: #0b0c10;
+  border: 3px solid #7cb8f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dk-node-num {
+  font-family: 'Syne', 'Arial Black', sans-serif;
+  font-weight: 800;
+  font-size: 44px;
+  line-height: 1;
+  color: #f1f2f4;
+}
+
+.dk-box {
+  position: absolute;
+  box-sizing: border-box;
+  background: #14161c;
+  border: 2px solid #3a3f4a;
+  border-radius: 28px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dk-box-red {
+  border-color: #ff5a63;
+  background: #1c1013;
+}
+
+.dk-chip {
+  position: absolute;
+  box-sizing: border-box;
+  height: 80px;
+  border-radius: 40px;
+  border: 2px solid #3a3f4a;
+  background: #14161c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dk-hub {
+  position: absolute;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: #f0702a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dk-hub .dk-label {
+  color: #0b0c10;
+  text-align: center;
+}
+
+/* The video call of the Arup fraud. */
+.dk-cam {
+  position: absolute;
+  box-sizing: border-box;
+  width: 264px;
+  height: 264px;
+  border-radius: 24px;
+  background: #14161c;
+  border: 2px solid #3a2026;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.dk-cam-me {
+  border-color: #2485ea;
+}
+
+.dk-scan {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 840px;
+  height: 6px;
+  border-radius: 3px;
+  background: #ff5a63;
+  opacity: 0;
+  animation: dk-scan 1600ms 500ms ease-in-out both;
+}
+
+/* The log stream of the defenders. */
+.dk-log {
+  display: grid;
+  grid-template-columns: 150px 1fr 150px;
+  gap: 20px;
+  padding: 8px 16px;
+  border-radius: 12px;
+}
+
+.dk-log p {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.4;
+  color: #8a909c;
+}
+
+.dk-log-hit {
+  background: #2a1114;
+}
+
+.dk-log-hit p {
+  color: #ff5a63;
+}
+
+/* The AI Act's levels of risk, stacked like a pyramid. */
+.dk-pyr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.dk-step {
+  box-sizing: border-box;
+  border-radius: 20px;
+  padding: 22px 28px;
+  display: flex;
+  justify-content: center;
+}
+
+.dk-step p {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  color: #0b0c10;
+}
+
+.dk-step-dark p {
+  color: #f7f8fa;
+}
+
+/* The timeline's milestones. */
+.dk-mile {
+  position: absolute;
+  box-sizing: border-box;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #2485ea;
+  border: 4px solid #0b0c10;
+  animation: dk-pop 420ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+  animation-delay: calc(var(--i, 0) * 220ms + 300ms);
+}
+
+/* Code, line by line (indents as padding). */
+.dk-code {
+  background: #101217;
+  border: 1px solid #262931;
+  border-radius: 28px;
+  padding: 40px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dk-code p {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.6;
+  color: #e3e6eb;
+}
+
+.dk-code .dk-ind {
+  padding-left: 48px;
+}
+
+.dk-k {
+  color: #7cb8f5;
+}
+
+.dk-n {
+  color: #ff8a4c;
+}
+
+.dk-cm {
+  color: #8a909c;
 }
 
 .dk-bar {
@@ -340,15 +504,67 @@
   justify-content: space-between;
 }
 
-/* Things arrive on the slide one after the other, within a second. */
+/* Arrivals: things rise in one after the other, within a second. */
 @keyframes dk-rise {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(32px);
+  }
+}
+
+@keyframes dk-slide {
+  from {
+    opacity: 0;
+    transform: translateX(-120px);
+  }
+}
+
+@keyframes dk-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+}
+
+@keyframes dk-scan {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(552px);
   }
 }
 
 .dk-in {
-  animation: dk-rise 520ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: dk-rise 560ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
   animation-delay: calc(var(--i, 0) * 110ms);
+}
+
+.dk-from-left {
+  animation: dk-slide 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 110ms);
+}
+
+/* A number that counts up when the slide arrives. */
+@property --n {
+  syntax: '<integer>';
+  inherits: false;
+  initial-value: 0;
+}
+
+@keyframes count {
+  from {
+    --n: 0;
+  }
+}
+
+.n {
+  animation: count 1.2s ease-out both;
 }

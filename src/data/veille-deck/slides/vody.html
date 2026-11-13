@@ -1,26 +1,43 @@
 <section id="vody" class="dk" data-transition="fade">
+<svg class="dk-grid" aria-hidden="true" width="1920" height="1080" viewBox="0 0 1920 1080"><defs><pattern id="gv" width="96" height="96" patternUnits="userSpaceOnUse"><path d="M96 0H0V96" fill="none" stroke="#16181f" stroke-width="2"/></pattern></defs><rect width="1920" height="1080" fill="url(#gv)"/></svg>
 <div class="dk-head">
-<div class="dk-dot dk-vody"></div>
+<div class="dk-dot dk-f-blue"></div>
 <h2 class="dk-title">Ce que j’applique chez Vody Studio</h2>
+<div class="dk-spacer"></div>
+<p class="dk-tag dk-c-blue">Dans mes projets</p>
 </div>
+<div class="dk-split">
 <div class="dk-rows">
 <div class="dk-row dk-in" style="--i:1">
-<p class="dk-label">Le moindre privilège</p>
-<p class="dk-body">Les modules que mes clients écrivent pour vBot tournent en bac à sable et ne voient que leur propre serveur.</p>
+<p class="dk-label dk-c-blue">Le moindre privilège</p>
+<p class="dk-small">Les modules que mes clients écrivent pour vBot tournent en bac à sable et ne voient que leur propre serveur.</p>
 </div>
 <div class="dk-row dk-in" style="--i:2">
-<p class="dk-label">La double authentification</p>
-<p class="dk-body">Des codes TOTP sont proposés sur chaque compte client de vodystudio.fr.</p>
+<p class="dk-label dk-c-blue">La double authentification</p>
+<p class="dk-small">Des codes TOTP sur chaque compte client de vodystudio.fr.</p>
 </div>
 <div class="dk-row dk-in" style="--i:3">
-<p class="dk-label">Limiter les essais</p>
-<p class="dk-body">Les routes de connexion refusent les essais répétés depuis une même adresse.</p>
+<p class="dk-label dk-c-blue">Limiter les essais</p>
+<p class="dk-small">Les routes de connexion refusent les essais répétés depuis une même adresse.</p>
 </div>
 </div>
+<div style="display:flex; flex-direction:column; gap:16px">
+<div class="dk-code dk-in" style="padding:40px 32px; --i:2">
+<p><span class="dk-cm">// 20 essais par adresse IP, toutes les 15 min</span></p>
+<p><span class="dk-k">const</span> authLimiter = rateLimit({</p>
+<p class="dk-ind">windowMs: <span class="dk-n">15</span> * <span class="dk-n">60</span> * <span class="dk-n">1000</span>,</p>
+<p class="dk-ind">limit: <span class="dk-n">20</span>,</p>
+<p>});</p>
+<p><span class="dk-k">const</span> passwordHash = <span class="dk-k">await</span> bcrypt.hash(password, <span class="dk-n">10</span>);</p>
+</div>
+<p class="dk-tag">Extrait simplifié du serveur de vodystudio.fr</p>
+</div>
+</div>
+<div class="dk-spacer"></div>
 <p class="dk-lead dk-in" style="--i:4">Un agent IA mérite les mêmes règles qu’un module ou qu’un utilisateur.</p>
 <div class="dk-foot">
-<p class="dk-small dk-mono">Timéo Vaast, veille BTS SIO</p>
-<p class="dk-small dk-mono">15 / 16</p>
+<p class="dk-tag">Timéo Vaast, veille BTS SIO</p>
+<p class="dk-tag">20 / 21</p>
 </div>
-<aside>Ce que la veille change pour moi. Dans mes projets, j’applique déjà ces principes à du code que je ne contrôle pas : les modules de mes clients. Un agent IA, c’est la même situation : un programme qui agit pour quelqu’un, à qui on ne donne que ce dont il a besoin.</aside>
+<aside>Dans mes projets, j’applique déjà ces principes à du code que je ne contrôle pas : les modules de mes clients. À droite, un vrai extrait du serveur de vodystudio.fr : au plus 20 essais de connexion par adresse IP toutes les 15 minutes, et des mots de passe hachés avec bcrypt. Un agent IA, c’est la même situation : un programme qui agit pour quelqu’un, à qui on ne donne que ce dont il a besoin.</aside>
 </section>

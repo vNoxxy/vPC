@@ -1,27 +1,43 @@
 <section id="defenseurs" class="dk" data-transition="fade">
+<svg class="dk-grid" aria-hidden="true" width="1920" height="1080" viewBox="0 0 1920 1080"><defs><pattern id="gd" width="96" height="96" patternUnits="userSpaceOnUse"><path d="M96 0H0V96" fill="none" stroke="#16181f" stroke-width="2"/></pattern></defs><rect width="1920" height="1080" fill="url(#gd)"/></svg>
 <div class="dk-head">
-<div class="dk-dot dk-green"></div>
-<h2 class="dk-title">L’IA au service des défenseurs</h2>
+<div class="dk-dot dk-f-green"></div>
+<h2 class="dk-title">Ce que l’IA apporte aux défenseurs</h2>
+<div class="dk-spacer"></div>
+<p class="dk-tag dk-c-green">Angle 3</p>
 </div>
-<p class="dk-lead dk-in" style="--i:1">Les mêmes techniques aident les équipes de sécurité.</p>
+<div class="dk-split">
+<div class="dk-panel dk-in" style="gap:8px; --i:1">
+<p class="dk-tag">Exemple : journal de connexions</p>
+<div class="dk-log"><p>08:41:02</p><p>connexion réussie</p><p>poste-12</p></div>
+<div class="dk-log"><p>08:41:09</p><p>connexion réussie</p><p>poste-07</p></div>
+<div class="dk-log"><p>08:41:15</p><p>ouverture de session</p><p>srv-glpi</p></div>
+<div class="dk-log"><p>08:41:22</p><p>échec de connexion</p><p>poste-21</p></div>
+<div class="dk-log dk-log-hit dk-in" style="--i:5"><p>08:41:24</p><p>48 échecs en 2 s</p><p>poste-21</p></div>
+<div class="dk-log"><p>08:41:30</p><p>connexion réussie</p><p>poste-09</p></div>
+<p class="dk-small dk-c-green dk-in" style="--i:6">→ Alerte transmise à un analyste</p>
+</div>
+<div style="display:flex; flex-direction:column; gap:40px">
 <div class="dk-rows">
 <div class="dk-row dk-in" style="--i:2">
-<p class="dk-label">Les journaux</p>
-<p class="dk-body">Repérer des comportements anormaux dans des journaux trop volumineux pour être lus à la main.</p>
+<p class="dk-label dk-c-green">Les journaux</p>
+<p class="dk-body">Repérer l’anormal dans des journaux trop gros pour être lus à la main.</p>
 </div>
 <div class="dk-row dk-in" style="--i:3">
-<p class="dk-label">Les alertes</p>
-<p class="dk-body">Trier les alertes d’un centre de sécurité (SOC) et résumer un incident.</p>
+<p class="dk-label dk-c-green">Les alertes</p>
+<p class="dk-body">Trier les alertes d’un SOC et résumer un incident.</p>
 </div>
 <div class="dk-row dk-in" style="--i:4">
-<p class="dk-label">Le phishing</p>
-<p class="dk-body">Détecter les e-mails de phishing et les sites frauduleux.</p>
+<p class="dk-label dk-c-green">Le phishing</p>
+<p class="dk-body">Détecter les e-mails et les sites frauduleux.</p>
 </div>
 </div>
-<p class="dk-lead dk-accent dk-in" style="--i:5">À une condition : garder un humain dans la boucle.</p>
+<p class="dk-h3 dk-in" style="--i:5">L’IA propose, un humain décide.</p>
+</div>
+</div>
 <div class="dk-foot">
-<p class="dk-small dk-mono">Timéo Vaast, veille BTS SIO</p>
-<p class="dk-small dk-mono">10 / 16</p>
+<p class="dk-tag">Timéo Vaast, veille BTS SIO</p>
+<p class="dk-tag">13 / 21</p>
 </div>
-<aside>Troisième angle : l’IA est aussi un outil de défense, surtout pour trier de gros volumes. Mais elle peut se tromper ou être trompée, comme on vient de le voir. Elle propose, un humain décide.</aside>
+<aside>À gauche, un exemple de journal de connexions, inventé pour l’illustration : au milieu des connexions normales, 48 échecs en deux secondes sur le même poste. Une IA repère ce genre d’anomalie dans des millions de lignes. Mais elle peut se tromper ou être trompée, comme on vient de le voir : elle propose, un humain décide.</aside>
 </section>

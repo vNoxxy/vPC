@@ -23,8 +23,13 @@ const SLIDES = deck.order
 const WIDTH = 1920;
 const HEIGHT = 1080;
 
+export const SLIDE_COUNT = SLIDES.length;
+
+const reducedMotion = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 export default function SlideDeck({ pdf }: { pdf?: { url: string; downloadName: string } }) {
   const stageRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
   const [scale, setScale] = useState(0);
   const [full, setFull] = useState(false);
@@ -84,6 +89,37 @@ export default function SlideDeck({ pdf }: { pdf?: { url: string; downloadName: 
     }
   };
 
+  // The slide is only drawn once its scale is known.
+  const ready = scale > 0;
+
+  // What the deck's CSS can't do in a browser: a number that counts up (`.n`, the Slides recipe), and, for
+  // visitors who asked for less motion, the drawings' animations shown at their end.
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    if (reducedMotion()) {
+      canvas.querySelectorAll("svg").forEach((svg) => {
+        svg.setCurrentTime(60);
+        svg.pauseAnimations();
+      });
+      return;
+    }
+    const frames: number[] = [];
+    canvas.querySelectorAll<HTMLElement>(".n").forEach((el) => {
+      const target = Number.parseInt(el.textContent ?? "", 10);
+      if (!Number.isFinite(target)) return;
+      const start = performance.now();
+      const step = (now: number) => {
+        const t = Math.min(1, (now - start) / 1200);
+        el.textContent = String(Math.round(target * (1 - (1 - t) ** 3)));
+        if (t < 1) frames.push(requestAnimationFrame(step));
+      };
+      el.textContent = "0";
+      frames.push(requestAnimationFrame(step));
+    });
+    return () => frames.forEach(cancelAnimationFrame);
+  }, [index, ready]);
+
   const slide = SLIDES[index];
 
   return (
@@ -106,7 +142,7 @@ export default function SlideDeck({ pdf }: { pdf?: { url: string; downloadName: 
       >
         {scale > 0 && (
           <div style={{ width: WIDTH * scale, height: HEIGHT * scale }} className="relative shrink-0 overflow-hidden">
-            <div key={slide.id} className="deck-canvas" style={{ transform: `scale(${scale})` }} dangerouslySetInnerHTML={{ __html: slide.html }} />
+            <div key={slide.id} ref={canvasRef} className="deck-canvas" style={{ transform: `scale(${scale})` }} dangerouslySetInnerHTML={{ __html: slide.html }} />
           </div>
         )}
       </div>

@@ -267,6 +267,12 @@ body {
   width: 1920px;
   height: 1080px;
   overflow: hidden;
+  isolation: isolate;
+}
+
+/* In Slides a backdrop listed first paints under the text; a browser paints positioned boxes on top. */
+.deck-canvas .dk-grid {
+  z-index: -1;
 }
 
 .deck-canvas table {

@@ -5,14 +5,17 @@
   "format": { "v": 1, "shared": ["project/deck.css"] },
   "title": "L’IA et la cybersécurité",
   "cover": "cover",
-  "order": ["cover", "question", "pourquoi", "methode", "angles", "attaquants", "arup", "surface", "injection", "defenseurs", "cadre", "journal", "sources", "reponse", "vody", "fin"],
+  "order": ["cover", "question", "pourquoi", "methode", "angles", "angle1", "attaquants", "arup", "angle2", "surface", "injection", "angle3", "defenseurs", "angle4", "cadre", "journal", "sources", "reponse", "reflexes", "vody", "fin"],
   "sections": {
     "s1": { "description": "Le sujet, la question et la méthode de veille", "start": "cover" },
-    "s2": { "description": "Quatre angles : les attaquants, la surface d’attaque, les défenseurs, le cadre", "start": "angles" },
-    "s3": { "description": "Le journal de veille et les sources", "start": "journal" },
-    "s4": { "description": "Ma réponse à la question et ce que j’applique chez Vody Studio", "start": "reponse" }
+    "s2": { "description": "Angle 1 : l’IA au service des attaquants", "start": "angle1" },
+    "s3": { "description": "Angle 2 : l’IA devient une cible", "start": "angle2" },
+    "s4": { "description": "Angle 3 : l’IA au service des défenseurs", "start": "angle3" },
+    "s5": { "description": "Angle 4 : le cadre, puis le journal et les sources", "start": "angle4" },
+    "s6": { "description": "Ma réponse à la question et ce que j’applique chez Vody Studio", "start": "reponse" }
   },
   "faces": {
+    "syne": { "family": "Syne", "href": "https://fonts.googleapis.com/css2?family=Syne:wght@800&display=swap" },
     "plus-jakarta-sans": { "family": "Plus Jakarta Sans", "href": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400..800&display=swap" },
     "jetbrains-mono": { "family": "JetBrains Mono", "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap" }
   },

@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import SiteLayout from "../components/Layout";
-import SlideDeck from "../components/SlideDeck";
+import SlideDeck, { SLIDE_COUNT } from "../components/SlideDeck";
 import { Facts, PageHead, Row, SectionHead } from "../components/ui";
 import { AXES, JOURNAL, SOURCES, TOOLS, VEILLE } from "../data/veille";
 import { DOCUMENTS } from "../lib/documents";
@@ -41,7 +41,7 @@ export default function VeillePage() {
 
       {/* The presentation itself, as given in AP. */}
       <section className="wrap">
-        <SectionHead title="Le diaporama" note="La présentation en atelier, 16 diapositives" />
+        <SectionHead title="Le diaporama" note={`La présentation en atelier, ${SLIDE_COUNT} diapositives`} />
         <div className="pt-7">
           <SlideDeck pdf={PDF} />
         </div>
