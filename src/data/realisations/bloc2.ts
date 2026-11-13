@@ -55,7 +55,8 @@ export const BLOC2: Realisation[] = [
   {
     slug: "defis-pseudolab",
     title: "Défis PseudoLab : une billetterie et un contrôle d'accès",
-    wordmark: "PseudoLab",
+    short: "Défis PseudoLab",
+    kind: "Algorithmique",
     summary: "Analyser des règles métier, écrire l'algorithme, le tester sur ses cas limites et y trouver une erreur.",
     category: "bloc2",
     from: "13/10/26",

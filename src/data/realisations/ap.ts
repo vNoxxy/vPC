@@ -4,7 +4,8 @@ export const AP: Realisation[] = [
   {
     slug: "preparer-une-veille",
     title: "Préparer une veille sur les mises à jour Windows",
-    wordmark: "Veille",
+    short: "Préparer une veille",
+    kind: "Exercice, veille",
     summary: "Objectifs, sources comparées, outil de curation et diffusion : la méthode avant le sujet.",
     category: "ap",
     from: "18/09/26",
@@ -23,7 +24,8 @@ export const AP: Realisation[] = [
   {
     slug: "ce-portfolio",
     title: "Ce portfolio",
-    wordmark: "Portfolio",
+    short: "Ce portfolio",
+    kind: "Site personnel",
     summary: "Prouver ce que je sais faire : une fiche par réalisation, des compétences reliées à leurs preuves, au style de mon studio.",
     category: "ap",
     from: "02/10/26",

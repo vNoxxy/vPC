@@ -1,32 +1,6 @@
-import { Fragment, type CSSProperties, type ReactNode } from "react";
-
-export type Tone = "dark" | "light";
-
-// Spelled out (not `tone-${tone}`) so Tailwind sees both class names and keeps them in the build.
-const TONE_CLASS: Record<Tone, string> = { dark: "tone-dark", light: "tone-light" };
-
-/**
- * A string whose accent words are written as `*word*`.
- * - In a headline they get the selection frame (`.mark`: outline + a handle on each corner).
- * - With `plain`, for running text, they are only colored.
- */
-export function Rich({ text, plain = false }: { text: string; plain?: boolean }) {
-  return text.split(/\*([^*]+)\*/g).map((part, i) =>
-    i % 2 === 0 ? (
-      <Fragment key={i}>{part}</Fragment>
-    ) : plain ? (
-      <em key={i} className="mark-plain">
-        {part}
-      </em>
-    ) : (
-      <em key={i} className="mark">
-        {/* Carries the two handles the frame's own ::before/::after can't draw. */}
-        <i aria-hidden />
-        {part}
-      </em>
-    ),
-  );
-}
+import { Fragment, type ReactNode } from "react";
+import type { Shot } from "../data/types";
+import { withBase } from "../lib/site";
 
 /** Running text where `code` between backticks is set in monospace. */
 export function Inline({ text }: { text: string }) {
@@ -41,168 +15,97 @@ export function Inline({ text }: { text: string }) {
   );
 }
 
-/** One band of a page. `tone` flips every color inside it; a paper one is a rounded sheet laid on the ink. */
-export function Section({
-  tone = "dark",
-  id,
-  divider = false,
-  className = "",
-  innerClassName = "py-20 lg:py-28",
-  style,
-  children,
-}: {
-  tone?: Tone;
-  id?: string;
-  /** Sets two stacked sections of the same tone apart: a hairline on ink, a gap between sheets. */
-  divider?: boolean;
-  className?: string;
-  innerClassName?: string;
-  style?: CSSProperties;
-  children: ReactNode;
-}) {
-  return (
-    <section
-      id={id}
-      style={style}
-      className={`${TONE_CLASS[tone]} relative ${tone === "light" ? "sheet" : ""} ${divider ? (tone === "light" ? "mt-3" : "border-t border-[var(--line)]") : ""} ${className}`}
-    >
-      <div className={`guides relative ${innerClassName}`}>{children}</div>
-    </section>
-  );
-}
-
-export function SectionHead({
-  kicker,
-  title,
-  lede,
-  compact = false,
-  className = "",
-}: {
-  kicker?: string;
-  title: string;
-  lede?: string;
-  /** Smaller title, for a head sitting in a narrow column next to its content. */
-  compact?: boolean;
-  className?: string;
-}) {
-  return (
-    <div className={`max-w-[760px] ${className}`}>
-      {kicker && <p className="kicker">{kicker}</p>}
-      <h2 className={`h-section ${compact ? "!text-[clamp(19px,2.25vw,30px)]" : ""} ${kicker ? "mt-6" : ""}`}>
-        <Rich text={title} />
-      </h2>
-      {lede && <p className="lede mt-5 max-w-[600px]">{lede}</p>}
-    </div>
-  );
-}
-
-/** A plain list: one line per item, a short dash in the margin. */
-export function DashList({ items, className = "" }: { items: ReactNode[]; className?: string }) {
-  return (
-    <ul className={`text-[14.5px] leading-relaxed text-[var(--fg-muted)] ${className}`}>
-      {items.map((item, i) => (
-        <li key={i} className="mb-2 flex gap-2.5">
-          <span aria-hidden className="text-[var(--fg-faint)]">
-            –
-          </span>
-          <span className="min-w-0">{item}</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 /**
- * A name across the sheet, as large as one line allows on a wide screen; on a phone it breaks
- * between its words. Decorative (hidden from screen readers): the page's h1 follows it.
+ * The top of a page: its title, a sentence or two, and on a wide screen a short sheet of facts on
+ * the right. `before` sits above the title (a way back), `actions` under the text.
  */
-export function Wordmark({ text, className = "" }: { text: string; className?: string }) {
-  const longest = Math.max(...text.split(/\s+/).map((word) => word.length));
-  // Syne's widest capitals run up to ~1.2em: 80cqw over the letters keeps any name on its line,
-  // never broken inside a word.
-  const style: CSSProperties = { fontSize: `min(200px, max(${(80 / text.length).toFixed(2)}cqw, min(${(80 / longest).toFixed(2)}cqw, 64px)))` };
-  return (
-    <div aria-hidden className={`w-full [container-type:inline-size] ${className}`}>
-      <p className="h-wordmark" style={style}>
-        {text}
-      </p>
-    </div>
-  );
-}
-
-/** A dimension line, as on a technical drawing: a hairline between two ticks, its label in the middle. */
-export function DimLine({ text, className = "" }: { text: string; className?: string }) {
-  return (
-    <p className={`dim-line ${className}`}>
-      <span>{text}</span>
-    </p>
-  );
-}
-
-/** The curved planes behind a hero, in flat tones of the page's accent. Put it in a clipping box covering the section. */
-export function HeroPlanes({ className = "" }: { className?: string }) {
-  return (
-    <svg aria-hidden viewBox="0 0 1440 1500" preserveAspectRatio="none" className={`hero-planes ${className}`}>
-      <path className="p2" d="M0,1000 C380,920 640,560 1440,190 L1440,350 C720,690 430,1070 0,1160 Z" />
-      <path className="p1" d="M0,1160 C430,1070 720,690 1440,350 L1440,790 C920,990 520,1320 0,1500 Z" />
-      <path className="p3" d="M0,1500 C520,1320 920,990 1440,790 L1440,860 C960,1050 600,1360 160,1500 Z" />
-      <path className="edge" d="M0,1000 C380,920 640,560 1440,190" />
-      <path className="edge" d="M0,1160 C430,1070 720,690 1440,350" />
-    </svg>
-  );
-}
-
-/**
- * Opening section of a page: the curved planes behind, a name across the sheet, the headline in two
- * tones, the description and the call(s) to action.
- */
-export function PageHero({
-  kicker,
-  wordmark,
-  dimension,
+export function PageHead({
   title,
-  description,
-  action,
-  children,
+  lead,
+  before,
+  actions,
+  aside,
 }: {
-  kicker: ReactNode;
-  wordmark: string;
-  dimension?: string;
   title: string;
-  description: string;
-  action?: ReactNode;
-  children?: ReactNode;
+  lead?: ReactNode;
+  before?: ReactNode;
+  actions?: ReactNode;
+  aside?: ReactNode;
 }) {
   return (
-    <section className="tone-dark relative">
-      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <HeroPlanes />
-      </div>
-      <div className="guides relative pb-16 pt-12 sm:pt-16 lg:pb-24 lg:pt-20">
-        <div className="flex flex-col items-center text-center">
-          {kicker}
-          <Wordmark text={wordmark} className="mt-7" />
-          {dimension && <DimLine text={dimension} className="mt-5 hidden w-full max-w-[1000px] sm:flex" />}
-          <h1 className="h-subline mt-8 max-w-[900px]">
-            <Rich plain text={title} />
-          </h1>
-          <p className="lede mt-5 max-w-[640px]">{description}</p>
-          {action && <div className="hero-actions mt-9 flex flex-wrap justify-center gap-3">{action}</div>}
+    <section className="wrap pb-14 pt-10 sm:pt-14 lg:pb-20 lg:pt-[70px]">
+      {before && <div className="mb-8">{before}</div>}
+      <div className={`grid gap-10 ${aside ? "lg:grid-cols-[1.55fr_1fr] lg:gap-[72px]" : ""}`}>
+        <div>
+          <h1 className="t-page">{title}</h1>
+          {lead && <div className="mt-6 max-w-[720px] text-[18px] leading-[1.6] text-[#2f3440] sm:text-[19px]">{lead}</div>}
+          {actions && <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">{actions}</div>}
         </div>
-        {children}
+        {aside && <div className="lg:pt-3">{aside}</div>}
       </div>
     </section>
   );
 }
 
-/** My round mark: my initials on the page's accent. */
-export function Monogram({ className = "h-9 w-9" }: { className?: string }) {
+/** A short sheet of facts: a label on the left, its value on the right, ruled by hairlines. */
+export function Facts({ rows }: { rows: { label: string; value: ReactNode; live?: boolean }[] }) {
   return (
-    <span
-      aria-hidden
-      className={`flex shrink-0 items-center justify-center rounded-full bg-[var(--accent-fill)] font-display text-[13px] font-extrabold tracking-[-0.02em] text-[var(--accent-on)] ${className}`}
-    >
-      TV
+    <dl className="border-t-[1.5px] border-ink">
+      {rows.map((row) => (
+        <div key={row.label} className="grid grid-cols-[112px_1fr] gap-4 border-b border-rule py-3 text-[15px] sm:grid-cols-[128px_1fr]">
+          <dt className="text-soft">{row.label}</dt>
+          <dd className="flex items-baseline gap-2 font-semibold">
+            {row.live && <i aria-hidden className="dot translate-y-[-1px] bg-[#2fbf71]" />}
+            <span className="min-w-0">{row.value}</span>
+          </dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+/** The strong rule a section opens on, its name on the left and a note on the right. */
+export function SectionHead({ title, note, id, as: Tag = "h2" }: { title: string; note?: ReactNode; id?: string; as?: "h2" | "h3" }) {
+  return (
+    <div id={id} className="sec-head scroll-mt-24">
+      <Tag className="text-[17px] font-bold">{title}</Tag>
+      {note && <p>{note}</p>}
+    </div>
+  );
+}
+
+/** A label and its text side by side on a wide screen, stacked on a phone; meant for a `rule-rows` list. */
+export function Row({ label, children, labelClass = "" }: { label: ReactNode; children: ReactNode; labelClass?: string }) {
+  return (
+    <div className="grid gap-2 py-5 sm:grid-cols-[220px_1fr] sm:gap-8">
+      <div className={`text-[15px] font-bold ${labelClass}`}>{label}</div>
+      <div className="min-w-0">{children}</div>
+    </div>
+  );
+}
+
+export function Dot({ color, className = "" }: { color: string; className?: string }) {
+  return <i aria-hidden className={`dot ${className}`} style={{ background: color }} />;
+}
+
+/** A screenshot with its caption. */
+export function Figure({ shot, className = "", priority = false }: { shot: Shot; className?: string; priority?: boolean }) {
+  return (
+    <figure className={className}>
+      <a href={withBase(shot.src)} target="_blank" rel="noopener noreferrer" aria-label="Ouvrir l'image en grand">
+        <img src={withBase(shot.src)} alt={shot.caption} loading={priority ? "eager" : "lazy"} className="shot" />
+      </a>
+      <figcaption className="caption">{shot.caption}</figcaption>
+    </figure>
+  );
+}
+
+/** Vody Studio's name as the studio writes it: its round mark and the wordmark in Syne. */
+export function VodyBrand({ className = "" }: { className?: string }) {
+  return (
+    <span className={`flex items-center gap-3 sm:gap-3.5 ${className}`}>
+      <img src={withBase("/images/vody-logo.jpg")} alt="" className="h-10 w-10 rounded-full sm:h-12 sm:w-12" />
+      <span className="whitespace-nowrap font-brand text-[17px] font-extrabold tracking-[0.06em] sm:text-[21px]">VODY STUDIO</span>
     </span>
   );
 }

@@ -6,6 +6,11 @@ export type CategoryKey = "bloc1" | "bloc2" | "bloc3" | "ap" | "perso";
 /** The six competencies of the E4 synthesis table (see competences.ts). */
 export type CompetenceKey = "patrimoine" | "incidents" | "presence" | "projet" | "service" | "devpro";
 
+export interface Shot {
+  src: string;
+  caption: string;
+}
+
 export interface CodeProof {
   title: string;
   lang: string;
@@ -20,8 +25,10 @@ export interface CodeProof {
 export interface Realisation {
   slug: string;
   title: string;
-  /** The name across the hero of its page (short, in capitals). */
-  wordmark: string;
+  /** Its name in the index of réalisations (a few words). */
+  short: string;
+  /** What it is, in the index: "TP, gestion de parc", "Bot Discord"... */
+  kind: string;
   /** One line, for the cards. */
   summary: string;
   category: CategoryKey;
@@ -40,8 +47,10 @@ export interface Realisation {
   competences: Partial<Record<CompetenceKey, number[]>>;
   proofs: string[];
   code?: CodeProof[];
-  /** Screenshots shown as proofs: files put in public/preuves/, e.g. { src: "/preuves/glpi-tickets.png", caption: "…" }. */
-  shots?: { src: string; caption: string }[];
+  /** A real screenshot at the top of its page, and next to the pointer in the index (public/images/). */
+  cover?: Shot;
+  /** More screenshots shown as proofs: files put in public/preuves/, e.g. { src: "/preuves/glpi-tickets.png", caption: "…" }. */
+  shots?: Shot[];
   bilan: string;
   /** The TP's document in my Drive: exported as documents/<slug>.pdf, it gets its download button. */
   drive?: string;

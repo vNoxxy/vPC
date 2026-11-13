@@ -1,9 +1,6 @@
 import { useState, type FormEvent } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faCopy, faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import SiteLayout from "../components/Layout";
-import { PageHero, Section, SectionHead } from "../components/ui";
+import { PageHead } from "../components/ui";
 import { PROFILE } from "../data/profile";
 
 const SUBJECTS = ["Proposition de stage", "Question sur une réalisation", "Projet ou collaboration", "Autre"];
@@ -13,18 +10,7 @@ const SUBJECTS = ["Proposition de stage", "Question sur une réalisation", "Proj
  * app, so nothing typed here is sent or stored anywhere else.
  */
 export default function ContactPage() {
-  const [copied, setCopied] = useState(false);
   const [subject, setSubject] = useState(SUBJECTS[0]);
-
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(PROFILE.email);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
-    } catch {
-      // No clipboard access (an old browser, a page not served over HTTPS): the address stays readable.
-    }
-  };
 
   const send = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,90 +18,79 @@ export default function ContactPage() {
     const name = String(form.get("name") ?? "").trim();
     const organisation = String(form.get("organisation") ?? "").trim();
     const message = String(form.get("message") ?? "").trim();
-    const body = [message, "", [name, organisation].filter(Boolean).join(" — ")].join("\n");
+    const body = [message, "", [name, organisation].filter(Boolean).join(", ")].join("\n");
     window.location.href = `mailto:${PROFILE.email}?subject=${encodeURIComponent(`[Portfolio] ${subject}`)}&body=${encodeURIComponent(body)}`;
   };
 
   return (
-    <SiteLayout title="Contact" description="Écrire à Timéo Vaast, étudiant en BTS SIO : stage, question ou projet.">
-      <PageHero
-        kicker={<p className="kicker kicker-plain">Contact</p>}
-        wordmark="Contact"
-        title="Un stage, une question, un projet ? *Écrivez-moi.*"
-        description="Je réponds à tous les messages, en général dans la journée."
-        action={
-          <a href={`mailto:${PROFILE.email}`} className="btn btn-lg btn-solid">
-            <FontAwesomeIcon icon={faEnvelope} /> {PROFILE.email}
-          </a>
-        }
-      />
+    <SiteLayout title="Contact" description="Écrire à Timéo Vaast, étudiant en BTS SIO : un stage, une question ou un projet.">
+      <PageHead title="Contact" lead="Un stage, un projet, une question : écrivez-moi, je réponds en général dans la journée." />
 
-      <Section tone="light">
-        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-          <div>
-            <SectionHead compact kicker="Me joindre" title="Par *e-mail*, tout simplement" />
-            <div className="mt-8 space-y-3">
-              <div className="card flex items-center justify-between gap-3 p-4 pl-5">
-                <span className="min-w-0">
-                  <span className="field-label !mb-1">E-mail</span>
-                  <span className="block truncate text-[15px] font-bold">{PROFILE.email}</span>
-                </span>
-                <button type="button" onClick={copy} className="btn btn-sm btn-outline" aria-live="polite">
-                  <FontAwesomeIcon icon={copied ? faCheck : faCopy} /> {copied ? "Copiée" : "Copier"}
-                </button>
-              </div>
-              <a href={PROFILE.github} target="_blank" rel="noopener noreferrer" className="card lift flex items-center gap-4 p-4 pl-5">
-                <FontAwesomeIcon icon={faGithub} className="text-[20px]" />
-                <span>
-                  <span className="field-label !mb-1">GitHub</span>
-                  <span className="block text-[15px] font-bold">github.com/vnoxxy</span>
-                </span>
+      <section className="wrap grid gap-14 lg:grid-cols-[1fr_1.25fr] lg:gap-20">
+        <div>
+          <div className="border-t-[1.5px] border-ink">
+            <div className="border-b border-rule py-4">
+              <p className="text-[14.5px] text-soft">E-mail</p>
+              <a href={`mailto:${PROFILE.email}`} className="mt-1 block break-all text-[22px] font-semibold tracking-[-0.02em] hover:text-blue-text">
+                {PROFILE.email}
+              </a>
+            </div>
+            <div className="border-b border-rule py-4">
+              <p className="text-[14.5px] text-soft">GitHub</p>
+              <a href={PROFILE.github} target="_blank" rel="noopener noreferrer" className="mt-1 block text-[22px] font-semibold tracking-[-0.02em] hover:text-blue-text">
+                github.com/vnoxxy ↗
+              </a>
+            </div>
+            <div className="border-b border-rule py-4">
+              <p className="text-[14.5px] text-soft">Mon studio</p>
+              <a href={PROFILE.vody} target="_blank" rel="noopener noreferrer" className="mt-1 block text-[22px] font-semibold tracking-[-0.02em] hover:text-blue-text">
+                vodystudio.fr ↗
               </a>
             </div>
           </div>
-
-          <form onSubmit={send} className="card space-y-5 p-6 sm:p-8">
-            <div>
-              <span className="field-label">Objet</span>
-              <div className="flex flex-wrap gap-2">
-                {SUBJECTS.map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => setSubject(s)}
-                    aria-pressed={s === subject}
-                    className={`h-9 rounded-full border px-4 text-[13px] font-semibold ${
-                      s === subject ? "border-transparent bg-[var(--accent-fill)] text-[var(--accent-on)]" : "border-[var(--line-strong)] text-[var(--fg-muted)] hover:border-[var(--fg)]"
-                    }`}
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="grid gap-5 sm:grid-cols-2">
-              <label className="block">
-                <span className="field-label">Votre nom</span>
-                <input name="name" className="field" autoComplete="name" />
-              </label>
-              <label className="block">
-                <span className="field-label">Entreprise ou établissement</span>
-                <input name="organisation" className="field" autoComplete="organization" />
-              </label>
-            </div>
-            <label className="block">
-              <span className="field-label">Message</span>
-              <textarea name="message" required rows={6} className="field" />
-            </label>
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-[13px] text-[var(--fg-faint)]">Le message s'ouvre dans votre messagerie : rien n'est envoyé ni enregistré par ce site.</p>
-              <button type="submit" className="btn btn-accent shrink-0">
-                <FontAwesomeIcon icon={faEnvelope} /> Écrire le message
-              </button>
-            </div>
-          </form>
         </div>
-      </Section>
+
+        <form onSubmit={send} className="border-t-[1.5px] border-ink pt-6">
+          <fieldset>
+            <legend className="field-label">Objet</legend>
+            <div className="flex flex-wrap gap-2">
+              {SUBJECTS.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setSubject(s)}
+                  aria-pressed={s === subject}
+                  className={`h-10 rounded-full border px-4 text-[14.5px] font-semibold transition-colors ${
+                    s === subject ? "border-ink bg-ink text-white" : "border-rule bg-white text-soft hover:border-ink hover:text-ink"
+                  }`}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          </fieldset>
+          <div className="mt-6 grid gap-5 sm:grid-cols-2">
+            <label className="block">
+              <span className="field-label">Votre nom</span>
+              <input name="name" className="field" autoComplete="name" />
+            </label>
+            <label className="block">
+              <span className="field-label">Entreprise ou établissement</span>
+              <input name="organisation" className="field" autoComplete="organization" />
+            </label>
+          </div>
+          <label className="mt-5 block">
+            <span className="field-label">Message</span>
+            <textarea name="message" required rows={6} className="field" />
+          </label>
+          <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-[340px] text-[14px] text-soft">Le message s'ouvre dans votre messagerie : rien n'est envoyé ni enregistré par ce site.</p>
+            <button type="submit" className="btn">
+              Écrire le message
+            </button>
+          </div>
+        </form>
+      </section>
     </SiteLayout>
   );
 }

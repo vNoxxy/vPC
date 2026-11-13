@@ -4,7 +4,8 @@ export const BLOC1: Realisation[] = [
   {
     slug: "charte-informatique",
     title: "Appliquer la charte informatique de Rostand NetInfo",
-    wordmark: "Charte informatique",
+    short: "Charte informatique",
+    kind: "TD, règles d'utilisation",
     summary: "Dix situations de salariés : fraude ou non ? Chaque réponse s'appuie sur un article de la charte.",
     category: "bloc1",
     from: "03/09/26",
@@ -28,7 +29,8 @@ export const BLOC1: Realisation[] = [
   {
     slug: "refroidissement",
     title: "Exposé : le système de refroidissement d'un ordinateur",
-    wordmark: "Refroidissement",
+    short: "Le refroidissement",
+    kind: "Exposé, matériel",
     summary: "À quoi sert un système de refroidissement, comment il évacue la chaleur, et ce qui arrive quand il défaille.",
     category: "bloc1",
     from: "03/09/26",
@@ -51,7 +53,8 @@ export const BLOC1: Realisation[] = [
   {
     slug: "poste-windows",
     title: "Installer et paramétrer un poste client Windows 10",
-    wordmark: "Poste Windows",
+    short: "Poste Windows 10",
+    kind: "TP, poste client",
     summary: "Machine virtuelle, réseau et proxy, logiciels libres, partition de données, comptes et droits, ligne de commande.",
     category: "bloc1",
     from: "17/09/26",
@@ -75,7 +78,8 @@ export const BLOC1: Realisation[] = [
   {
     slug: "poste-ubuntu",
     title: "Installer et paramétrer un poste client Ubuntu",
-    wordmark: "Poste Ubuntu",
+    short: "Poste Ubuntu",
+    kind: "TP, poste client Linux",
     summary: "Le même poste qu'en Windows, sous Linux : machine virtuelle, réseau au terminal, proxy, comptes et droits.",
     category: "bloc1",
     from: "25/09/26",
@@ -98,7 +102,8 @@ export const BLOC1: Realisation[] = [
   {
     slug: "glpi",
     title: "Installer GLPI sur un serveur Debian",
-    wordmark: "GLPI",
+    short: "GLPI sur Debian",
+    kind: "TP, gestion de parc",
     summary: "Un serveur Debian sans interface graphique, la pile Apache, MariaDB et PHP, puis GLPI : comptes, parc et tickets.",
     category: "bloc1",
     from: "01/10/26",
@@ -122,7 +127,8 @@ export const BLOC1: Realisation[] = [
   {
     slug: "reseaux-tcp-ip",
     title: "Les réseaux : types, topologies et modèle TCP/IP",
-    wordmark: "Réseaux",
+    short: "Réseaux et TCP/IP",
+    kind: "Exercices, réseaux",
     summary: "Reconnaître un PAN, un LAN, un MAN et les topologies, puis placer chaque protocole dans sa couche TCP/IP.",
     category: "bloc1",
     from: "13/10/26",
@@ -143,7 +149,8 @@ export const BLOC1: Realisation[] = [
   {
     slug: "adressage-ipv4",
     title: "L'adressage IPv4 et le découpage en sous-réseaux",
-    wordmark: "IPv4",
+    short: "Adressage IPv4",
+    kind: "Exercices, sous-réseaux",
     summary: "Binaire, classes, masques, adresses réservées, puis le découpage d'une plage pour trois entreprises.",
     category: "bloc1",
     from: "02/11/26",

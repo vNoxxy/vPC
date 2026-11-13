@@ -60,9 +60,10 @@ Ses compétences E4 (`competences`) remplissent toutes seules le tableau de synt
 ```
 documents/      les TP en PDF, un par fiche (documents/glpi.pdf → /realisations/glpi)
 src/
-  components/   Layout (menu, pied de page), éléments du design, cartes, contrôle segmenté
+  components/   Layout (menu, pied de page), éléments de page, liste des réalisations, onglets de filtre
   data/         tout le contenu
-  lib/          couleurs, animations au défilement, titre des pages
+  lib/          couleurs des blocs, documents à télécharger, adresse du site, titre des pages
   pages/        une page par adresse (accueil, parcours, cv, réalisations, compétences, veille, vody-studio, contact)
-  index.css     le design de vodystudio.fr (tons encre et papier, pastilles, cadres arrondis, animations)
+  index.css     le design (papier clair, encre, bleu Vody Studio, filets fins, boutons arrondis)
+public/images/  les captures de vodystudio.fr (données de démonstration) et le logo du studio
 ```

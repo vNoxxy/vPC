@@ -34,21 +34,21 @@ export interface Step {
 /** Studies, the newest first. */
 export const EDUCATION: Step[] = [
   {
-    period: "2026 — 2028",
+    period: "2026–2028",
     title: "BTS SIO, option SLAM",
     place: "Lycée Jean Rostand, Chantilly",
     text: "Services informatiques aux organisations : support et services (Bloc 1), développement d'applications (Bloc 2, SLAM), cybersécurité (Bloc 3).",
     tag: "En cours",
   },
   {
-    period: "2023 — 2026",
+    period: "2023–2026",
     title: "Bac pro MSPC",
     place: "Lycée Mireille Grenet",
     text: "Maintenance des systèmes de production connectés : maintenance préventive et dépannage, électricité, automatismes. Obtenu avec la mention Bien.",
     tag: "Mention Bien",
   },
   {
-    period: "2022 — 2023",
+    period: "2022–2023",
     title: "Diplôme national du brevet",
     place: "Collège Lucie & Raymond Aubrac",
     text: "Obtenu avec la mention Bien, le fruit d'un travail régulier toute l'année.",

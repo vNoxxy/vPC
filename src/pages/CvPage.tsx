@@ -1,12 +1,9 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import SiteLayout from "../components/Layout";
-import { Monogram, Section } from "../components/ui";
 import { EDUCATION, EXPERIENCE, INTERESTS, LANGUAGES, PROFILE, SKILLS } from "../data/profile";
 import { siteAddress } from "../lib/site";
 
 function Heading({ children }: { children: string }) {
-  return <h2 className="border-b border-[var(--line-strong)] pb-2 font-tech text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--accent-text)]">{children}</h2>;
+  return <h2 className="border-b-[1.5px] border-ink pb-2 text-[14px] font-bold">{children}</h2>;
 }
 
 /**
@@ -16,31 +13,28 @@ function Heading({ children }: { children: string }) {
 export default function CvPage() {
   return (
     <SiteLayout title="CV" description="Le CV de Timéo Vaast, étudiant en BTS SIO option SLAM.">
-      <Section tone="dark" className="no-print" innerClassName="flex flex-col gap-4 py-10 sm:flex-row sm:items-center sm:justify-between">
+      <section className="wrap no-print flex flex-col gap-4 pb-8 pt-10 sm:flex-row sm:items-end sm:justify-between sm:pt-14">
         <div>
-          <p className="kicker kicker-plain">Curriculum vitæ</p>
-          <p className="mt-4 max-w-[560px] text-[14.5px] text-[var(--fg-muted)]">Pour le garder en PDF : « Imprimer », puis « Enregistrer au format PDF ».</p>
+          <h1 className="t-page">CV</h1>
+          <p className="mt-4 text-[15.5px] text-soft">Pour le garder en PDF : « Imprimer », puis « Enregistrer au format PDF ».</p>
         </div>
-        <button type="button" onClick={() => window.print()} className="btn btn-lg btn-solid">
-          <FontAwesomeIcon icon={faPrint} /> Imprimer ou enregistrer en PDF
+        <button type="button" onClick={() => window.print()} className="btn">
+          Imprimer ou enregistrer en PDF
         </button>
-      </Section>
+      </section>
 
-      <Section tone="light" className="print-sheet" innerClassName="py-10 sm:py-14">
-        <article className="mx-auto max-w-[860px] text-[var(--fg)]">
-          <header className="flex flex-col gap-6 border-b border-[var(--line-strong)] pb-8 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-4">
-              <Monogram className="h-14 w-14 text-[18px]" />
-              <div>
-                <h1 className="font-display text-[30px] font-extrabold uppercase leading-none tracking-[-0.01em]">
-                  {PROFILE.firstName} {PROFILE.lastName}
-                </h1>
-                <p className="mt-2 text-[15px] font-semibold text-[var(--accent-text)]">{PROFILE.title}</p>
-              </div>
+      <section className="wrap">
+        <article className="print-cv mx-auto max-w-[900px] rounded-[18px] bg-white p-6 sm:p-12 print:rounded-none print:p-0">
+          <header className="flex flex-col gap-5 border-b-[1.5px] border-ink pb-7 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h1 className="text-[40px] font-semibold leading-none tracking-[-0.04em]">
+                {PROFILE.firstName} {PROFILE.lastName}
+              </h1>
+              <p className="mt-2 text-[17px] font-medium text-soft">{PROFILE.title}</p>
             </div>
-            <ul className="space-y-1 text-[13.5px] text-[var(--fg-muted)] sm:text-right">
+            <ul className="space-y-1 text-[14px] text-soft sm:text-right">
               <li>
-                <a href={`mailto:${PROFILE.email}`} className="font-semibold text-[var(--fg)]">
+                <a href={`mailto:${PROFILE.email}`} className="font-semibold text-ink">
                   {PROFILE.email}
                 </a>
               </li>
@@ -49,9 +43,9 @@ export default function CvPage() {
             </ul>
           </header>
 
-          <p className="mt-6 text-[14.5px] leading-relaxed text-[var(--fg-muted)]">
-            En première année de BTS SIO au lycée Jean Rostand de Chantilly, je recherche un stage en développement ou en support informatique. Fondateur de Vody Studio, ma micro-entreprise de
-            développement.
+          <p className="mt-6 text-[15px] leading-relaxed text-[#2f3440]">
+            En première année de BTS SIO au lycée Jean Rostand de Chantilly, je cherche un stage en développement ou en support informatique. Fondateur de Vody Studio, ma micro-entreprise
+            de développement.
           </p>
 
           <div className="mt-8 grid gap-10 sm:grid-cols-[1.45fr_1fr]">
@@ -62,14 +56,14 @@ export default function CvPage() {
                   {EDUCATION.map((e) => (
                     <li key={e.title}>
                       <div className="flex items-baseline justify-between gap-3">
-                        <p className="text-[14.5px] font-extrabold">{e.title}</p>
-                        <p className="shrink-0 font-tech text-[11px] font-bold text-[var(--fg-faint)]">{e.period}</p>
+                        <p className="text-[15px] font-bold">{e.title}</p>
+                        <p className="shrink-0 text-[13px] text-soft">{e.period}</p>
                       </div>
-                      <p className="text-[13px] font-semibold text-[var(--accent-text)]">
+                      <p className="text-[13.5px] font-semibold text-blue-text">
                         {e.place}
-                        {e.tag && e.tag !== "En cours" ? ` · ${e.tag}` : ""}
+                        {e.tag && e.tag !== "En cours" ? `, ${e.tag.toLowerCase()}` : ""}
                       </p>
-                      <p className="mt-1 text-[13px] leading-relaxed text-[var(--fg-muted)]">{e.text}</p>
+                      <p className="mt-1 text-[13.5px] leading-relaxed text-soft">{e.text}</p>
                     </li>
                   ))}
                 </ul>
@@ -79,22 +73,22 @@ export default function CvPage() {
                 <ul className="mt-4 space-y-4">
                   <li>
                     <div className="flex items-baseline justify-between gap-3">
-                      <p className="text-[14.5px] font-extrabold">Vody Studio — fondateur</p>
-                      <p className="shrink-0 font-tech text-[11px] font-bold text-[var(--fg-faint)]">Depuis 2026</p>
+                      <p className="text-[15px] font-bold">Vody Studio, fondateur</p>
+                      <p className="shrink-0 text-[13px] text-soft">Depuis 2026</p>
                     </div>
-                    <p className="text-[13px] font-semibold text-[var(--accent-text)]">Micro-entreprise de développement</p>
-                    <p className="mt-1 text-[13px] leading-relaxed text-[var(--fg-muted)]">
+                    <p className="text-[13.5px] font-semibold text-blue-text">Micro-entreprise de développement</p>
+                    <p className="mt-1 text-[13.5px] leading-relaxed text-soft">
                       Conception, développement et mise en ligne de vodystudio.fr, d'un bot Discord et d'outils pour serveurs FiveM.
                     </p>
                   </li>
                   {EXPERIENCE.map((e) => (
                     <li key={e.title}>
                       <div className="flex items-baseline justify-between gap-3">
-                        <p className="text-[14.5px] font-extrabold">{e.title}</p>
-                        <p className="shrink-0 font-tech text-[11px] font-bold text-[var(--fg-faint)]">{e.period}</p>
+                        <p className="text-[15px] font-bold">{e.title}</p>
+                        <p className="shrink-0 text-[13px] text-soft">{e.period}</p>
                       </div>
-                      <p className="text-[13px] font-semibold text-[var(--accent-text)]">{e.place}</p>
-                      <p className="mt-1 text-[13px] leading-relaxed text-[var(--fg-muted)]">{e.text}</p>
+                      <p className="text-[13.5px] font-semibold text-blue-text">{e.place}</p>
+                      <p className="mt-1 text-[13.5px] leading-relaxed text-soft">{e.text}</p>
                     </li>
                   ))}
                 </ul>
@@ -105,41 +99,31 @@ export default function CvPage() {
               {SKILLS.map((g) => (
                 <section key={g.title}>
                   <Heading>{g.title}</Heading>
-                  <ul className="mt-4 flex flex-wrap gap-1.5">
-                    {g.items.map((s) => (
-                      <li key={s.name} className="tag">
-                        {s.name}
-                      </li>
-                    ))}
-                  </ul>
+                  <p className="mt-3 text-[13.5px] leading-relaxed text-[#2f3440]">{g.items.map((s) => s.name).join(", ")}</p>
                 </section>
               ))}
               <section>
                 <Heading>Qualités</Heading>
-                <p className="mt-4 text-[13.5px] text-[var(--fg-muted)]">{PROFILE.qualities.map((q) => q.name).join(" · ")}</p>
+                <p className="mt-3 text-[13.5px] text-[#2f3440]">{PROFILE.qualities.map((q) => q.name).join(", ")}</p>
               </section>
               <section>
                 <Heading>Langues</Heading>
-                <ul className="mt-4 space-y-1 text-[13.5px]">
+                <ul className="mt-3 space-y-1 text-[13.5px]">
                   {LANGUAGES.map((l) => (
                     <li key={l.name}>
-                      <span className="font-bold">{l.name}</span> <span className="text-[var(--fg-muted)]">— {l.level}</span>
+                      <span className="font-bold">{l.name}</span> <span className="text-soft">: {l.level.toLowerCase()}</span>
                     </li>
                   ))}
                 </ul>
               </section>
               <section>
                 <Heading>Centres d'intérêt</Heading>
-                <ul className="mt-4 space-y-1 text-[13.5px] text-[var(--fg-muted)]">
-                  {INTERESTS.map((i) => (
-                    <li key={i.name}>{i.name}</li>
-                  ))}
-                </ul>
+                <p className="mt-3 text-[13.5px] text-[#2f3440]">{INTERESTS.map((i) => i.name).join(", ")}</p>
               </section>
             </div>
           </div>
         </article>
-      </Section>
+      </section>
     </SiteLayout>
   );
 }

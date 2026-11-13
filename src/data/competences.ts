@@ -111,7 +111,7 @@ export const CATEGORIES: Category[] = [
   {
     key: "perso",
     label: "Vody Studio",
-    name: "Réalisations personnelles — Vody Studio",
+    name: "Réalisations personnelles",
     accent: "vody",
     text: "Les projets de ma micro-entreprise : un site en production, un bot Discord, des éditeurs et un outil d'audit.",
   },

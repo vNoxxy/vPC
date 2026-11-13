@@ -5,9 +5,18 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Plus Jakarta Sans", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
-        display: ["Syne", "Plus Jakarta Sans", "sans-serif"],
-        // Monospace for the small technical labels: sheet numbers, dates, row indexes.
-        tech: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        // Vody Studio's own wordmark face, for the studio's name only.
+        brand: ["Syne", "Plus Jakarta Sans", "sans-serif"],
+        mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+      },
+      colors: {
+        paper: "var(--paper)",
+        ink: "var(--ink)",
+        night: "var(--night)",
+        soft: "var(--soft)",
+        faint: "var(--faint)",
+        rule: "var(--rule)",
+        blue: { DEFAULT: "var(--blue)", text: "var(--blue-text)", light: "var(--blue-light)" },
       },
     },
   },

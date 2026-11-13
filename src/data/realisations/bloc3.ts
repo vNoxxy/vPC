@@ -4,7 +4,8 @@ export const BLOC3: Realisation[] = [
   {
     slug: "e-mail-suspect",
     title: "Enquête sur un e-mail suspect",
-    wordmark: "E-mail suspect",
+    short: "E-mail suspect",
+    kind: "TP, phishing",
     summary: "Un faux message « Microsoft 365 » : relever les indices, lire les URL piégées, réagir à l'incident.",
     category: "bloc3",
     from: "17/09/26",
@@ -24,7 +25,8 @@ export const BLOC3: Realisation[] = [
   {
     slug: "securiser-un-compte",
     title: "Sécuriser un compte : mots de passe, hachage et MFA",
-    wordmark: "Hachage & MFA",
+    short: "Sécuriser un compte",
+    kind: "TP, authentification",
     summary: "Juger quatre comptes, réagir au vol d'un mot de passe, comprendre le hachage, le sel et le MFA.",
     category: "bloc3",
     from: "21/09/26",
@@ -49,7 +51,8 @@ export const BLOC3: Realisation[] = [
   {
     slug: "authentification-sure",
     title: "Concevoir une authentification plus sûre",
-    wordmark: "Authentification",
+    short: "Authentification sûre",
+    kind: "Trinôme, authentification",
     summary: "Après un phishing, trier les protections et construire la chaîne d'authentification d'une future application.",
     category: "bloc3",
     from: "28/09/26",
@@ -69,7 +72,8 @@ export const BLOC3: Realisation[] = [
   {
     slug: "audit-technova",
     title: "Audit de sécurité du système d'information de TechNova",
-    wordmark: "Audit TechNova",
+    short: "Audit TechNova",
+    kind: "TD, audit de sécurité",
     summary: "Huit situations à risque, le bon vocabulaire, des mesures justifiées, et un agent IA à encadrer.",
     category: "bloc3",
     from: "01/10/26",

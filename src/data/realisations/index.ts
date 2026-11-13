@@ -25,3 +25,17 @@ export function periodLabel(r: Realisation): string {
 
 /** The newest first, for the home page. */
 export const byNewest = (a: Realisation, b: Realisation) => dayOf(b.from) - dayOf(a.from);
+
+const MONTHS = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
+
+/** "01/10/26" → "Oct. 2026", for the index. */
+export function monthLabel(r: Realisation): string {
+  const [, mm, yy] = r.from.split("/").map(Number);
+  const month = MONTHS[mm - 1];
+  return `${month.charAt(0).toUpperCase()}${month.slice(1)} ${2000 + yy}`;
+}
+
+/** What the home page's index shows first: the studio's two main products, then the TPs that say the most. */
+export const HOME_SELECTION = ["vodystudio-fr", "forge", "audit-technova", "glpi", "defis-pseudolab", "e-mail-suspect"]
+  .map((slug) => REALISATION_BY_SLUG.get(slug)!)
+  .filter(Boolean);
