@@ -27,6 +27,7 @@ export default function LegalPage() {
       title: "Contenus",
       text: [
         "Les travaux présentés ont été réalisés dans le cadre du BTS SIO ; les entreprises citées dans les sujets (Rostand NetInfo, ROSTAND, TechNova) sont fictives. Les captures de vodystudio.fr montrent des données de démonstration. Les marques citées appartiennent à leurs propriétaires.",
+        "Les cours et les énoncés proposés au téléchargement sont ceux des enseignants du BTS SIO du lycée Jean Rostand, qui en restent les auteurs.",
       ],
     },
   ];

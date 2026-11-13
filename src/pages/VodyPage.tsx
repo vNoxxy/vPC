@@ -1,21 +1,22 @@
-import { Link } from "react-router";
 import IndexList from "../components/IndexList";
 import SiteLayout from "../components/Layout";
 import { Figure, SectionHead, VodyBrand } from "../components/ui";
 import { PROFILE } from "../data/profile";
-import { REALISATIONS } from "../data/realisations";
+import { PROJECTS } from "../data/realisations";
+import { DOCUMENTS } from "../lib/documents";
 import { withBase } from "../lib/site";
 
-const PROJECTS = REALISATIONS.filter((r) => r.category === "perso");
-
-/** From a TP to code in production: where a notion of the courses shows up in my own projects. */
-const LINKS: { notion: string; tp: { label: string; slug: string }; where: string }[] = [
-  { notion: "Hachage et sel", tp: { label: "Sécuriser un compte", slug: "securiser-un-compte" }, where: "Les mots de passe de vodystudio.fr sont hachés avec bcrypt, jamais stockés en clair." },
-  { notion: "MFA", tp: { label: "Authentification sûre", slug: "authentification-sure" }, where: "La double authentification par codes TOTP est proposée sur chaque compte client." },
-  { notion: "Limiter les essais", tp: { label: "Authentification sûre", slug: "authentification-sure" }, where: "Les routes de connexion refusent les essais répétés depuis une même adresse." },
-  { notion: "Moindre privilège", tp: { label: "Audit TechNova", slug: "audit-technova" }, where: "Les modules des clients de vBot tournent en bac à sable et ne voient que leur propre serveur." },
-  { notion: "Vulnérabilité et contexte", tp: { label: "Audit TechNova", slug: "audit-technova" }, where: "L'audit FiveM note la gravité d'un constat selon ce qu'il faut pour l'exploiter." },
-  { notion: "Règles d'utilisation, RGPD", tp: { label: "Charte informatique", slug: "charte-informatique" }, where: "Aucun traceur avant consentement, et des pages légales qui disent ce que le code fait." },
+/**
+ * From a TP to code in production: where a notion of the courses shows up in my own projects. `doc` is
+ * found in the name of the work on the Documents page, which is then offered for download.
+ */
+const LINKS: { notion: string; tp: string; doc: string; where: string }[] = [
+  { notion: "Hachage et sel", tp: "Sécuriser un compte", doc: "Sécuriser un compte", where: "Les mots de passe de vodystudio.fr sont hachés avec bcrypt, jamais stockés en clair." },
+  { notion: "MFA", tp: "Authentification sûre", doc: "authentification plus sûre", where: "La double authentification par codes TOTP est proposée sur chaque compte client." },
+  { notion: "Limiter les essais", tp: "Authentification sûre", doc: "authentification plus sûre", where: "Les routes de connexion refusent les essais répétés depuis une même adresse." },
+  { notion: "Moindre privilège", tp: "Audit TechNova", doc: "Audit de sécurité de TechNova", where: "Les modules des clients de vBot tournent en bac à sable et ne voient que leur propre serveur." },
+  { notion: "Vulnérabilité et contexte", tp: "Audit TechNova", doc: "Audit de sécurité de TechNova", where: "L'audit FiveM note la gravité d'un constat selon ce qu'il faut pour l'exploiter." },
+  { notion: "Règles d'utilisation, RGPD", tp: "Charte informatique", doc: "La charte informatique", where: "Aucun traceur avant consentement, et des pages légales qui disent ce que le code fait." },
 ];
 
 export default function VodyPage() {
@@ -68,15 +69,22 @@ export default function VodyPage() {
       <section className="wrap mt-24">
         <SectionHead title="Du TP au code" note="Ce que j'apprends en cours, appliqué dans mes projets" />
         <ul className="rule-rows">
-          {LINKS.map((l) => (
-            <li key={l.notion} className="grid gap-2 py-5 lg:grid-cols-[230px_220px_1fr] lg:items-baseline lg:gap-8">
-              <p className="text-[17px] font-semibold">{l.notion}</p>
-              <Link to={`/realisations/${l.tp.slug}`} viewTransition className="text-[15px] text-soft underline decoration-rule underline-offset-[3px] hover:text-blue-text">
-                TP : {l.tp.label}
-              </Link>
-              <p className="text-[15.5px] leading-relaxed text-[#2f3440]">{l.where}</p>
-            </li>
-          ))}
+          {LINKS.map((l) => {
+            const doc = DOCUMENTS.find((d) => d.name.includes(l.doc));
+            return (
+              <li key={l.notion} className="grid gap-2 py-5 lg:grid-cols-[230px_220px_1fr] lg:items-baseline lg:gap-8">
+                <p className="text-[17px] font-semibold">{l.notion}</p>
+                {doc ? (
+                  <a href={doc.url} download={doc.downloadName} className="text-[15px] text-soft underline decoration-rule underline-offset-[3px] hover:text-blue-text">
+                    TP : {l.tp} ↓
+                  </a>
+                ) : (
+                  <p className="text-[15px] text-soft">TP : {l.tp}</p>
+                )}
+                <p className="text-[15.5px] leading-relaxed text-[#2f3440]">{l.where}</p>
+              </li>
+            );
+          })}
         </ul>
       </section>
     </SiteLayout>

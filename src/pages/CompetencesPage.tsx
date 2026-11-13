@@ -4,8 +4,8 @@ import SiteLayout from "../components/Layout";
 import { Dot, Facts, PageHead, SectionHead } from "../components/ui";
 import { CATEGORY_BY_KEY, COMPETENCES } from "../data/competences";
 import { PROFILE, SKILLS } from "../data/profile";
-import { REALISATIONS, periodLabel } from "../data/realisations";
-import type { CompetenceKey, Realisation } from "../data/types";
+import { WORKS, periodLabel } from "../data/realisations";
+import type { CompetenceKey, Work } from "../data/types";
 import { ACCENTS } from "../lib/accents";
 import { siteAddress } from "../lib/site";
 
@@ -18,10 +18,20 @@ const SHORT: Record<CompetenceKey, string> = {
   devpro: "Dév. professionnel",
 };
 
+/** A row's name: a project links to its page; the BTS work has none, its documents are on the Documents page. */
+function WorkName({ r, className }: { r: Work; className: string }) {
+  if (r.category !== "perso") return <span className={className}>{r.short}</span>;
+  return (
+    <Link to={`/vody-studio/${r.slug}`} viewTransition className={`${className} hover:text-blue-text`}>
+      {r.short}
+    </Link>
+  );
+}
+
 /** The rows of the E4 table, grouped like the official sheet. */
-const GROUPS: { title: string; items: Realisation[]; empty?: string }[] = [
-  { title: "Réalisations en cours de formation", items: REALISATIONS.filter((r) => r.category !== "perso") },
-  { title: "Réalisations personnelles, Vody Studio", items: REALISATIONS.filter((r) => r.category === "perso") },
+const GROUPS: { title: string; items: Work[]; empty?: string }[] = [
+  { title: "Réalisations en cours de formation", items: WORKS.filter((r) => r.category !== "perso") },
+  { title: "Réalisations personnelles, Vody Studio", items: WORKS.filter((r) => r.category === "perso") },
   { title: "En milieu professionnel, première année", items: [], empty: "Le stage de première année : en cours de recherche." },
   { title: "En milieu professionnel, seconde année", items: [], empty: "À venir." },
 ];
@@ -31,7 +41,15 @@ export default function CompetencesPage() {
     <SiteLayout title="Compétences" description="Le tableau de synthèse E4 de Timéo Vaast : chaque compétence reliée aux réalisations qui la prouvent.">
       <PageHead
         title="Compétences"
-        lead="Le tableau de synthèse de l'épreuve E4, construit à partir des fiches elles-mêmes : chaque coche renvoie à une réalisation, et chaque réalisation à son document."
+        lead={
+          <>
+            Le tableau de synthèse de l'épreuve E4 : chaque ligne est un TP, un exercice ou un projet, et chaque coche une compétence qu'il démontre. Les documents sont sur la{" "}
+            <Link to="/documents" viewTransition className="link-u">
+              page Documents
+            </Link>
+            .
+          </>
+        }
         aside={
           <Facts
             rows={[
@@ -81,9 +99,7 @@ export default function CompetencesPage() {
                   {g.items.map((r) => (
                     <tr key={r.slug} className="border-y border-rule transition-colors hover:bg-white">
                       <td className="py-3 pr-4">
-                        <Link to={`/realisations/${r.slug}`} viewTransition className="font-semibold hover:text-blue-text">
-                          {r.short}
-                        </Link>
+                        <WorkName r={r} className="font-semibold" />
                         <span className="ml-2.5 text-[13px] text-faint">{CATEGORY_BY_KEY[r.category].label}</span>
                       </td>
                       <td className="whitespace-nowrap px-3 py-3 text-[13.5px] text-soft">{periodLabel(r)}</td>
@@ -118,7 +134,7 @@ export default function CompetencesPage() {
             </div>
             <ul className="rule-rows">
               {c.activities.map((activity, ai) => {
-                const proofs = REALISATIONS.filter((r) => r.competences[c.key]?.includes(ai));
+                const proofs = WORKS.filter((r) => r.competences[c.key]?.includes(ai));
                 return (
                   <li key={activity} className="grid gap-2 py-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-10">
                     <p className="text-[15.5px] font-semibold leading-relaxed">{activity}</p>
@@ -127,9 +143,7 @@ export default function CompetencesPage() {
                         ? proofs.map((r, i) => (
                             <Fragment key={r.slug}>
                               {i > 0 && ", "}
-                              <Link to={`/realisations/${r.slug}`} viewTransition className="text-ink underline decoration-rule underline-offset-[3px] hover:text-blue-text hover:decoration-current">
-                                {r.short}
-                              </Link>
+                              <WorkName r={r} className={r.category === "perso" ? "text-ink underline decoration-rule underline-offset-[3px] hover:decoration-current" : "text-ink"} />
                             </Fragment>
                           ))
                         : "À démontrer en stage ou en deuxième année."}

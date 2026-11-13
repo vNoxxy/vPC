@@ -1,71 +1,38 @@
 import { Link, useParams } from "react-router";
 import SiteLayout from "../components/Layout";
 import { Dot, Facts, Figure, Inline, PageHead, Row, SectionHead } from "../components/ui";
-import { CATEGORY_BY_KEY, COMPETENCES } from "../data/competences";
-import { REALISATIONS, REALISATION_BY_SLUG, periodLabel } from "../data/realisations";
-import type { Realisation } from "../data/types";
+import { COMPETENCES } from "../data/competences";
+import { PROJECTS, PROJECT_BY_SLUG, periodLabel } from "../data/realisations";
 import { ACCENTS } from "../lib/accents";
-import { documentsFor, type Doc } from "../lib/documents";
 import NotFoundPage from "./NotFoundPage";
 
-const docLabel = (d: Doc) => `Télécharger le document${d.suffix ? ` (${d.suffix})` : ""}`;
-
-/**
- * While the site runs locally, a TP whose file is not there yet says which document to export and
- * under which name; once deployed, a missing document simply shows nothing.
- */
-function MissingDocument({ r }: { r: Realisation }) {
-  if (!import.meta.env.DEV || !r.drive) return null;
-  return (
-    <p className="rounded-[12px] border border-dashed border-amber-500 bg-amber-50 px-4 py-3 text-[14.5px] leading-relaxed text-amber-900">
-      Visible en local seulement : exporte « {r.drive} » en PDF et enregistre-le sous <code className="code-inline">documents/{r.slug}.pdf</code>.
-    </p>
-  );
-}
-
-/** One réalisation, read as a case study: what it was, what I did, what it proves, and the document. */
-export default function RealisationPage() {
+/** One Vody Studio project, read as a case study: what it was, what I did, what it proves. */
+export default function ProjectPage() {
   const { slug = "" } = useParams();
-  const r = REALISATION_BY_SLUG.get(slug);
+  const r = PROJECT_BY_SLUG.get(slug);
   if (!r) return <NotFoundPage />;
 
-  const category = CATEGORY_BY_KEY[r.category];
-  const index = REALISATIONS.indexOf(r);
-  const prev = REALISATIONS[index - 1];
-  const next = REALISATIONS[index + 1];
+  const index = PROJECTS.indexOf(r);
+  const prev = PROJECTS[index - 1];
+  const next = PROJECTS[index + 1];
   const shownCompetences = COMPETENCES.filter((c) => r.competences[c.key]?.length);
-  const docs = documentsFor(r.slug);
 
   return (
     <SiteLayout title={r.title} description={r.summary}>
       <PageHead
         before={
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[15px]">
-            <Link to="/realisations" viewTransition className="text-soft transition-colors hover:text-ink">
-              ← Réalisations
-            </Link>
-            <Link to={`/realisations?bloc=${category.key}`} viewTransition className="flex items-center gap-2 font-semibold hover:text-blue-text">
-              <Dot color={ACCENTS[category.accent]} />
-              {category.label}, {category.name.charAt(0).toLowerCase() + category.name.slice(1)}
-            </Link>
-          </div>
+          <Link to="/vody-studio" viewTransition className="text-[15px] text-soft transition-colors hover:text-ink">
+            ← Vody Studio
+          </Link>
         }
         title={r.title}
         lead={r.summary}
         actions={
-          <>
-            {docs.map((d) => (
-              <a key={d.url} href={d.url} download={d.downloadName} className="btn">
-                {docLabel(d)} <small>{d.ext}</small>
-              </a>
-            ))}
-            {r.live && (
-              <a href={r.live.href} target="_blank" rel="noopener noreferrer" className={docs.length ? "link-u text-[15px]" : "btn"}>
-                {r.live.label} ↗
-              </a>
-            )}
-            {docs.length === 0 && <MissingDocument r={r} />}
-          </>
+          r.live && (
+            <a href={r.live.href} target="_blank" rel="noopener noreferrer" className="btn">
+              {r.live.label} ↗
+            </a>
+          )
         }
         aside={
           <Facts
@@ -96,9 +63,9 @@ export default function RealisationPage() {
         </section>
       )}
 
-      {/* The story of the work, told like the AP fiche. */}
+      {/* The story of the project, told like the AP fiche. */}
       <section className="wrap">
-        <SectionHead title="La fiche" note={r.format} />
+        <SectionHead title="Le projet" note={r.format} />
         <div className="rule-rows">
           {[
             { label: "Le contexte", text: r.context },
@@ -144,13 +111,6 @@ export default function RealisationPage() {
         <div>
           <SectionHead title="Preuves" />
           <ul className="rule-rows">
-            {docs.map((d) => (
-              <li key={d.url} className="py-5">
-                <a href={d.url} download={d.downloadName} className="link-u text-[16px]">
-                  {docLabel(d)}, {d.ext}
-                </a>
-              </li>
-            ))}
             {r.proofs.map((p) => (
               <li key={p} className="py-5 text-[15.5px] leading-relaxed text-[#2f3440]">
                 {p}
@@ -175,20 +135,20 @@ export default function RealisationPage() {
         </section>
       ))}
 
-      {/* The neighbours in the list, to read on. */}
-      <nav aria-label="Autres réalisations" className="wrap mt-24">
+      {/* The other projects, to read on. */}
+      <nav aria-label="Autres projets" className="wrap mt-24">
         <div className="grid gap-6 border-t-[1.5px] border-ink pt-6 sm:grid-cols-2">
           {prev ? (
-            <Link to={`/realisations/${prev.slug}`} viewTransition className="group">
-              <span className="text-[14.5px] text-soft">← Précédente</span>
+            <Link to={`/vody-studio/${prev.slug}`} viewTransition className="group">
+              <span className="text-[14.5px] text-soft">← Précédent</span>
               <span className="mt-1 block text-[22px] font-semibold leading-tight tracking-[-0.02em] group-hover:text-blue-text">{prev.short}</span>
             </Link>
           ) : (
             <span />
           )}
           {next && (
-            <Link to={`/realisations/${next.slug}`} viewTransition className="group sm:text-right">
-              <span className="text-[14.5px] text-soft">Suivante →</span>
+            <Link to={`/vody-studio/${next.slug}`} viewTransition className="group sm:text-right">
+              <span className="text-[14.5px] text-soft">Suivant →</span>
               <span className="mt-1 block text-[22px] font-semibold leading-tight tracking-[-0.02em] group-hover:text-blue-text">{next.short}</span>
             </Link>
           )}

@@ -238,6 +238,17 @@ body {
   box-shadow: 0 0 0 2px #fff;
 }
 
+/* The arrow of a line slides toward where it leads. */
+.index-arrow {
+  display: inline-block;
+  transition: transform 180ms ease-out;
+}
+
+.index-row:hover .index-arrow,
+.index-row:focus-visible .index-arrow {
+  transform: translateX(4px);
+}
+
 .index-peek {
   position: absolute;
   left: 0;

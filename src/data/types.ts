@@ -17,25 +17,31 @@ export interface CodeProof {
   code: string;
 }
 
-/**
- * One réalisation, told like the AP Portfolio asks: why (context, need), what I did (contribution,
- * tools, difficulty, solution), what it proves (competencies, proofs, assessment). The work itself is
- * not copied here: its document is downloaded from the fiche (documents/<slug>.pdf, see lib/documents.ts).
- */
-export interface Realisation {
+/** A line of the E4 synthesis table: a piece of BTS work or a project, and the competencies it proves. */
+export interface Work {
   slug: string;
-  title: string;
-  /** Its name in the index of réalisations (a few words). */
+  /** Its name in the table (a few words). */
   short: string;
-  /** What it is, in the index: "TP, gestion de parc", "Bot Discord"... */
-  kind: string;
-  /** One line, for the cards. */
-  summary: string;
   category: CategoryKey;
   /** dd/mm/yy, as in the E4 table. `to` left out for a single day, "" for "still running". */
   from: string;
   to?: string;
-  /** "TP individuel", "Travail en trinôme"... */
+  /** Indexes into each competency's activities (competences.ts). */
+  competences: Partial<Record<CompetenceKey, number[]>>;
+}
+
+/**
+ * A Vody Studio project, told like the AP Portfolio asks: why (context, need), what I did (contribution,
+ * tools, difficulty, solution), what it proves (competencies, proofs, assessment). The BTS work itself
+ * has no page of its own: its documents are downloaded from the Documents page.
+ */
+export interface Realisation extends Work {
+  title: string;
+  /** What it is, in the index: "Site et application", "Bot Discord"... */
+  kind: string;
+  /** One line, for the cards. */
+  summary: string;
+  /** "Projet personnel, en production"... */
   format: string;
   context: string;
   need: string;
@@ -43,17 +49,13 @@ export interface Realisation {
   tools: string[];
   difficulty: string;
   solution: string;
-  /** Indexes into each competency's activities (competences.ts). */
-  competences: Partial<Record<CompetenceKey, number[]>>;
   proofs: string[];
   code?: CodeProof[];
   /** A real screenshot at the top of its page, and next to the pointer in the index (public/images/). */
   cover?: Shot;
-  /** More screenshots shown as proofs: files put in public/preuves/, e.g. { src: "/preuves/glpi-tickets.png", caption: "…" }. */
+  /** More screenshots shown as proofs (public/images/). */
   shots?: Shot[];
   bilan: string;
-  /** The TP's document in my Drive: exported as documents/<slug>.pdf, it gets its download button. */
-  drive?: string;
   /** A link to see it live (the Vody Studio projects). */
   live?: { label: string; href: string };
   featured?: boolean;

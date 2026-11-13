@@ -1,171 +1,60 @@
-import type { Realisation } from "../types";
+import type { Work } from "../types";
 
-export const BLOC1: Realisation[] = [
+/** Bloc 1, support et mise à disposition de services informatiques. Their documents are on the Documents page; here, only what the E4 table needs. */
+export const BLOC1: Work[] = [
   {
     slug: "charte-informatique",
-    title: "Appliquer la charte informatique de Rostand NetInfo",
     short: "Charte informatique",
-    kind: "TD, règles d'utilisation",
-    summary: "Dix situations de salariés : fraude ou non ? Chaque réponse s'appuie sur un article de la charte.",
     category: "bloc1",
     from: "03/09/26",
-    format: "TD individuel",
-    drive: "Chapitre 1 – La charte informatique",
-    context:
-      "Rostand NetInfo est une entreprise de services numériques (infogérance, cloud, travail collaboratif, sécurité). Pour rassurer ses clients, elle a adopté une charte d'utilisation des ressources informatiques, en vigueur depuis le 1er septembre 2026.",
-    need: "Vérifier que la charte est comprise et applicable : pour dix situations vécues par des salariés, dire s'il y a fraude et pourquoi, en s'appuyant sur le texte.",
-    contribution:
-      "J'ai lu la charte et ses deux annexes (dispositions légales, conseils de cybersécurité), puis j'ai analysé seul les dix situations en citant à chaque fois la règle concernée : authentification, règles de sécurité, usage d'Internet, IA générative, téléphone, équipements nomades.",
-    tools: ["Charte informatique", "Loi Informatique et Libertés / RGPD", "Loi Godfrain", "Google Docs"],
-    difficulty:
-      "Certaines situations ne sont pas tranchées : la charte tolère un usage personnel « raisonnable » d'Internet et du téléphone, sans fixer de limite chiffrée.",
-    solution:
-      "Pour chaque cas, j'ai cherché la règle la plus précise qui s'applique (les appels internationaux limités selon les postes, l'interdiction expresse de l'IA générative, le chiffrement des supports nomades) et je l'ai citée, plutôt que de répondre au ressenti.",
     competences: { patrimoine: [5, 1] },
-    proofs: ["Document réponse « Chapitre 1 – La charte informatique » : les dix situations analysées et justifiées."],
-    bilan:
-      "Une charte n'est utile que si on sait l'appliquer à un cas concret. J'ai appris à justifier une décision par un article précis : c'est ce qu'il faudra faire pour sensibiliser un utilisateur sans le braquer.",
   },
   {
     slug: "refroidissement",
-    title: "Exposé : le système de refroidissement d'un ordinateur",
     short: "Le refroidissement",
-    kind: "Exposé, matériel",
-    summary: "À quoi sert un système de refroidissement, comment il évacue la chaleur, et ce qui arrive quand il défaille.",
     category: "bloc1",
     from: "03/09/26",
     to: "07/09/26",
-    format: "Exposé individuel",
-    drive: "Chapitre 2 - Les clients",
-    context: "Chapitre 2 du Bloc 1, « Les clients » : chaque étudiant présente un composant d'un poste de travail.",
-    need: "Expliquer clairement un composant : son rôle, sa composition, son fonctionnement, et les conséquences d'une défaillance.",
-    contribution:
-      "J'ai choisi le système de refroidissement, fait les recherches et rédigé la fiche en cinq parties : présentation, objectif, composition, fonctionnement, conséquences.",
-    tools: ["Google Docs", "Documentation des constructeurs"],
-    difficulty: "Rendre le trajet de la chaleur clair pour quelqu'un qui n'est pas technicien, avec deux technologies différentes : l'air et le liquide.",
-    solution:
-      "J'ai décrit le même trajet en trois temps pour les deux : récupérer la chaleur au contact du composant, la transporter, puis l'évacuer par l'air.",
     competences: { patrimoine: [0], incidents: [1] },
-    proofs: ["Fiche « Chapitre 2 – Les clients » en cinq parties."],
-    bilan:
-      "Connaître le matériel aide à diagnostiquer : des ralentissements ou des plantages peuvent venir d'une surchauffe et pas d'un logiciel. C'est une piste à vérifier avant de réinstaller un poste.",
   },
   {
     slug: "poste-windows",
-    title: "Installer et paramétrer un poste client Windows 10",
     short: "Poste Windows 10",
-    kind: "TP, poste client",
-    summary: "Machine virtuelle, réseau et proxy, logiciels libres, partition de données, comptes et droits, ligne de commande.",
     category: "bloc1",
     from: "17/09/26",
     to: "25/09/26",
-    format: "TP individuel",
-    drive: "Chapitre 2 - Les clients TP1",
-    context:
-      "Rostand NetInfo doit installer un poste pour un nouveau collaborateur. Il faut d'abord se renseigner sur le système d'exploitation, puis installer et paramétrer le poste.",
-    need: "Livrer un poste Windows 10 prêt à l'emploi : connecté à Internet, équipé de logiciels libres, avec les données séparées du système et des comptes aux bons droits.",
-    contribution:
-      "J'ai créé et installé la machine virtuelle, paramétré la carte réseau et le proxy, installé Firefox, LibreOffice et 7-Zip, créé une partition « Données » pour y déplacer les dossiers de l'utilisateur, créé trois comptes et testé leurs droits, puis rédigé les procédures et testé les commandes de base.",
-    tools: ["VirtualBox", "Windows 10", "Gestion des disques", "Invite de commandes", "Firefox", "LibreOffice", "7-Zip"],
-    difficulty: "Créer une seconde partition sur un disque déjà occupé par Windows, sans perdre le système.",
-    solution:
-      "Je suis passé par la Gestion des disques : réduire le volume C: de 10 000 Mo, puis créer un nouveau volume simple dans l'espace libéré, lettre F:, nommé « Données », et y déplacer les dossiers de l'utilisateur.",
     competences: { service: [1, 0], patrimoine: [2, 4], incidents: [1] },
-    proofs: ["Document « Chapitre 2 – Les clients TP1 » : réponses, procédures et captures d'écran.", "Le tableau des commandes de l'invite de commandes, testées une à une."],
-    bilan:
-      "Séparer le système des données et donner à chacun le bon type de compte, ce sont deux réflexes simples qui évitent de perdre des données ou de laisser un utilisateur abîmer son poste.",
   },
   {
     slug: "poste-ubuntu",
-    title: "Installer et paramétrer un poste client Ubuntu",
     short: "Poste Ubuntu",
-    kind: "TP, poste client Linux",
-    summary: "Le même poste qu'en Windows, sous Linux : machine virtuelle, réseau au terminal, proxy, comptes et droits.",
     category: "bloc1",
     from: "25/09/26",
     to: "01/10/26",
-    format: "TP individuel",
-    drive: "Ubuntu TP - Timeo Vaast",
-    context: "Toujours pour Rostand NetInfo : le nouveau collaborateur travaille cette fois sur un poste Linux.",
-    need: "Se renseigner sur Ubuntu, l'installer dans une machine virtuelle, le connecter à Internet derrière le proxy, puis créer des comptes et vérifier leurs droits.",
-    contribution:
-      "J'ai créé la machine virtuelle et installé Ubuntu, connecté l'interface réseau en ligne de commande, réglé le proxy, créé les comptes administrateur et standard, et comparé ce que chacun peut faire.",
-    tools: ["VirtualBox", "Ubuntu Desktop", "Terminal (ip, nmcli, adduser)", "Paramètres d'Ubuntu"],
-    difficulty: "Une fois installée, la machine virtuelle n'avait pas accès à Internet : son interface réseau n'était pas connectée.",
-    solution:
-      "J'ai trouvé le nom de l'interface avec `ip a`, puis je l'ai connectée avec `sudo nmcli device connect <interface>`, avant de régler le proxy dans les paramètres réseau.",
     competences: { service: [1], patrimoine: [2], incidents: [1] },
-    proofs: ["Document « Ubuntu TP – Timeo Vaast » : réponses, procédures et captures d'écran.", "Les commandes de diagnostic et de connexion réseau utilisées."],
-    bilan:
-      "Les mêmes besoins (comptes, droits, réseau) se règlent différemment sous Windows et sous Linux. Le terminal fait peur au début, mais il va plus vite une fois qu'on connaît les commandes, et il marche aussi sur un serveur sans écran.",
   },
   {
     slug: "glpi",
-    title: "Installer GLPI sur un serveur Debian",
     short: "GLPI sur Debian",
-    kind: "TP, gestion de parc",
-    summary: "Un serveur Debian sans interface graphique, la pile Apache, MariaDB et PHP, puis GLPI : comptes, parc et tickets.",
     category: "bloc1",
     from: "01/10/26",
     to: "15/10/26",
-    format: "TP individuel",
-    drive: "GLPI - Timeo Vaast",
-    context:
-      "L'entreprise ROSTAND, prestataire informatique, veut suivre le parc et les demandes de ses clients avec GLPI, un logiciel libre de gestion de parc et d'assistance (helpdesk).",
-    need: "Installer un serveur Debian sans interface graphique, y déployer GLPI, puis l'utiliser : créer les comptes, inventorier le parc et ouvrir des tickets.",
-    contribution:
-      "J'ai répondu aux questions sur Linux, identifié les logiciels nécessaires (serveur web, base de données, PHP), installé Debian en mode texte dans VirtualBox, déployé GLPI, sécurisé l'installation, puis créé les comptes, les éléments du parc et les tickets demandés.",
-    tools: ["VirtualBox", "Debian (CLI)", "Apache2", "MariaDB", "PHP", "GLPI"],
-    difficulty: "Sans interface graphique, tout se fait au terminal, et GLPI refuse de s'installer tant qu'il manque une extension PHP.",
-    solution:
-      "J'ai installé toute la pile en une commande, contrôlé la liste des prérequis que GLPI vérifie au début de l'installation, puis supprimé install.php pour qu'on ne puisse pas relancer l'installation et écraser la base.",
     competences: { patrimoine: [0, 2], incidents: [0], service: [1] },
-    proofs: ["Document « GLPI – Timeo Vaast » : réponses et procédures.", "Les commandes d'installation de la pile et de GLPI.", "Les comptes, le parc et les tickets créés dans GLPI."],
-    bilan:
-      "Un outil de gestion de parc ne sert que si chacun a le bon profil : un observateur consulte, un technicien traite les tickets, seul l'administrateur configure. C'est le principe des habilitations appliqué à un vrai service.",
   },
   {
     slug: "reseaux-tcp-ip",
-    title: "Les réseaux : types, topologies et modèle TCP/IP",
     short: "Réseaux et TCP/IP",
-    kind: "Exercices, réseaux",
-    summary: "Reconnaître un PAN, un LAN, un MAN et les topologies, puis placer chaque protocole dans sa couche TCP/IP.",
     category: "bloc1",
     from: "13/10/26",
     to: "15/10/26",
-    format: "Exercices individuels",
-    drive: "Réseaux",
-    context: "Chapitres 4 et 5 du Bloc 1 : les réseaux, puis les modèles OSI et TCP/IP.",
-    need: "Savoir reconnaître un type de réseau et une topologie, puis associer chaque couche du modèle TCP/IP à ses protocoles et à son matériel.",
-    contribution: "J'ai fait les exercices sur les types de réseaux et les topologies, puis le premier dossier sur le modèle TCP/IP.",
-    tools: ["Cours et schémas réseau", "Modèles OSI et TCP/IP"],
-    difficulty: "Ne pas confondre les couches : j'avais d'abord placé IP dans la couche Accès réseau.",
-    solution:
-      "En reprenant le rôle de chaque couche (la trame et les adresses MAC, puis le paquet et les adresses IP, puis le segment et les ports), j'ai corrigé : Ethernet en couche 1, IP en couche 2.",
     competences: { incidents: [1] },
-    proofs: ["Document « Réseaux » : les huit réponses de l'exercice.", "Exercice sur le modèle TCP/IP, dossier 1."],
-    bilan: "Savoir à quelle couche se situe un problème (un câble, une adresse IP, un port fermé) permet de chercher une panne au bon endroit au lieu de tout essayer.",
   },
   {
     slug: "adressage-ipv4",
-    title: "L'adressage IPv4 et le découpage en sous-réseaux",
     short: "Adressage IPv4",
-    kind: "Exercices, sous-réseaux",
-    summary: "Binaire, classes, masques, adresses réservées, puis le découpage d'une plage pour trois entreprises.",
     category: "bloc1",
     from: "02/11/26",
     to: "05/11/26",
-    format: "Exercices individuels",
-    drive: "Chapitre 6 - IPv4",
-    context: "Chapitre 6 du Bloc 1 : l'adressage IPv4, de l'adresse physique (MAC) à l'adresse logique (IP).",
-    need: "Lire une adresse IP (classe, réseau, hôte, particularités), dire si elle est valide, puis découper une plage d'adresses entre plusieurs réseaux.",
-    contribution: "J'ai fait les conversions binaire et décimal, classé les adresses, repéré les adresses réservées et les adresses invalides, puis réalisé les deux découpages en sous-réseaux.",
-    tools: ["Calcul binaire (puissances de 2)", "Masques et notation CIDR", "ipconfig", "ping"],
-    difficulty: "Découper le bloc 162.18.132.0/22 entre trois entreprises de tailles différentes : 200, 200 et 450 adresses d'hôtes.",
-    solution:
-      "Commencer par la plus grande : 450 hôtes demandent 9 bits d'hôte (510 adresses utiles), donc un /23. Il reste exactement deux /24 de 254 hôtes pour A et B.",
     competences: { incidents: [1] },
-    proofs: ["Document « Chapitre 6 – IPv4 » et la feuille de conversion binaire.", "Les tableaux de découpage en sous-réseaux."],
-    bilan: "La conversion en binaire n'est pas un exercice pour rien : c'est elle qui explique le masque, l'adresse du réseau et celle de diffusion. Sans elle, un découpage en sous-réseaux reste de la magie.",
   },
 ];

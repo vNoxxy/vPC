@@ -21,8 +21,8 @@ export default function VeillePage() {
                 value: (
                   <>
                     Apprise en AP,{" "}
-                    <Link to="/realisations/preparer-une-veille" viewTransition className="link-u">
-                      voir la fiche
+                    <Link to="/documents?dossier=mes-tp-et-exercices" viewTransition className="link-u">
+                      les exercices
                     </Link>
                   </>
                 ),

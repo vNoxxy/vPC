@@ -7,14 +7,14 @@ export default function NotFoundPage() {
     <SiteLayout title="Page introuvable">
       <PageHead
         title="Cette page n'existe pas."
-        lead="Le lien est peut-être ancien, ou la réalisation a changé d'adresse."
+        lead="Le lien est peut-être ancien, ou la page a changé d'adresse."
         actions={
           <>
             <Link to="/" viewTransition className="btn">
               Retour à l'accueil
             </Link>
-            <Link to="/realisations" viewTransition className="link-u text-[15px]">
-              Les réalisations
+            <Link to="/documents" viewTransition className="link-u text-[15px]">
+              Les documents
             </Link>
           </>
         }

@@ -6,7 +6,7 @@ import { usePageMeta } from "../lib/usePageMeta";
 export const NAV: { to: string; label: string; end?: boolean }[] = [
   { to: "/", label: "Accueil", end: true },
   { to: "/parcours", label: "Parcours" },
-  { to: "/realisations", label: "Réalisations" },
+  { to: "/documents", label: "Documents" },
   { to: "/competences", label: "Compétences" },
   { to: "/veille", label: "Veille" },
   { to: "/vody-studio", label: "Vody Studio" },

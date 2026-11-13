@@ -1,22 +1,20 @@
 /**
- * GitHub Pages serves files as they are, with no rewrite to index.html: /vPC/realisations/glpi would be a
- * 404. So the built index.html is copied to every address of the site (dist/realisations/glpi/index.html…),
+ * GitHub Pages serves files as they are, with no rewrite to index.html: /vPC/vody-studio/forge would be a
+ * 404. So the built index.html is copied to every address of the site (dist/vody-studio/forge/index.html…),
  * each one answering 200, and to 404.html, which the app turns into its own "page introuvable".
  * Harmless on Vercel and Netlify, which rewrite every address anyway.
  */
-import { copyFileSync, mkdirSync, readFileSync, readdirSync } from "node:fs";
+import { copyFileSync, mkdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const dist = "dist";
 const index = join(dist, "index.html");
 
-// The fiches' addresses come from their slugs in the data files.
-const dataDir = join("src", "data", "realisations");
-const slugs = readdirSync(dataDir)
-  .filter((f) => f.endsWith(".ts") && f !== "index.ts")
-  .flatMap((f) => [...readFileSync(join(dataDir, f), "utf8").matchAll(/^\s*slug: "([^"]+)",$/gm)].map((m) => m[1]));
+// The projects' addresses come from their slugs in the data file.
+const slugs = [...readFileSync(join("src", "data", "realisations", "perso.ts"), "utf8").matchAll(/^\s*slug: "([^"]+)",$/gm)].map((m) => m[1]);
 
-const pages = ["parcours", "cv", "realisations", "competences", "veille", "vody-studio", "contact", "mentions-legales", ...slugs.map((s) => `realisations/${s}`)];
+// The documents page lives at /documents, next to the files themselves (dist/documents/<section>/…).
+const pages = ["parcours", "cv", "documents", "competences", "veille", "vody-studio", "contact", "mentions-legales", ...slugs.map((s) => `vody-studio/${s}`)];
 
 for (const page of pages) {
   mkdirSync(join(dist, page), { recursive: true });

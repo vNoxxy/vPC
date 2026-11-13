@@ -4,17 +4,13 @@ import SiteLayout from "../components/Layout";
 import { Facts, Figure, SectionHead, VodyBrand } from "../components/ui";
 import { COMPETENCES } from "../data/competences";
 import { PROFILE } from "../data/profile";
-import { HOME_SELECTION, REALISATIONS, REALISATION_BY_SLUG } from "../data/realisations";
-import { documentsFor } from "../lib/documents";
+import { PROJECTS, PROJECT_BY_SLUG } from "../data/realisations";
+import { DOCUMENTS, SECTIONS } from "../lib/documents";
 import { withBase } from "../lib/site";
 
-const PROJECTS = REALISATIONS.filter((r) => r.category === "perso");
-const FORGE = REALISATION_BY_SLUG.get("forge")!;
-const CASE = REALISATION_BY_SLUG.get("audit-technova")!;
+const FORGE = PROJECT_BY_SLUG.get("forge")!;
 
 export default function HomePage() {
-  const caseDoc = documentsFor(CASE.slug)[0];
-
   return (
     <SiteLayout>
       {/* Who I am in one sentence, and the facts beside it. */}
@@ -35,13 +31,31 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* The index of the work, straight away. */}
+      {/* The BTS work, straight away: a line per section of the Documents page. */}
       <section className="wrap">
-        <SectionHead title="Réalisations" note={`${REALISATIONS.length} fiches, chacune avec son document`} />
-        <IndexList items={HOME_SELECTION} />
-        <Link to="/realisations" viewTransition className="link-u mt-7 text-[16px]">
-          Voir les {REALISATIONS.length} réalisations
-        </Link>
+        <SectionHead title="Cours, TP et exercices" note={`${DOCUMENTS.length} documents à télécharger`} />
+        <ul>
+          {SECTIONS.map((s) => (
+            <li key={s.key} className="border-b border-rule">
+              <Link
+                to={`/documents?dossier=${s.key}`}
+                viewTransition
+                className="index-row -mx-3 grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-5 px-3 py-4 sm:-mx-[18px] sm:px-[18px] sm:py-5"
+              >
+                <span className="text-[25px] font-semibold leading-[1.15] tracking-[-0.03em] sm:text-[30px] lg:text-[34px]">{s.label}</span>
+                <span className="index-soft whitespace-nowrap text-[14.5px] text-soft lg:text-[15px]">
+                  {s.docs.length} document{s.docs.length > 1 ? "s" : ""} <span className="index-arrow">→</span>
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* The projects, with their screenshot under the pointer. */}
+      <section className="wrap mt-24 lg:mt-28">
+        <SectionHead title="Projets" note="Chez Vody Studio, en production" />
+        <IndexList items={PROJECTS} />
       </section>
 
       {/* The studio, with its real client area. */}
@@ -52,16 +66,6 @@ export default function HomePage() {
             <p className="mt-7 text-[17px] leading-[1.6] text-white/80 sm:text-[18px]">
               Ma micro-entreprise, immatriculée en octobre 2026. Des sites, des applications et des outils pour les serveurs FiveM et Discord. Ce que j'apprends en BTS, je l'applique ici sur de vrais projets.
             </p>
-            <ul className="mt-7 border-t border-white/15">
-              {PROJECTS.map((r) => (
-                <li key={r.slug} className="border-b border-white/15">
-                  <Link to={`/realisations/${r.slug}`} viewTransition className="flex items-baseline justify-between gap-4 py-3 text-[15.5px] transition-colors hover:text-blue-light">
-                    {r.short}
-                    <span className="text-right text-[14px] text-white/55">{r.kind}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 lg:mt-auto lg:pt-8">
               <a href={PROFILE.vody} target="_blank" rel="noopener noreferrer" className="link-u text-[16px] text-blue-light hover:text-white">
                 vodystudio.fr ↗
@@ -87,49 +91,21 @@ export default function HomePage() {
         <div>
           <h2 className="t-sec">Forge, l'éditeur où l'on programme en reliant des blocs</h2>
           <p className="t-body mt-4">{FORGE.solution}</p>
-          <Link to={`/realisations/${FORGE.slug}`} viewTransition className="link-u mt-6 text-[16px]">
-            La fiche de Forge
+          <Link to={`/vody-studio/${FORGE.slug}`} viewTransition className="link-u mt-6 text-[16px]">
+            Le projet Forge
           </Link>
         </div>
         {FORGE.cover && <Figure shot={FORGE.cover} />}
       </section>
 
-      {/* One fiche, read as a case study. */}
-      <section className="wrap mt-24 lg:mt-28">
-        <div className="border-t-[1.5px] border-ink pt-6">
-          <div className="flex flex-col gap-2 lg:flex-row lg:items-baseline lg:justify-between lg:gap-10">
-            <h2 className="t-sec max-w-[680px]">{CASE.title}</h2>
-            <p className="text-[15px] text-soft">Bloc 3, TD individuel, 1er octobre 2026</p>
-          </div>
-          <div className="mt-8 grid gap-8 md:grid-cols-3 md:gap-0">
-            {[
-              { title: "Le problème", text: CASE.context },
-              { title: "Ce que j'ai fait", text: CASE.contribution },
-              { title: "Ce que j'en retiens", text: CASE.bilan },
-            ].map((col, i) => (
-              <div key={col.title} className={i > 0 ? "md:border-l md:border-rule md:pl-7" : "md:pr-7"}>
-                <h3 className="text-[15px] font-bold">{col.title}</h3>
-                <p className="t-body mt-2.5 text-[16px]">{col.text}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
-            <Link to={`/realisations/${CASE.slug}`} viewTransition className="btn">
-              Lire la fiche
-            </Link>
-            {caseDoc && (
-              <a href={caseDoc.url} download={caseDoc.downloadName} className="link-u text-[15px]">
-                Télécharger le document ({caseDoc.ext})
-              </a>
-            )}
-          </div>
-        </div>
-      </section>
-
       {/* The figures, said in a sentence rather than shown in boxes. */}
       <section className="wrap mt-28 lg:mt-32">
         <p className="max-w-[1060px] text-[clamp(28px,3.6vw,46px)] font-medium leading-[1.22] tracking-[-0.035em]">
-          Depuis la rentrée 2026 : <Link to="/realisations" viewTransition className="font-bold text-blue-text hover:underline">{REALISATIONS.length} réalisations</Link> documentées, les{" "}
+          Depuis la rentrée 2026 :{" "}
+          <Link to="/documents" viewTransition className="font-bold text-blue-text hover:underline">
+            {DOCUMENTS.length} documents
+          </Link>{" "}
+          de cours et de TP à télécharger, les{" "}
           <Link to="/competences" viewTransition className="font-bold text-blue-text hover:underline">{COMPETENCES.length} compétences</Link> du tableau E4 couvertes, et{" "}
           <Link to="/vody-studio" viewTransition className="font-bold text-blue-text hover:underline">{PROJECTS.length} projets</Link> en ligne chez Vody Studio.
         </p>

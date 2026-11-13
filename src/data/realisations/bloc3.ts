@@ -1,96 +1,33 @@
-import type { Realisation } from "../types";
+import type { Work } from "../types";
 
-export const BLOC3: Realisation[] = [
+/** Bloc 3, cybersécurité des services informatiques. Their documents are on the Documents page; here, only what the E4 table needs. */
+export const BLOC3: Work[] = [
   {
     slug: "e-mail-suspect",
-    title: "Enquête sur un e-mail suspect",
     short: "E-mail suspect",
-    kind: "TP, phishing",
-    summary: "Un faux message « Microsoft 365 » : relever les indices, lire les URL piégées, réagir à l'incident.",
     category: "bloc3",
     from: "17/09/26",
-    format: "TP individuel",
-    drive: "Vaast_Timeo_TP_Bloc3_Cybersecurite.docx",
-    context: "Au service informatique d'une entreprise, un salarié transmet un e-mail qui menace de suspendre son compte Microsoft 365 dans les deux heures.",
-    need: "Analyser le message, justifier le diagnostic, proposer une réaction si un collègue a déjà donné son mot de passe, et rédiger les bons réflexes pour des non-informaticiens.",
-    contribution:
-      "J'ai relevé six indices, analysé le nom de domaine et deux URL piégées en m'appuyant sur des sources officielles, écrit une procédure de réaction en cinq étapes et une fiche de cinq réflexes.",
-    tools: ["Lecture d'en-têtes et d'URL", "cybermalveillance.gouv.fr", "cnil.fr", "service-public.fr"],
-    difficulty: "Repérer le vrai propriétaire d'une URL comme https://microsoft.com.securite-compte.example/login, qui commence par « microsoft.com ».",
-    solution: "Lire le nom d'hôte de droite à gauche : le domaine réel est la partie juste avant l'extension finale (securite-compte.example) ; tout ce qui précède n'est qu'un sous-domaine choisi par l'attaquant.",
     competences: { incidents: [0], patrimoine: [5], service: [2] },
-    proofs: ["Le TP « Enquête sur un e-mail suspect » : tableau des indices, analyse des URL, procédure et fiche réflexes.", "Les trois sources consultées."],
-    bilan: "HTTPS ne prouve pas qu'un site est honnête : n'importe qui obtient un certificat gratuitement. Seul le nom de domaine compte, et l'urgence est le premier signal d'alerte.",
   },
   {
     slug: "securiser-un-compte",
-    title: "Sécuriser un compte : mots de passe, hachage et MFA",
     short: "Sécuriser un compte",
-    kind: "TP, authentification",
-    summary: "Juger quatre comptes, réagir au vol d'un mot de passe, comprendre le hachage, le sel et le MFA.",
     category: "bloc3",
     from: "21/09/26",
-    format: "TP en binôme puis individuel",
-    drive: "BTS_SIO_Bloc3_Mots_de_passe_Hachage_MFA_TimeoVaast.docx",
-    context: "TP court en équipe cybersécurité : analyser les risques liés à l'authentification dans un service numérique.",
-    need: "Repérer les risques de quatre comptes, aider une victime de phishing, puis expliquer pourquoi et comment un service doit protéger les mots de passe.",
-    contribution:
-      "J'ai analysé les quatre comptes et proposé une recommandation pour chacun, décrit la réaction à un vol de mot de passe, expliqué la chaîne du hachage, puis fait le bonus développeur sur bcrypt, Argon2 et le salage.",
-    tools: ["Recommandations de la CNIL", "bcrypt", "Argon2", "Gestionnaire de mots de passe"],
-    difficulty: "Ne pas juger un mot de passe à sa seule complexité apparente : « B!lal2026 » a l'air solide mais contient un prénom, une année et une substitution connue.",
-    solution: "J'ai croisé quatre critères pour chaque compte : longueur et prévisibilité, réutilisation, présence du MFA, et exposition au phishing.",
     competences: { patrimoine: [2], incidents: [0] },
-    proofs: [
-      "Le TP « Sécuriser un compte utilisateur » : tableau d'analyse, incident, hachage et mini-évaluation.",
-      "Le bonus développeur : bcrypt, Argon2 et salage.",
-      "Sur mon site vodystudio.fr, les mots de passe sont hachés avec bcrypt et la double authentification est proposée (voir la fiche du site).",
-    ],
-    bilan:
-      "Ce TP m'a servi directement : j'ai vérifié que mon propre site faisait ce que j'avais écrit au bonus (hachage avec sel, MFA, limitation des essais). Ce que l'on apprend en cyber se retrouve en lignes de code.",
   },
   {
     slug: "authentification-sure",
-    title: "Concevoir une authentification plus sûre",
     short: "Authentification sûre",
-    kind: "Trinôme, authentification",
-    summary: "Après un phishing, trier les protections et construire la chaîne d'authentification d'une future application.",
     category: "bloc3",
     from: "28/09/26",
-    format: "Travail en trinôme, puis ticket individuel",
-    drive: "Bloc 3 - Nzazi [Timeo, Haitam, Ismail].docx",
-    context: "Après un incident de phishing qui a coûté un mot de passe, une entreprise demande de revoir l'authentification de sa future application.",
-    need: "Proposer un système qui limite les conséquences d'un vol de mot de passe, avec plusieurs couches de protection.",
-    contribution:
-      "En trinôme, nous avons classé huit fonctionnalités (à retenir, à écarter, à discuter) et construit la chaîne d'authentification, de l'utilisateur jusqu'à la session ; j'ai ensuite rédigé seul le ticket SEC-001.",
-    tools: ["Analyse de risques", "Schéma de la chaîne d'authentification"],
-    difficulty: "Placer les protections dans le bon ordre : à quel moment limiter les tentatives par rapport à la vérification du mot de passe ?",
-    solution: "Avant la vérification : on bloque les essais répétés avant même de comparer le hash, puis viennent le MFA et un jeton de session à durée limitée ; le journal et la notification couvrent la fin de la chaîne.",
     competences: { projet: [0], patrimoine: [2] },
-    proofs: ["Le document « Bloc 3 — Incident de cybersécurité » : tableau des décisions, chaîne d'authentification et ticket SEC-001."],
-    bilan: "Une seule protection ne suffit jamais : le hachage protège la base, pas l'utilisateur qui se fait piéger. C'est le principe de défense en profondeur, chaque couche couvrant l'échec d'une autre.",
   },
   {
     slug: "audit-technova",
-    title: "Audit de sécurité du système d'information de TechNova",
     short: "Audit TechNova",
-    kind: "TD, audit de sécurité",
-    summary: "Huit situations à risque, le bon vocabulaire, des mesures justifiées, et un agent IA à encadrer.",
     category: "bloc3",
     from: "01/10/26",
-    format: "TD individuel",
-    drive: "Bloc 3 Audit Nzazi - Timeo Vaast",
-    featured: true,
-    context: "TechNova, une PME de 30 salariés, demande un premier diagnostic de la sécurité de son système d'information.",
-    need: "Repérer les situations à risque, expliquer leurs conséquences, proposer des mesures adaptées et encadrer le projet d'agent IA de la direction.",
-    contribution:
-      "J'ai analysé seul huit situations, classé les notions (vulnérabilité, menace, impact), proposé et justifié une mesure pour cinq cas, identifié les risques d'un agent IA branché sur tout le SI, puis choisi trois mesures prioritaires.",
-    tools: ["Analyse de risques", "Moindre privilège", "Sauvegardes 3-2-1", "MFA"],
-    difficulty: "Distinguer vulnérabilité, menace et impact, que l'on mélange facilement.",
-    solution:
-      "Une phrase par notion : la vulnérabilité est une faiblesse du système, la menace ce qui peut l'exploiter, l'impact ce qui arrive ensuite. Le serveur non mis à jour est la vulnérabilité, le ransomware la menace, les fichiers chiffrés l'impact.",
     competences: { patrimoine: [3, 4, 2, 5] },
-    proofs: ["Le document « Bloc 3 — Audit TechNova » : tableaux des missions 1 et 2, mesures, agent IA et conclusion."],
-    bilan:
-      "Trois mesures suffisent à changer beaucoup : le MFA, des sauvegardes isolées et le moindre privilège, y compris pour un agent IA. C'est cette mission qui m'a donné le sujet de ma veille : l'IA et la cybersécurité.",
   },
 ];
