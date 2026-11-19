@@ -54,7 +54,7 @@ export default function HomePage() {
 
       {/* The projects, with their screenshot under the pointer. */}
       <section className="wrap mt-24 lg:mt-28">
-        <SectionHead title="Projets" note="Chez Vody Studio, en production" />
+        <SectionHead title="Projets" note="Chez Vody Studio" />
         <IndexList items={PROJECTS} />
       </section>
 

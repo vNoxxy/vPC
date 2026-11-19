@@ -21,7 +21,7 @@ const LINKS: { notion: string; tp: string; doc: string; where: string }[] = [
 
 export default function VodyPage() {
   return (
-    <SiteLayout title="Vody Studio" description="Vody Studio, la micro-entreprise de développement de Timéo Vaast, et ses projets : vodystudio.fr, vBot, Forge, l'audit FiveM.">
+    <SiteLayout title="Vody Studio" description="Vody Studio, la micro-entreprise de développement de Timéo Vaast, et ses projets : vodystudio.fr, vBot, Forge, l'audit FiveM et l'application WhyNot?.">
       <section className="wrap pt-6 sm:pt-10">
         <div className="night grid overflow-hidden lg:grid-cols-[440px_1fr]">
           <div className="flex flex-col p-7 sm:p-10 lg:py-14 lg:pl-12 lg:pr-0">
@@ -57,7 +57,7 @@ export default function VodyPage() {
       </section>
 
       <section className="wrap mt-24">
-        <SectionHead title="Les projets" note="Quatre projets en production, une fiche chacun" />
+        <SectionHead title="Les projets" note={`${PROJECTS.length} projets, une fiche chacun`} />
         <IndexList items={PROJECTS} />
       </section>
 

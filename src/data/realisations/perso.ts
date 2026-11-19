@@ -1,5 +1,19 @@
 import type { Realisation } from "../types";
 
+const ROW_LEVEL_SECURITY = `-- Le journal d'activité est privé : chaque utilisateur ne voit que ses lignes,
+-- et une activité issue d'une séance ne se modifie que par la séance.
+create policy "activity_logs_select_own"
+  on public.activity_logs for select to authenticated
+  using (user_id = (select auth.uid()));
+
+create policy "activity_logs_insert_own_manual"
+  on public.activity_logs for insert to authenticated
+  with check (user_id = (select auth.uid()) and session_id is null);
+
+create policy "activity_logs_delete_own_manual"
+  on public.activity_logs for delete to authenticated
+  using (user_id = (select auth.uid()) and session_id is null);`;
+
 const AUTH_LIMITER = `// Les routes de connexion et d'inscription : au plus 20 essais par adresse IP
 // toutes les 15 minutes, puis un refus poli (HTTP 429).
 const authLimiter = rateLimit({
@@ -116,5 +130,38 @@ export const PERSO: Realisation[] = [
     proofs: ["L'audit en ligne sur vodystudio.fr.", "Les ressources de test et leurs résultats attendus."],
     cover: { src: "/images/audit-fivem-carte.jpg", caption: "L'audit gratuit, sur l'accueil de vodystudio.fr." },
     bilan: "Vulnérabilité, menace, contexte : le vocabulaire de l'audit TechNova m'a servi à noter juste, sans affoler pour rien.",
+  },
+  {
+    slug: "whynot",
+    title: "WhyNot?, une application mobile de fitness et de nutrition",
+    short: "WhyNot?",
+    kind: "Application mobile",
+    summary: "Musculation, nutrition, progression et régularité dans une seule app iOS et Android, avec un espace social privé entre amis.",
+    category: "perso",
+    from: "11/11/26",
+    to: "",
+    format: "Projet personnel, prêt à publier sur les stores",
+    live: { label: "whynotapp.fr", href: "https://whynotapp.fr" },
+    context:
+      "WhyNot? (« Why Not This One? ») est une application mobile que je publie en tant qu'entrepreneur individuel, avec son site public whynotapp.fr. Elle s'adresse aux personnes qui s'entraînent en salle ou à la maison et veulent suivre leur alimentation au même endroit.",
+    need: "Une seule app pour enregistrer ses séances, ce que l'on mange, ses mensurations et ses photos d'évolution, garder l'envie de revenir chaque jour, et partager ses progrès seulement avec ses amis, en protégeant des données de santé.",
+    contribution:
+      "J'ai tout conçu et développé, phase par phase à partir d'un plan technique : l'authentification, le profil et les objectifs caloriques, le catalogue de plus de 140 exercices, les programmes et la séance en cours, le journal alimentaire (Ciqual, USDA, Open Food Facts, scanner de codes-barres, fast-food), les mensurations et graphiques, les photos privées, le calendrier, les amis, groupes et défis, l'XP, les rangs et les quêtes, puis la préparation de la publication (site légal, fiches des stores).",
+    tools: ["React Native", "Expo", "TypeScript", "Expo Router", "Supabase", "PostgreSQL", "TanStack Query", "Zustand", "Zod", "Jest", "Maestro", "EAS Build"],
+    difficulty: "Ne jamais perdre une séance : on s'entraîne souvent avec un réseau faible ou absent (salle en sous-sol), et l'app peut être fermée en pleine séance.",
+    solution:
+      "La séance vit entièrement sur le téléphone et est enregistrée à chaque action. À la fin, elle part dans une file d'envoi persistante, vidée au retour du réseau ; côté serveur, l'enregistrement est transactionnel et idempotent (identifiants générés sur l'appareil), donc un renvoi ne crée jamais de doublon. Les données personnelles sont protégées par la sécurité au niveau des lignes (RLS) de PostgreSQL sur toutes les tables, et les photos d'évolution sont ré-encodées pour retirer leur position GPS.",
+    competences: { service: [0, 1], projet: [0, 1], incidents: [2], patrimoine: [2] },
+    proofs: [
+      "Le dépôt GitHub du projet et son historique, phase par phase.",
+      "Le plan technique et 14 décisions d'architecture écrites (ADR).",
+      "Les tests : composants et logique (Jest), base de données (pgTAP), parcours de bout en bout (Maestro).",
+      "L'extrait ci-dessous : les règles de sécurité au niveau des lignes de la base.",
+      "Le site public whynotapp.fr (confidentialité, suppression du compte, support).",
+    ],
+    code: [{ title: "Extrait de la base : chaque utilisateur ne voit que ses propres données", lang: "SQL", code: ROW_LEVEL_SECURITY }],
+    cover: { src: "/images/whynot-carte.jpg", caption: "L'identité de WhyNot?, telle qu'elle apparaît quand on partage l'app." },
+    bilan:
+      "C'est mon projet le plus complet : découper le travail en phases, écrire les décisions avant de coder et tester chaque règle m'a permis d'avancer vite sans casser ce qui marchait déjà. Avec des données de santé, la sécurité ne s'ajoute pas à la fin, elle se pense dès le schéma de la base.",
   },
 ];
