@@ -1,6 +1,6 @@
 import type { AccentKey } from "../lib/accents";
 
-/** The parts of the BTS a réalisation belongs to, each with its own color (see competences.ts). */
+/** The parts of the BTS a réalisation belongs to, each with its own color (see categories.ts). */
 export type CategoryKey = "bloc1" | "bloc2" | "bloc3" | "ap" | "perso";
 
 /** The six competencies of the E4 synthesis table (see competences.ts). */
@@ -59,8 +59,6 @@ export interface Realisation extends Work {
   /** A link to see it live (the Vody Studio projects). */
   live?: { label: string; href: string };
   featured?: boolean;
-  /** The color of the product on vodystudio.fr, carried by its card and its page. */
-  accent: AccentKey;
 }
 
 export interface Category {

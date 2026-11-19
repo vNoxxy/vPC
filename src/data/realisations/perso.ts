@@ -17,7 +17,6 @@ const passwordHash = await bcrypt.hash(password, 10);`;
 export const PERSO: Realisation[] = [
   {
     slug: "vodystudio-fr",
-    accent: "vody",
     title: "vodystudio.fr, le site de mon studio",
     short: "vodystudio.fr",
     kind: "Site et application",
@@ -52,7 +51,6 @@ export const PERSO: Realisation[] = [
   },
   {
     slug: "vbot",
-    accent: "yellow",
     title: "vBot, un bot Discord modulable",
     short: "vBot",
     kind: "Bot Discord",
@@ -76,7 +74,6 @@ export const PERSO: Realisation[] = [
   },
   {
     slug: "forge",
-    accent: "red",
     title: "Forge, des éditeurs visuels de scripts FiveM",
     short: "Forge",
     kind: "Éditeurs de scripts FiveM",
@@ -100,7 +97,6 @@ export const PERSO: Realisation[] = [
   },
   {
     slug: "audit-fivem",
-    accent: "orange",
     title: "L'audit FiveM gratuit",
     short: "Audit FiveM",
     kind: "Analyse de sécurité",

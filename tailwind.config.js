@@ -4,24 +4,20 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Bricolage Grotesque Variable", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
-        serif: ["Instrument Serif", "Georgia", "serif"],
+        sans: ["Plus Jakarta Sans", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
         // Vody Studio's own wordmark face, for the studio's name only.
-        brand: ["Syne", "Bricolage Grotesque Variable", "sans-serif"],
-        mono: ["JetBrains Mono Variable", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        brand: ["Syne", "Plus Jakarta Sans", "sans-serif"],
+        mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       colors: {
-        bg: "rgb(var(--bg-rgb) / <alpha-value>)",
-        surface: "var(--surface)",
-        raised: "var(--raised)",
-        fg: "var(--fg)",
+        paper: "var(--paper)",
+        ink: "var(--ink)",
+        night: "var(--night)",
         soft: "var(--soft)",
         faint: "var(--faint)",
-        line: "var(--line)",
-        accent: { DEFAULT: "rgb(var(--accent-rgb) / <alpha-value>)", soft: "var(--accent-soft)" },
-        signal: "var(--signal)",
+        rule: "var(--rule)",
+        blue: { DEFAULT: "var(--blue)", text: "var(--blue-text)", light: "var(--blue-light)" },
       },
-      screens: { xs: "420px" },
     },
   },
   plugins: [],

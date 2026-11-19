@@ -1,10 +1,9 @@
-import { Reveal } from "../components/Reveal";
-import { usePageMeta } from "../lib/usePageMeta";
+import SiteLayout from "../components/Layout";
 import { EDUCATION, EXPERIENCE, INTERESTS, LANGUAGES, PROFILE, SKILLS } from "../data/profile";
 import { siteAddress } from "../lib/site";
 
 function Heading({ children }: { children: string }) {
-  return <h2 className="border-b-[1.5px] border-[#0b0c10] pb-2 text-[13px] font-bold uppercase tracking-[0.08em]">{children}</h2>;
+  return <h2 className="border-b-[1.5px] border-ink pb-2 text-[14px] font-bold">{children}</h2>;
 }
 
 /**
@@ -12,38 +11,30 @@ function Heading({ children }: { children: string }) {
  * e-mail address is on it: the phone number and the street address stay on the CV sent to a company.
  */
 export default function CvPage() {
-  usePageMeta("CV", "Le CV de Timéo Vaast, étudiant en BTS SIO option SLAM.");
   return (
-    <>
-      <section className="wrap no-print flex flex-col gap-6 pb-12 pt-36 sm:flex-row sm:items-end sm:justify-between sm:pt-44">
-        <div data-anim="rise">
-          <p className="label mb-6 flex items-center gap-3">
-            <span className="h-px w-8 bg-accent" />
-            Curriculum vitæ
-          </p>
-          <h1 className="t-display">
-            Mon <span className="serif text-accent-soft">CV.</span>
-          </h1>
-          <p className="mt-5 text-[15.5px] text-soft">Une page A4. Pour la garder en PDF : « Imprimer », puis « Enregistrer au format PDF ».</p>
+    <SiteLayout title="CV" description="Le CV de Timéo Vaast, étudiant en BTS SIO option SLAM.">
+      <section className="wrap no-print flex flex-col gap-4 pb-8 pt-10 sm:flex-row sm:items-end sm:justify-between sm:pt-14">
+        <div>
+          <h1 className="t-page">CV</h1>
+          <p className="mt-4 text-[15.5px] text-soft">Pour le garder en PDF : « Imprimer », puis « Enregistrer au format PDF ».</p>
         </div>
-        <button type="button" onClick={() => window.print()} className="btn" data-anim="rise">
+        <button type="button" onClick={() => window.print()} className="btn">
           Imprimer ou enregistrer en PDF
         </button>
       </section>
 
       <section className="wrap">
-        <Reveal variant="scale">
-        <article className="print-cv mx-auto max-w-[900px] rounded-[20px] bg-white p-6 text-[#0b0c10] shadow-[0_60px_160px_-40px_rgba(61,149,242,0.35)] sm:p-12 print:rounded-none print:p-0 print:shadow-none [&_.text-soft]:text-[#5b616d]">
-          <header className="flex flex-col gap-5 border-b-[1.5px] border-[#0b0c10] pb-7 sm:flex-row sm:items-end sm:justify-between">
+        <article className="print-cv mx-auto max-w-[900px] rounded-[18px] bg-white p-6 sm:p-12 print:rounded-none print:p-0">
+          <header className="flex flex-col gap-5 border-b-[1.5px] border-ink pb-7 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <h2 className="text-[40px] font-semibold leading-none tracking-[-0.04em]">
+              <h1 className="text-[40px] font-semibold leading-none tracking-[-0.04em]">
                 {PROFILE.firstName} {PROFILE.lastName}
-              </h2>
+              </h1>
               <p className="mt-2 text-[17px] font-medium text-soft">{PROFILE.title}</p>
             </div>
             <ul className="space-y-1 text-[14px] text-soft sm:text-right">
               <li>
-                <a href={`mailto:${PROFILE.email}`} className="font-semibold text-[#0b0c10]">
+                <a href={`mailto:${PROFILE.email}`} className="font-semibold text-ink">
                   {PROFILE.email}
                 </a>
               </li>
@@ -68,7 +59,7 @@ export default function CvPage() {
                         <p className="text-[15px] font-bold">{e.title}</p>
                         <p className="shrink-0 text-[13px] text-soft">{e.period}</p>
                       </div>
-                      <p className="text-[13.5px] font-semibold text-[#1d6cbe]">
+                      <p className="text-[13.5px] font-semibold text-blue-text">
                         {e.place}
                         {e.tag && e.tag !== "En cours" ? `, ${e.tag.toLowerCase()}` : ""}
                       </p>
@@ -85,7 +76,7 @@ export default function CvPage() {
                       <p className="text-[15px] font-bold">Vody Studio, fondateur</p>
                       <p className="shrink-0 text-[13px] text-soft">Depuis 2026</p>
                     </div>
-                    <p className="text-[13.5px] font-semibold text-[#1d6cbe]">Micro-entreprise de développement</p>
+                    <p className="text-[13.5px] font-semibold text-blue-text">Micro-entreprise de développement</p>
                     <p className="mt-1 text-[13.5px] leading-relaxed text-soft">
                       Conception, développement et mise en ligne de vodystudio.fr, d'un bot Discord et d'outils pour serveurs FiveM.
                     </p>
@@ -96,7 +87,7 @@ export default function CvPage() {
                         <p className="text-[15px] font-bold">{e.title}</p>
                         <p className="shrink-0 text-[13px] text-soft">{e.period}</p>
                       </div>
-                      <p className="text-[13.5px] font-semibold text-[#1d6cbe]">{e.place}</p>
+                      <p className="text-[13.5px] font-semibold text-blue-text">{e.place}</p>
                       <p className="mt-1 text-[13.5px] leading-relaxed text-soft">{e.text}</p>
                     </li>
                   ))}
@@ -132,8 +123,7 @@ export default function CvPage() {
             </div>
           </div>
         </article>
-        </Reveal>
       </section>
-    </>
+    </SiteLayout>
   );
 }

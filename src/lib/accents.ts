@@ -13,7 +13,3 @@ export const ACCENTS: Record<AccentKey, string> = {
   yellow: "#e3a83e",
   cyan: "#16c0dc",
 };
-
-/** "#2485ea" → "36 133 234", for a color that Tailwind's opacity modifiers can fade. */
-export const rgbChannels = (hex: string) =>
-  [1, 3, 5].map((i) => Number.parseInt(hex.slice(i, i + 2), 16)).join(" ");
