@@ -9,8 +9,10 @@ import { PROJECTS } from "../data/realisations";
 import { ACCENTS } from "../lib/accents";
 import { usePageMeta } from "../lib/usePageMeta";
 
+const COUNT_WORDS: Record<number, string> = { 3: "Trois", 4: "Quatre", 5: "Cinq", 6: "Six", 7: "Sept", 8: "Huit" };
+
 export default function VodyPage() {
-  usePageMeta("Vody Studio", "Vody Studio, la micro-entreprise de développement de Timéo Vaast, et ses projets : vodystudio.fr, vBot, Forge, l'audit FiveM.");
+  usePageMeta("Vody Studio", "Vody Studio, la micro-entreprise de développement de Timéo Vaast, et ses projets : vodystudio.fr, vBot, Forge, l'audit FiveM et l'application WhyNot?.");
   return (
     <>
       <section className="relative overflow-hidden pb-10 pt-36 sm:pt-44">
@@ -73,7 +75,7 @@ export default function VodyPage() {
 
       <section id="projets" className="wrap scroll-mt-24 pt-28 lg:pt-40">
         <SectionLabel index="01">Les projets</SectionLabel>
-        <Lines lines={["Quatre produits,", <span className="serif text-accent-soft">une fiche chacun.</span>]} className="t-h2 mt-10" />
+        <Lines lines={[`${COUNT_WORDS[PROJECTS.length] ?? PROJECTS.length} produits,`, <span className="serif text-accent-soft">une fiche chacun.</span>]} className="t-h2 mt-10" />
         <ul className="mt-14 grid gap-4 md:grid-cols-2">
           {PROJECTS.map((p, i) => {
             const color = ACCENTS[p.accent];

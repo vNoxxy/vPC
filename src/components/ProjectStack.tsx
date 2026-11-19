@@ -79,7 +79,15 @@ export default function ProjectStack({ items }: { items: Realisation[] }) {
                     <span style={{ color }}>{String(i + 1).padStart(2, "0")}</span> / {String(items.length).padStart(2, "0")}
                   </span>
                   <span className="label flex items-center gap-2 !text-[11px]">
-                    <i aria-hidden className="live-dot" /> En production
+                    {r.format.includes("en production") ? (
+                      <>
+                        <i aria-hidden className="live-dot" /> En production
+                      </>
+                    ) : (
+                      <>
+                        <i aria-hidden className="h-2 w-2 rounded-full border border-current" /> Prêt à publier
+                      </>
+                    )}
                   </span>
                 </div>
                 <p className="label mt-10 lg:mt-auto" style={{ color }}>

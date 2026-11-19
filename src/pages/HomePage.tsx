@@ -17,6 +17,9 @@ import { DOCUMENTS, SECTIONS } from "../lib/documents";
 import { useParisTime, useScrollProgress } from "../lib/motion";
 import { usePageMeta } from "../lib/usePageMeta";
 
+/** "Cinq produits", rather than "5 produits", at the start of a sentence. */
+const COUNT_WORDS: Record<number, string> = { 3: "Trois", 4: "Quatre", 5: "Cinq", 6: "Six", 7: "Sept", 8: "Huit" };
+
 const STACK = ["React", "TypeScript", "Node.js", "PostgreSQL", "Docker", "Lua", "Prisma", "Stripe", "discord.js", "Linux", "GLPI", "Tailwind CSS", "Vitest", "Blender", "Unreal Engine"];
 
 function Hero() {
@@ -217,7 +220,7 @@ export default function HomePage() {
           {[
             { value: DOCUMENTS.length, label: "documents de cours et de TP à télécharger", to: "/documents" },
             { value: COVERED_COUNT, label: `activités du référentiel E4 déjà prouvées, sur ${ACTIVITY_COUNT}`, to: "/competences" },
-            { value: PROJECTS.length, label: "projets en production chez Vody Studio", to: "/vody-studio" },
+            { value: PROJECTS.length, label: "projets menés chez Vody Studio", to: "/vody-studio" },
             { value: EXPERIENCE.length, label: "stages en entreprise pendant le bac pro", to: "/parcours" },
           ].map((s, i) => (
             <Reveal key={s.label} delay={i * 80} className="bg-bg">
@@ -240,7 +243,7 @@ export default function HomePage() {
         <div className="mb-14 mt-10 grid gap-8 lg:mb-20 lg:grid-cols-[1.4fr_1fr] lg:items-end">
           <Lines lines={["Des projets en ligne,", <span className="serif text-accent-soft">pas des maquettes.</span>]} className="t-h2" />
           <Reveal delay={150} className="t-lead lg:pb-2">
-            Quatre produits de Vody Studio, conçus, codés, testés et mis en ligne par moi. Chacun raconté comme une étude de cas.
+            {COUNT_WORDS[PROJECTS.length] ?? PROJECTS.length} produits de Vody Studio, conçus, codés et testés par moi, en ligne ou prêts à publier. Chacun raconté comme une étude de cas.
           </Reveal>
         </div>
         <ProjectStack items={PROJECTS} />

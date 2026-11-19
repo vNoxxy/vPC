@@ -11,6 +11,7 @@ const IMAGES: Record<string, { width: number; height: number; webp: number[] }> 
   "forge-schematics": { width: 2284, height: 1042, webp: [800, 1600] },
   "audit-fivem-carte": { width: 1314, height: 1236, webp: [800] },
   "vbot-carte": { width: 800, height: 692, webp: [800] },
+  "whynot-carte": { width: 1200, height: 630, webp: [800, 1600] },
 };
 
 export function picture(src: string): { srcSet?: string; width?: number; height?: number } {

@@ -102,7 +102,7 @@ export const SKILLS: SkillGroup[] = [
     items: [
       { name: "HTML & CSS", where: "vodystudio.fr, ce portfolio" },
       { name: "SCSS, Sass, Tailwind CSS", where: "vodystudio.fr, ce portfolio" },
-      { name: "JavaScript & TypeScript", where: "vodystudio.fr, vBot, Forge" },
+      { name: "JavaScript & TypeScript", where: "vodystudio.fr, vBot, Forge, WhyNot?" },
       { name: "Lua", where: "Forge, l'audit FiveM" },
       { name: "Pseudo-code", where: "Défis PseudoLab" },
       { name: "SQL (PostgreSQL)", where: "vodystudio.fr, GLPI (MariaDB)" },
