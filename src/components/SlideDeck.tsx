@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type PointerEvent } from "react";
 import deck from "../data/veille-deck/deck.json";
 import "../data/veille-deck/deck.css";
+// The slides are set in Plus Jakarta Sans, as they were designed; loaded only with the watch's page.
+import "@fontsource/plus-jakarta-sans/400.css";
+import "@fontsource/plus-jakarta-sans/500.css";
+import "@fontsource/plus-jakarta-sans/600.css";
+import "@fontsource/plus-jakarta-sans/700.css";
+import "@fontsource/plus-jakarta-sans/800.css";
+import "@fontsource/jetbrains-mono/500.css";
 
 /**
  * The slides of the watch's presentation, the same files as the deck made in Claude (src/data/veille-deck):
@@ -130,6 +137,7 @@ export default function SlideDeck({ pdf }: { pdf?: { url: string; downloadName: 
         role="region"
         aria-roledescription="diaporama"
         aria-label={`Diapositive ${index + 1} sur ${SLIDES.length}`}
+        data-cursor={full ? undefined : "Suivant"}
         onKeyDown={(e) => {
           if (full) return;
           if (e.key === "ArrowRight") go(1);
@@ -137,47 +145,64 @@ export default function SlideDeck({ pdf }: { pdf?: { url: string; downloadName: 
         }}
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUp}
-        className={`deck-stage relative cursor-pointer select-none overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-blue ${full ? "flex items-center justify-center bg-[#0b0c10]" : "rounded-[18px] border border-rule"}`}
+        className={`deck-stage relative cursor-pointer select-none overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-accent ${full ? "flex items-center justify-center bg-[#0b0c10]" : "rounded-[24px] border border-[var(--line-strong)] shadow-[0_60px_160px_-50px_rgba(61,149,242,0.4)]"}`}
         style={full ? undefined : { height: Math.round(HEIGHT * scale) || undefined, aspectRatio: scale ? undefined : "16 / 9" }}
       >
         {scale > 0 && (
           <div style={{ width: WIDTH * scale, height: HEIGHT * scale }} className="relative shrink-0 overflow-hidden">
-            <div key={slide.id} ref={canvasRef} className="deck-canvas" style={{ transform: `scale(${scale})` }} dangerouslySetInnerHTML={{ __html: slide.html }} />
+            <div key={slide.id} ref={canvasRef} data-anim="fade" className="deck-canvas" style={{ transform: `scale(${scale})` }} dangerouslySetInnerHTML={{ __html: slide.html }} />
           </div>
         )}
       </div>
 
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+      {/* Where we are: a segment per slide, clickable. */}
+      <div className="mt-5 flex gap-1" role="group" aria-label="Aller à une diapositive">
+        {SLIDES.map((s, i) => (
+          <button
+            key={s.id}
+            type="button"
+            onClick={() => setIndex(i)}
+            aria-label={`Diapositive ${i + 1}`}
+            aria-current={i === index ? "step" : undefined}
+            className="group flex h-5 flex-1 items-center"
+          >
+            <span className={`h-[3px] w-full rounded-full transition-colors duration-300 ${i === index ? "bg-accent" : i < index ? "bg-white/40" : "bg-white/10 group-hover:bg-white/30"}`} />
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-4">
         <div className="flex items-center gap-2">
-          <button type="button" onClick={() => go(-1)} disabled={index === 0} className="btn-round" aria-label="Diapositive précédente">
+          <button type="button" onClick={() => go(-1)} disabled={index === 0} className="grid h-12 w-12 place-items-center rounded-full border border-[var(--line-strong)] transition-colors hover:border-fg disabled:opacity-30" aria-label="Diapositive précédente">
             ←
           </button>
-          <span className="min-w-[64px] text-center font-mono text-[14px] tabular-nums text-soft">
-            {String(index + 1).padStart(2, "0")} / {SLIDES.length}
+          <span className="num min-w-[72px] text-center text-[14px] text-soft">
+            <span className="text-fg">{String(index + 1).padStart(2, "0")}</span> / {SLIDES.length}
           </span>
-          <button type="button" onClick={() => go(1)} disabled={index === SLIDES.length - 1} className="btn-round" aria-label="Diapositive suivante">
+          <button type="button" onClick={() => go(1)} disabled={index === SLIDES.length - 1} className="grid h-12 w-12 place-items-center rounded-full border border-[var(--line-strong)] transition-colors hover:border-fg disabled:opacity-30" aria-label="Diapositive suivante">
             →
           </button>
         </div>
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-[15px]">
-          <button type="button" onClick={() => setNotes((n) => !n)} aria-expanded={notes} className="link-u">
+        <div className="flex flex-wrap items-center gap-3">
+          <button type="button" onClick={() => setNotes((n) => !n)} aria-expanded={notes} className={`btn btn-sm ${notes ? "" : "btn-ghost"}`}>
             {notes ? "Masquer mes notes" : "Ce que je dis"}
           </button>
           {typeof document !== "undefined" && document.fullscreenEnabled && (
-            <button type="button" onClick={toggleFull} className="link-u">
+            <button type="button" onClick={toggleFull} className="btn btn-ghost btn-sm">
               Plein écran
             </button>
           )}
           {pdf && (
-            <a href={pdf.url} download={pdf.downloadName} className="btn">
-              Télécharger en PDF
+            <a href={pdf.url} download={pdf.downloadName} className="btn btn-sm">
+              Télécharger en PDF ↓
             </a>
           )}
         </div>
       </div>
 
       {notes && slide.notes && (
-        <p className="mt-5 max-w-[860px] border-l-2 border-blue pl-5 text-[16px] leading-relaxed text-[#2f3440]">
+        <p data-anim="rise" className="mt-6 max-w-[860px] border-l-2 border-accent pl-6 text-[17px] leading-relaxed text-[#c3c8d1]">
+          <span className="label mb-2 block !text-[11px] text-accent">Notes · diapo {index + 1}</span>
           {slide.notes}
         </p>
       )}

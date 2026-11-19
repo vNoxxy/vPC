@@ -19,12 +19,3 @@ export function periodLabel(r: Work): string {
   if (r.to === "") return `depuis le ${r.from}`;
   return `du ${r.from} au ${r.to}`;
 }
-
-const MONTHS = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
-
-/** "01/10/26" → "Oct. 2026", for the index. */
-export function monthLabel(r: Work): string {
-  const [, mm, yy] = r.from.split("/").map(Number);
-  const month = MONTHS[mm - 1];
-  return `${month.charAt(0).toUpperCase()}${month.slice(1)} ${2000 + yy}`;
-}

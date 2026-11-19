@@ -1,92 +1,135 @@
-import IndexList from "../components/IndexList";
-import SiteLayout from "../components/Layout";
-import { Figure, SectionHead, VodyBrand } from "../components/ui";
+import type { CSSProperties } from "react";
+import { Link } from "react-router";
+import Bridge from "../components/Bridge";
+import NetworkField from "../components/NetworkField";
+import { Curtain, Lines, Reveal } from "../components/Reveal";
+import { ArrowRight, ArrowUpRight, Figure, Magnetic, Picture, SectionLabel, VodyBrand } from "../components/ui";
 import { PROFILE } from "../data/profile";
 import { PROJECTS } from "../data/realisations";
-import { DOCUMENTS } from "../lib/documents";
-import { withBase } from "../lib/site";
-
-/**
- * From a TP to code in production: where a notion of the courses shows up in my own projects. `doc` is
- * found in the name of the work on the Documents page, which is then offered for download.
- */
-const LINKS: { notion: string; tp: string; doc: string; where: string }[] = [
-  { notion: "Hachage et sel", tp: "Sécuriser un compte", doc: "Sécuriser un compte", where: "Les mots de passe de vodystudio.fr sont hachés avec bcrypt, jamais stockés en clair." },
-  { notion: "MFA", tp: "Authentification sûre", doc: "authentification plus sûre", where: "La double authentification par codes TOTP est proposée sur chaque compte client." },
-  { notion: "Limiter les essais", tp: "Authentification sûre", doc: "authentification plus sûre", where: "Les routes de connexion refusent les essais répétés depuis une même adresse." },
-  { notion: "Moindre privilège", tp: "Audit TechNova", doc: "Audit de sécurité de TechNova", where: "Les modules des clients de vBot tournent en bac à sable et ne voient que leur propre serveur." },
-  { notion: "Vulnérabilité et contexte", tp: "Audit TechNova", doc: "Audit de sécurité de TechNova", where: "L'audit FiveM note la gravité d'un constat selon ce qu'il faut pour l'exploiter." },
-  { notion: "Règles d'utilisation, RGPD", tp: "Charte informatique", doc: "La charte informatique", where: "Aucun traceur avant consentement, et des pages légales qui disent ce que le code fait." },
-];
+import { ACCENTS } from "../lib/accents";
+import { usePageMeta } from "../lib/usePageMeta";
 
 export default function VodyPage() {
+  usePageMeta("Vody Studio", "Vody Studio, la micro-entreprise de développement de Timéo Vaast, et ses projets : vodystudio.fr, vBot, Forge, l'audit FiveM.");
   return (
-    <SiteLayout title="Vody Studio" description="Vody Studio, la micro-entreprise de développement de Timéo Vaast, et ses projets : vodystudio.fr, vBot, Forge, l'audit FiveM.">
-      <section className="wrap pt-6 sm:pt-10">
-        <div className="night grid overflow-hidden lg:grid-cols-[440px_1fr]">
-          <div className="flex flex-col p-7 sm:p-10 lg:py-14 lg:pl-12 lg:pr-0">
-            <VodyBrand />
-            <h1 className="mt-9 text-[clamp(32px,3.6vw,46px)] font-semibold leading-[1.08] tracking-[-0.04em]">Ma micro-entreprise de développement.</h1>
-            <p className="mt-5 text-[17px] leading-[1.6] text-white/80">
-              Des sites, des applications et des outils pour les serveurs FiveM et Discord, en service pour de vrais clients. C'est là que j'applique, chaque semaine, ce que j'apprends en BTS.
-            </p>
-            <dl className="mt-8 border-t border-white/15 text-[15px]">
-              {[
-                ["Statut", "Timéo Vaast EI, micro-entreprise"],
-                ["Immatriculation", "21 octobre 2026"],
-                ["Activité", "Programmation informatique (APE 6201Z)"],
-              ].map(([k, v]) => (
-                <div key={k} className="grid grid-cols-[116px_1fr] gap-3 border-b border-white/15 py-3 sm:grid-cols-[130px_1fr] sm:gap-4">
-                  <dt className="text-white/55">{k}</dt>
-                  <dd className="font-semibold">{v}</dd>
-                </div>
-              ))}
-            </dl>
-            <a href={PROFILE.vody} target="_blank" rel="noopener noreferrer" className="btn btn-light mt-9 self-start">
-              Visiter vodystudio.fr ↗
+    <>
+      <section className="relative overflow-hidden pb-10 pt-36 sm:pt-44">
+        <NetworkField className="absolute inset-0 opacity-60" density={0.6} />
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_30%,transparent_10%,var(--bg)_80%)]" />
+        <div aria-hidden className="pointer-events-none absolute left-1/2 top-10 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-accent/25 blur-[150px]" />
+        <div className="wrap relative text-center">
+          <div className="flex justify-center" data-anim="rise">
+            <VodyBrand large />
+          </div>
+          <Lines
+            as="h1"
+            lines={["Ma micro-entreprise", <span className="serif text-accent-soft">de développement.</span>]}
+            className="mx-auto mt-10 max-w-[1100px] t-display"
+            delay={100}
+          />
+          <Reveal delay={300} className="t-lead mx-auto mt-8 max-w-[680px]">
+            Des sites, des applications et des outils pour les serveurs FiveM et Discord, en service pour de vrais clients. C'est là que j'applique, chaque semaine, ce que j'apprends en BTS.
+          </Reveal>
+          <Reveal delay={400} className="mt-10 flex flex-wrap justify-center gap-3">
+            <Magnetic>
+              <a href={PROFILE.vody} target="_blank" rel="noopener noreferrer" className="btn">
+                Visiter vodystudio.fr <ArrowUpRight />
+              </a>
+            </Magnetic>
+            <a href="#projets" className="btn btn-ghost">
+              Les projets
             </a>
-          </div>
-          <div className="flex items-end pl-7 pt-2 sm:pl-10 lg:pl-10 lg:pt-14">
-            <img
-              src={withBase("/images/vodystudio-tableau-de-bord.jpg")}
-              alt="L'espace client de vodystudio.fr, avec des données de démonstration"
-              className="block w-full max-w-none rounded-tl-[14px] border-l border-t border-white/10 lg:w-[880px]"
-            />
-          </div>
+          </Reveal>
+          <Reveal delay={500} className="mx-auto mt-16 grid max-w-[880px] grid-cols-1 gap-px overflow-hidden rounded-[20px] border border-[var(--line)] bg-[var(--line)] text-left sm:grid-cols-3">
+            {[
+              ["Statut", "Timéo Vaast EI, micro-entreprise"],
+              ["Immatriculation", "21 octobre 2026"],
+              ["Activité", "Programmation informatique, APE 6201Z"],
+            ].map(([k, v]) => (
+              <div key={k} className="bg-bg/90 p-5 backdrop-blur">
+                <p className="label !text-[10.5px]">{k}</p>
+                <p className="mt-2 text-[15px] font-medium">{v}</p>
+              </div>
+            ))}
+          </Reveal>
         </div>
       </section>
 
-      <section className="wrap mt-24">
-        <SectionHead title="Les projets" note="Quatre projets en production, une fiche chacun" />
-        <IndexList items={PROJECTS} />
+      <section className="wrap mt-10">
+        <Curtain>
+          <Picture
+            src="/images/vodystudio-tableau-de-bord.jpg"
+            alt="L'espace client de vodystudio.fr, avec des données de démonstration"
+            priority
+            sizes="(min-width: 1360px) 1280px, 92vw"
+            className="shot shadow-[0_60px_160px_-40px_rgba(61,149,242,0.45)]"
+          />
+        </Curtain>
+        <p className="mt-4 flex gap-3 text-[14px] text-soft">
+          <span className="label !text-[11px] text-accent">Fig.</span>
+          L'espace client : chaque produit du studio au même endroit (données de démonstration).
+        </p>
       </section>
 
-      <section className="wrap mt-24">
-        <Figure shot={{ src: "/images/vodystudio-accueil.jpg", caption: "L'accueil de vodystudio.fr : le site présente les services du studio en quatre langues." }} />
-      </section>
-
-      {/* The bridge between the courses and the studio. */}
-      <section className="wrap mt-24">
-        <SectionHead title="Du TP au code" note="Ce que j'apprends en cours, appliqué dans mes projets" />
-        <ul className="rule-rows">
-          {LINKS.map((l) => {
-            const doc = DOCUMENTS.find((d) => d.name.includes(l.doc));
+      <section id="projets" className="wrap scroll-mt-24 pt-28 lg:pt-40">
+        <SectionLabel index="01">Les projets</SectionLabel>
+        <Lines lines={["Quatre produits,", <span className="serif text-accent-soft">une fiche chacun.</span>]} className="t-h2 mt-10" />
+        <ul className="mt-14 grid gap-4 md:grid-cols-2">
+          {PROJECTS.map((p, i) => {
+            const color = ACCENTS[p.accent];
             return (
-              <li key={l.notion} className="grid gap-2 py-5 lg:grid-cols-[230px_220px_1fr] lg:items-baseline lg:gap-8">
-                <p className="text-[17px] font-semibold">{l.notion}</p>
-                {doc ? (
-                  <a href={doc.url} download={doc.downloadName} className="text-[15px] text-soft underline decoration-rule underline-offset-[3px] hover:text-blue-text">
-                    TP : {l.tp} ↓
-                  </a>
-                ) : (
-                  <p className="text-[15px] text-soft">TP : {l.tp}</p>
-                )}
-                <p className="text-[15.5px] leading-relaxed text-[#2f3440]">{l.where}</p>
-              </li>
+              <Reveal as="li" key={p.slug} delay={(i % 2) * 100}>
+                <Link
+                  to={`/vody-studio/${p.slug}`}
+                  viewTransition
+                  data-cursor="Voir"
+                  className="spot card group flex h-full flex-col overflow-hidden !rounded-[28px]"
+                  style={{ "--spot-color": color } as CSSProperties}
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden border-b border-[var(--line)]" style={{ background: `color-mix(in srgb, ${color} 12%, #0a0b0e)` }}>
+                    {p.cover && (
+                      <Picture
+                        src={p.cover.src}
+                        alt={p.cover.caption}
+                        sizes="(min-width: 768px) 640px, 92vw"
+                        className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-[1200ms] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.05]"
+                      />
+                    )}
+                    <span className="absolute left-5 top-5 rounded-full bg-bg/80 px-3 py-1.5 backdrop-blur">
+                      <span className="num text-[12px]" style={{ color }}>
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="num text-[12px] text-soft"> · {p.kind}</span>
+                    </span>
+                  </div>
+                  <div className="flex flex-1 flex-col p-7 sm:p-9">
+                    <h3 className="text-[clamp(32px,3.4vw,48px)] font-semibold leading-none tracking-[-0.045em]">{p.short}</h3>
+                    <p className="mt-4 text-[16px] leading-relaxed text-soft">{p.summary}</p>
+                    <span className="mt-8 inline-flex items-center gap-2 pt-2 text-[15px] font-semibold sm:mt-auto">
+                      <span className="link-line">Étude de cas</span> <ArrowRight className="transition-transform duration-500 group-hover:translate-x-1" />
+                    </span>
+                  </div>
+                </Link>
+              </Reveal>
             );
           })}
         </ul>
       </section>
-    </SiteLayout>
+
+      <section className="wrap mt-28 lg:mt-40">
+        <Figure shot={{ src: "/images/vodystudio-accueil.jpg", caption: "L'accueil de vodystudio.fr : le site présente les services du studio en quatre langues." }} />
+      </section>
+
+      <section className="wrap pt-28 lg:pt-40">
+        <SectionLabel index="02">Du TP au code</SectionLabel>
+        <div className="mb-12 mt-10 grid gap-8 lg:mb-16 lg:grid-cols-[1.4fr_1fr] lg:items-end">
+          <Lines lines={["Ce que j'apprends en cours,", <span className="serif text-accent-soft">appliqué dans mes projets.</span>]} className="t-h2" />
+          <Reveal delay={150} className="t-lead lg:pb-2">
+            Le BTS et le studio avancent ensemble : chaque notion de sécurité devient une protection réelle.
+          </Reveal>
+        </div>
+        <Bridge />
+      </section>
+    </>
   );
 }

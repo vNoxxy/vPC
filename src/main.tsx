@@ -5,6 +5,9 @@ import "./fonts";
 import "./index.css";
 import { router } from "./App";
 
+// With JavaScript, what is revealed on scroll starts hidden; without it, everything simply shows.
+document.documentElement.classList.add("js");
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RouterProvider router={router} />

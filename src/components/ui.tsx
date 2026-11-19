@@ -1,6 +1,9 @@
-import { Fragment, type ReactNode } from "react";
+import { Fragment, useRef, type CSSProperties, type MouseEvent, type ReactNode } from "react";
 import type { Shot } from "../data/types";
+import { picture } from "../lib/images";
 import { withBase } from "../lib/site";
+import { useFinePointer } from "../lib/motion";
+import { Curtain, Lines, Reveal } from "./Reveal";
 
 /** Running text where `code` between backticks is set in monospace. */
 export function Inline({ text }: { text: string }) {
@@ -15,47 +18,117 @@ export function Inline({ text }: { text: string }) {
   );
 }
 
+/* ---------- Icons: drawn once, at the size of the text around them ---------- */
+
+export function ArrowRight({ className = "" }: { className?: string }) {
+  return (
+    <svg aria-hidden viewBox="0 0 16 16" className={`arrow inline-block h-[1em] w-[1em] ${className}`} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" />
+    </svg>
+  );
+}
+
+export function ArrowLeft({ className = "" }: { className?: string }) {
+  return (
+    <svg aria-hidden viewBox="0 0 16 16" className={`inline-block h-[1em] w-[1em] ${className}`} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M13.5 8h-11M7 3.5 2.5 8 7 12.5" />
+    </svg>
+  );
+}
+
+export function ArrowUpRight({ className = "" }: { className?: string }) {
+  return (
+    <svg aria-hidden viewBox="0 0 16 16" className={`arrow arrow-ne inline-block h-[0.9em] w-[0.9em] ${className}`} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4.5 11.5l7-7M5.5 4.5h6v6" />
+    </svg>
+  );
+}
+
+export function ArrowDown({ className = "" }: { className?: string }) {
+  return (
+    <svg aria-hidden viewBox="0 0 16 16" className={`inline-block h-[1em] w-[1em] ${className}`} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M8 2.5v11M3.5 9 8 13.5 12.5 9" />
+    </svg>
+  );
+}
+
+export function Dot({ color, className = "", glow = false }: { color: string; className?: string; glow?: boolean }) {
+  return <i aria-hidden className={`dot ${className}`} style={{ background: color, boxShadow: glow ? `0 0 12px ${color}` : undefined }} />;
+}
+
+/* ---------- Layout pieces ---------- */
+
+/** The label a section opens on: its number, its name, and a hairline to the edge. */
+export function SectionLabel({ index, children, className = "" }: { index?: string; children: ReactNode; className?: string }) {
+  return (
+    <Reveal variant="fade" className={`sec-label label ${className}`}>
+      {index && <span className="text-accent">({index})</span>}
+      <span>{children}</span>
+    </Reveal>
+  );
+}
+
 /**
- * The top of a page: its title, a sentence or two, and on a wide screen a short sheet of facts on
- * the right. `before` sits above the title (a way back), `actions` under the text.
+ * The top of an inner page: a mono label, the title rising line by line, a lead, and on a wide screen
+ * a short sheet of facts on the right. `title` lines are broken by the page.
  */
-export function PageHead({
+export function PageHero({
+  label,
   title,
   lead,
   before,
   actions,
   aside,
+  children,
 }: {
-  title: string;
+  label: ReactNode;
+  title: ReactNode[];
   lead?: ReactNode;
   before?: ReactNode;
   actions?: ReactNode;
   aside?: ReactNode;
+  children?: ReactNode;
 }) {
   return (
-    <section className="wrap pb-14 pt-10 sm:pt-14 lg:pb-20 lg:pt-[70px]">
-      {before && <div className="mb-8">{before}</div>}
-      <div className={`grid gap-10 ${aside ? "lg:grid-cols-[1.55fr_1fr] lg:gap-[72px]" : ""}`}>
-        <div>
-          <h1 className="t-page">{title}</h1>
-          {lead && <div className="mt-6 max-w-[720px] text-[18px] leading-[1.6] text-[#2f3440] sm:text-[19px]">{lead}</div>}
-          {actions && <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">{actions}</div>}
+    <section className="relative overflow-hidden pb-16 pt-36 sm:pt-44 lg:pb-24">
+      <div aria-hidden className="pointer-events-none absolute left-1/2 top-0 h-[520px] w-[1100px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/20 blur-[140px]" />
+      <div className="wrap relative">
+        {before && <div className="mb-8" data-anim="rise">{before}</div>}
+        <p className="label mb-7 flex items-center gap-3" data-anim="rise">
+          <span className="h-px w-8 bg-accent" />
+          {label}
+        </p>
+        <Lines as="h1" lines={title} className="t-display max-w-[1150px]" />
+        <div className={`mt-10 grid gap-12 lg:mt-14 ${aside ? "lg:grid-cols-[1.25fr_1fr] lg:gap-20" : ""}`}>
+          <div>
+            {lead && (
+              <Reveal delay={250} className="t-lead max-w-[680px]">
+                {lead}
+              </Reveal>
+            )}
+            {actions && (
+              <Reveal delay={350} className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
+                {actions}
+              </Reveal>
+            )}
+          </div>
+          {aside && <Reveal delay={400}>{aside}</Reveal>}
         </div>
-        {aside && <div className="lg:pt-3">{aside}</div>}
+        {children}
       </div>
     </section>
   );
 }
 
-/** A short sheet of facts: a label on the left, its value on the right, ruled by hairlines. */
+/** A short sheet of facts: a mono label on the left, its value on the right, ruled by hairlines. */
 export function Facts({ rows }: { rows: { label: string; value: ReactNode; live?: boolean }[] }) {
   return (
-    <dl className="border-t-[1.5px] border-ink">
+    <dl className="rows">
       {rows.map((row) => (
-        <div key={row.label} className="grid grid-cols-[112px_1fr] gap-4 border-b border-rule py-3 text-[15px] sm:grid-cols-[128px_1fr]">
-          <dt className="text-soft">{row.label}</dt>
-          <dd className="flex items-baseline gap-2 font-semibold">
-            {row.live && <i aria-hidden className="dot translate-y-[-1px] bg-[#2fbf71]" />}
+        <div key={row.label} className="grid grid-cols-[120px_1fr] items-baseline gap-4 py-3.5 sm:grid-cols-[140px_1fr]">
+          <dt className="label !text-[11px]">{row.label}</dt>
+          <dd className="flex items-center gap-2.5 text-[15.5px] font-medium">
+            {row.live && <i aria-hidden className="live-dot" />}
             <span className="min-w-0">{row.value}</span>
           </dd>
         </div>
@@ -64,48 +137,74 @@ export function Facts({ rows }: { rows: { label: string; value: ReactNode; live?
   );
 }
 
-/** The strong rule a section opens on, its name on the left and a note on the right. */
-export function SectionHead({ title, note, id, as: Tag = "h2" }: { title: string; note?: ReactNode; id?: string; as?: "h2" | "h3" }) {
-  return (
-    <div id={id} className="sec-head scroll-mt-24">
-      <Tag className="text-[17px] font-bold">{title}</Tag>
-      {note && <p>{note}</p>}
-    </div>
-  );
-}
-
-/** A label and its text side by side on a wide screen, stacked on a phone; meant for a `rule-rows` list. */
-export function Row({ label, children, labelClass = "" }: { label: ReactNode; children: ReactNode; labelClass?: string }) {
-  return (
-    <div className="grid gap-2 py-5 sm:grid-cols-[220px_1fr] sm:gap-8">
-      <div className={`text-[15px] font-bold ${labelClass}`}>{label}</div>
-      <div className="min-w-0">{children}</div>
-    </div>
-  );
-}
-
-export function Dot({ color, className = "" }: { color: string; className?: string }) {
-  return <i aria-hidden className={`dot ${className}`} style={{ background: color }} />;
-}
-
-/** A screenshot with its caption. */
-export function Figure({ shot, className = "", priority = false }: { shot: Shot; className?: string; priority?: boolean }) {
+/** A screenshot, served as WebP at the width the screen needs, with its caption. */
+export function Figure({ shot, className = "", priority = false, sizes = "(min-width: 1360px) 1280px, 92vw" }: { shot: Shot; className?: string; priority?: boolean; sizes?: string }) {
   return (
     <figure className={className}>
-      <a href={withBase(shot.src)} target="_blank" rel="noopener noreferrer" aria-label="Ouvrir l'image en grand">
-        <img src={withBase(shot.src)} alt={shot.caption} loading={priority ? "eager" : "lazy"} className="shot" />
-      </a>
-      <figcaption className="caption">{shot.caption}</figcaption>
+      <Curtain>
+        <a href={withBase(shot.src)} target="_blank" rel="noopener noreferrer" aria-label={`Ouvrir l'image en grand : ${shot.caption}`} data-cursor="Zoom" className="block">
+          <Picture src={shot.src} alt={shot.caption} sizes={sizes} priority={priority} className="shot" />
+        </a>
+      </Curtain>
+      <figcaption className="mt-4 flex gap-3 text-[14px] leading-snug text-soft">
+        <span className="label !text-[11px] text-accent">Fig.</span>
+        {shot.caption}
+      </figcaption>
     </figure>
   );
 }
 
-/** Vody Studio's name as the studio writes it: its round mark and the wordmark in Syne. */
-export function VodyBrand({ className = "" }: { className?: string }) {
+export function Picture({ src, alt, sizes, className = "", priority = false, style }: { src: string; alt: string; sizes?: string; className?: string; priority?: boolean; style?: CSSProperties }) {
+  const p = picture(src);
   return (
-    <span className={`flex items-center gap-3 sm:gap-3.5 ${className}`}>
-      <img src={withBase("/images/vody-logo.jpg")} alt="" className="h-10 w-10 rounded-full sm:h-12 sm:w-12" />
-      <span className="whitespace-nowrap font-brand text-[17px] font-extrabold tracking-[0.06em] sm:text-[21px]">VODY STUDIO</span>
+    <picture className="contents">
+      {p.srcSet && <source type="image/webp" srcSet={p.srcSet} sizes={sizes} />}
+      <img
+        src={withBase(src)}
+        alt={alt}
+        width={p.width}
+        height={p.height}
+        loading={priority ? "eager" : "lazy"}
+        decoding="async"
+        fetchPriority={priority ? "high" : undefined}
+        className={className}
+        style={style}
+      />
+    </picture>
+  );
+}
+
+/** Vody Studio's name as the studio writes it: its round mark and the wordmark in Syne. */
+export function VodyBrand({ className = "", large = false }: { className?: string; large?: boolean }) {
+  return (
+    <span className={`flex items-center gap-3 ${className}`}>
+      <img src={withBase("/images/vody-logo.jpg")} alt="" width={48} height={48} className={`rounded-full ${large ? "h-12 w-12 sm:h-14 sm:w-14" : "h-9 w-9"}`} />
+      <span className={`whitespace-nowrap font-brand font-extrabold tracking-[0.06em] ${large ? "text-[20px] sm:text-[24px]" : "text-[16px]"}`}>VODY STUDIO</span>
     </span>
   );
 }
+
+/** Pulls its child toward the pointer, a little, while the pointer is over it. */
+export function Magnetic({ children, strength = 0.28, className = "" }: { children: ReactNode; strength?: number; className?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const fine = useFinePointer();
+  const onMove = (e: MouseEvent) => {
+    const el = ref.current;
+    if (!el || !fine) return;
+    const box = el.getBoundingClientRect();
+    const x = (e.clientX - box.left - box.width / 2) * strength;
+    const y = (e.clientY - box.top - box.height / 2) * strength;
+    el.style.transform = `translate(${x}px, ${y}px)`;
+  };
+  const reset = () => {
+    if (ref.current) ref.current.style.transform = "";
+  };
+  return (
+    <span ref={ref} onMouseMove={onMove} onMouseLeave={reset} className={`inline-flex transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] ${className}`}>
+      {children}
+    </span>
+  );
+}
+
+/** A count that runs up to its value the first time it is seen. */
+export { default as Counter } from "./Counter";
