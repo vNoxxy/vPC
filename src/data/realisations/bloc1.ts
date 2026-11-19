@@ -57,4 +57,12 @@ export const BLOC1: Work[] = [
     to: "05/11/26",
     competences: { incidents: [1] },
   },
+  {
+    slug: "commutateur-cisco",
+    short: "Commutateur Cisco",
+    category: "bloc1",
+    from: "16/11/26",
+    to: "19/11/26",
+    competences: { incidents: [1], patrimoine: [2, 4] },
+  },
 ];
