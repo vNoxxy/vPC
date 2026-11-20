@@ -53,6 +53,8 @@ export interface Realisation extends Work {
   code?: CodeProof[];
   /** A real screenshot at the top of its page, and next to the pointer in the index (public/images/). */
   cover?: Shot;
+  /** Phone screenshots of an app, shown side by side (public/images/). */
+  screens?: Shot[];
   /** More screenshots shown as proofs (public/images/). */
   shots?: Shot[];
   bilan: string;

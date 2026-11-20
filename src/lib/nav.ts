@@ -6,4 +6,5 @@ export const NAV: { to: string; label: string; end?: boolean }[] = [
   { to: "/competences", label: "Compétences" },
   { to: "/veille", label: "Veille" },
   { to: "/vody-studio", label: "Vody Studio" },
+  { to: "/3d", label: "3D" },
 ];

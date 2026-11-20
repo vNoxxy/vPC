@@ -38,6 +38,7 @@ export const router = createBrowserRouter(
         { path: "/veille", ...page(() => import("./pages/VeillePage")) },
         { path: "/vody-studio", ...page(() => import("./pages/VodyPage")) },
         { path: "/vody-studio/:slug", ...page(() => import("./pages/ProjectPage")) },
+        { path: "/3d", ...page(() => import("./pages/TroisDPage")) },
         { path: "/contact", ...page(() => import("./pages/ContactPage")) },
         { path: "/mentions-legales", ...page(() => import("./pages/LegalPage")) },
         { path: "*", ...page(() => import("./pages/NotFoundPage")) },

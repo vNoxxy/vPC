@@ -163,9 +163,18 @@ export const PERSO: Realisation[] = [
       "Les tests : composants et logique (Jest), base de données (pgTAP), parcours de bout en bout (Maestro).",
       "L'extrait ci-dessous : les règles de sécurité au niveau des lignes de la base.",
       "Le site public whynotapp.fr (confidentialité, suppression du compte, support).",
+      "Les captures ci-dessus : l'app réelle, lancée sur une base locale avec un compte de démonstration.",
     ],
     code: [{ title: "Extrait de la base : chaque utilisateur ne voit que ses propres données", lang: "SQL", code: ROW_LEVEL_SECURITY }],
     cover: { src: "/images/whynot-carte.jpg", caption: "L'identité de WhyNot?, telle qu'elle apparaît quand on partage l'app." },
+    screens: [
+      { src: "/images/whynot/accueil.jpg", caption: "L'accueil : niveau et XP, semaine d'entraînement, séance du jour." },
+      { src: "/images/whynot/entrainement.jpg", caption: "L'entraînement : séance libre, générateur, séances prêtes, minuteur." },
+      { src: "/images/whynot/nutrition.jpg", caption: "La nutrition : calories restantes et macros du jour." },
+      { src: "/images/whynot/exercice.jpg", caption: "Une fiche d'exercice : records et progression du 1RM estimé." },
+      { src: "/images/whynot/rangs.jpg", caption: "Les rangs de force, de Bronze à Élite." },
+      { src: "/images/whynot/medailles.jpg", caption: "Les quêtes et les médailles, gagnées sur ce qui a été fait." },
+    ],
     bilan:
       "C'est mon projet le plus complet : découper le travail en phases, écrire les décisions avant de coder et tester chaque règle m'a permis d'avancer vite sans casser ce qui marchait déjà. Avec des données de santé, la sécurité ne s'ajoute pas à la fin, elle se pense dès le schéma de la base.",
   },

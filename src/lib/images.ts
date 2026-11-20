@@ -11,6 +11,16 @@ const IMAGES: Record<string, { width: number; height: number; webp: number[] }> 
   "forge-schematics": { width: 2284, height: 1042, webp: [800, 1600] },
   "audit-fivem-carte": { width: 1314, height: 1236, webp: [800] },
   "vbot-carte": { width: 800, height: 692, webp: [800] },
+  // The 3D renders of Creature Hunters (public/images/3d/).
+  "boss-ronce-sphinx": { width: 1345, height: 486, webp: [800, 1600] },
+  "boss-wyrm-titan": { width: 1362, height: 486, webp: [800, 1600] },
+  "creatures": { width: 1360, height: 333, webp: [800, 1600] },
+  "pets": { width: 1332, height: 333, webp: [800, 1600] },
+  "armes": { width: 1400, height: 368, webp: [800, 1600] },
+  "reliques": { width: 1400, height: 331, webp: [800, 1600] },
+  "armurerie-rouge": { width: 1200, height: 750, webp: [800, 1600] },
+  "armurerie-bleue": { width: 1200, height: 750, webp: [800, 1600] },
+  "epee": { width: 1400, height: 900, webp: [800, 1600] },
   "whynot-carte": { width: 1200, height: 630, webp: [800, 1600] },
 };
 

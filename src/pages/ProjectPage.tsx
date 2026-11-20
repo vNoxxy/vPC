@@ -6,6 +6,7 @@ import { COMPETENCES } from "../data/competences";
 import { PROJECTS, PROJECT_BY_SLUG, periodLabel } from "../data/realisations";
 import type { CodeProof } from "../data/types";
 import { ACCENTS, rgbChannels } from "../lib/accents";
+import { withBase } from "../lib/site";
 import { usePageMeta } from "../lib/usePageMeta";
 import NotFoundPage from "./NotFoundPage";
 
@@ -141,6 +142,35 @@ export default function ProjectPage() {
             <span className="label !text-[11px] text-accent">Fig. 01</span>
             {r.cover.caption}
           </p>
+        </section>
+      )}
+
+      {r.screens && r.screens.length > 0 && (
+        <section className="mt-24 lg:mt-32">
+          <div className="wrap mb-10 flex flex-wrap items-end justify-between gap-4">
+            <h2 className="t-h3">L'app en images</h2>
+            <span className="label">Captures réelles · compte de démonstration</span>
+          </div>
+          <ul className="wrap flex snap-x snap-mandatory scroll-px-5 gap-5 overflow-x-auto pb-6 sm:scroll-px-8 lg:grid lg:grid-cols-6 lg:gap-5 lg:overflow-visible">
+            {r.screens.map((shot, i) => (
+              <Reveal as="li" key={shot.src} delay={i * 70} className="w-[230px] shrink-0 snap-start lg:w-auto">
+                <a href={withBase(shot.src)} target="_blank" rel="noopener noreferrer" data-cursor="Zoom" aria-label={`Ouvrir la capture en grand : ${shot.caption}`} className="group block">
+                  <picture>
+                    <source type="image/webp" srcSet={withBase(shot.src.replace(/\.jpg$/, ".webp"))} />
+                    <img
+                      src={withBase(shot.src)}
+                      alt={shot.caption}
+                      width={590}
+                      height={989}
+                      loading="lazy"
+                      className="block w-full rounded-[26px] border-[5px] border-[#1b1e24] shadow-[0_30px_60px_-25px_rgba(0,0,0,0.9)] transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:-translate-y-2"
+                    />
+                  </picture>
+                </a>
+                <p className="mt-4 text-[13.5px] leading-snug text-soft">{shot.caption}</p>
+              </Reveal>
+            ))}
+          </ul>
         </section>
       )}
 

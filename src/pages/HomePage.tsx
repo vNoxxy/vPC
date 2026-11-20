@@ -278,9 +278,32 @@ export default function HomePage() {
 
       <VodyBand />
 
+      {/* The 3D side, with one render. */}
+      <section className="wrap mt-32 lg:mt-44">
+        <SectionLabel index="07">3D</SectionLabel>
+        <div className="mt-10 grid items-end gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-14">
+          <div>
+            <Lines lines={["Je fais aussi", <span className="serif text-accent-soft">de la 3D.</span>]} className="t-h2" />
+            <Reveal delay={150} className="t-lead mt-6">
+              Les créatures, les boss et les armes de Creature Hunters, mon jeu Roblox, sont sculptés par mon propre code, sans aucun modèle importé.
+            </Reveal>
+            <Reveal delay={250}>
+              <Link to="/3d" viewTransition className="mt-8 inline-flex items-center gap-2 font-semibold">
+                <span className="link-line">Voir mes modèles 3D</span> <ArrowRight />
+              </Link>
+            </Reveal>
+          </div>
+          <Curtain>
+            <Link to="/3d" viewTransition data-cursor="Voir" className="block overflow-hidden rounded-[22px]">
+              <Picture src="/images/3d/boss-ronce-sphinx.jpg" alt="Deux boss de Creature Hunters, avant et après leur refonte" sizes="(min-width: 1024px) 760px, 92vw" className="block w-full transition-transform duration-[1200ms] ease-[cubic-bezier(.22,1,.36,1)] hover:scale-[1.03]" />
+            </Link>
+          </Curtain>
+        </div>
+      </section>
+
       {/* The BTS work: one line per section of the Documents page. */}
       <section className="wrap mt-32 lg:mt-44">
-        <SectionLabel index="06">Cours, TP et exercices</SectionLabel>
+        <SectionLabel index="08">Cours, TP et exercices</SectionLabel>
         <div className="mb-10 mt-10 grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-end">
           <Lines lines={["Tout mon BTS,", <span className="serif text-accent-soft">à télécharger.</span>]} className="t-h2" />
           <Reveal delay={150} className="t-lead lg:pb-2">
