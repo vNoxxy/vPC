@@ -98,6 +98,18 @@ export default function HomePage() {
         {FORGE.cover && <Figure shot={FORGE.cover} />}
       </section>
 
+      {/* The 3D side, with one render. */}
+      <section className="wrap mt-24 grid gap-8 lg:mt-28 lg:grid-cols-[1fr_2.1fr] lg:items-end lg:gap-12">
+        <div>
+          <h2 className="t-sec">Je fais aussi de la 3D</h2>
+          <p className="t-body mt-4">Les créatures, les boss et les armes de Creature Hunters, mon jeu Roblox, sont sculptés par mon propre code, sans aucun modèle importé.</p>
+          <Link to="/3d" viewTransition className="link-u mt-6 text-[16px]">
+            Voir mes modèles 3D
+          </Link>
+        </div>
+        <Figure shot={{ src: "/images/3d/creatures.jpg", caption: "Des créatures de Creature Hunters, avant et après leur refonte." }} />
+      </section>
+
       {/* The figures, said in a sentence rather than shown in boxes. */}
       <section className="wrap mt-28 lg:mt-32">
         <p className="max-w-[1060px] text-[clamp(28px,3.6vw,46px)] font-medium leading-[1.22] tracking-[-0.035em]">
@@ -107,7 +119,7 @@ export default function HomePage() {
           </Link>{" "}
           de cours et de TP à télécharger, les{" "}
           <Link to="/competences" viewTransition className="font-bold text-blue-text hover:underline">{COMPETENCES.length} compétences</Link> du tableau E4 couvertes, et{" "}
-          <Link to="/vody-studio" viewTransition className="font-bold text-blue-text hover:underline">{PROJECTS.length} projets</Link> en ligne chez Vody Studio.
+          <Link to="/vody-studio" viewTransition className="font-bold text-blue-text hover:underline">{PROJECTS.length} projets</Link> chez Vody Studio.
         </p>
       </section>
     </SiteLayout>

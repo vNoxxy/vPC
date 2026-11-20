@@ -14,7 +14,7 @@ const index = join(dist, "index.html");
 const slugs = [...readFileSync(join("src", "data", "realisations", "perso.ts"), "utf8").matchAll(/^\s*slug: "([^"]+)",$/gm)].map((m) => m[1]);
 
 // The documents page lives at /documents, next to the files themselves (dist/documents/<section>/…).
-const pages = ["parcours", "cv", "documents", "competences", "veille", "vody-studio", "contact", "mentions-legales", ...slugs.map((s) => `vody-studio/${s}`)];
+const pages = ["parcours", "cv", "documents", "competences", "veille", "vody-studio", "3d", "contact", "mentions-legales", ...slugs.map((s) => `vody-studio/${s}`)];
 
 for (const page of pages) {
   mkdirSync(join(dist, page), { recursive: true });

@@ -126,6 +126,7 @@ export const SKILLS: SkillGroup[] = [
       { name: "Git & GitHub", where: "vodystudio.fr, ce portfolio" },
       { name: "Unreal Engine", where: "Projets personnels" },
       { name: "Blender", where: "Projets personnels" },
+      { name: "Roblox Studio & Luau", where: "Creature Hunters, page 3D" },
       { name: "Suite Adobe", where: "Identité de Vody Studio" },
     ],
   },

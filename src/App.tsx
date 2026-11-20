@@ -10,6 +10,7 @@ import ParcoursPage from "./pages/ParcoursPage";
 import ProjectPage from "./pages/ProjectPage";
 import VeillePage from "./pages/VeillePage";
 import VodyPage from "./pages/VodyPage";
+import TroisDPage from "./pages/TroisDPage";
 import { PROJECT_BY_SLUG } from "./data/realisations";
 
 /** Every page starts at the top; back and forward return where the visitor was. */
@@ -45,6 +46,7 @@ export const router = createBrowserRouter([
       { path: "/veille", element: <VeillePage /> },
       { path: "/vody-studio", element: <VodyPage /> },
       { path: "/vody-studio/:slug", element: <ProjectPage /> },
+      { path: "/3d", element: <TroisDPage /> },
       { path: "/contact", element: <ContactPage /> },
       { path: "/mentions-legales", element: <LegalPage /> },
       { path: "*", element: <NotFoundPage /> },

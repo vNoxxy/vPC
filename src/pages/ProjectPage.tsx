@@ -4,6 +4,7 @@ import { Dot, Facts, Figure, Inline, PageHead, Row, SectionHead } from "../compo
 import { COMPETENCES } from "../data/competences";
 import { PROJECTS, PROJECT_BY_SLUG, periodLabel } from "../data/realisations";
 import { ACCENTS } from "../lib/accents";
+import { withBase } from "../lib/site";
 import NotFoundPage from "./NotFoundPage";
 
 /** One Vody Studio project, read as a case study: what it was, what I did, what it proves. */
@@ -60,6 +61,25 @@ export default function ProjectPage() {
       {r.cover && (
         <section className="wrap mb-20">
           <Figure shot={r.cover} priority />
+        </section>
+      )}
+
+      {r.screens && r.screens.length > 0 && (
+        <section className="wrap mb-20">
+          <SectionHead title="L'app en images" note="Captures de l'app, avec un compte de démonstration" />
+          <ul className="-mx-5 mt-8 flex snap-x snap-mandatory scroll-px-5 gap-5 overflow-x-auto px-5 pb-4 sm:scroll-px-8 sm:-mx-8 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-6 lg:gap-4 lg:overflow-visible lg:px-0">
+            {r.screens.map((shot) => (
+              <li key={shot.src} className="w-[220px] shrink-0 snap-start lg:w-auto">
+                <a href={withBase(shot.src)} target="_blank" rel="noopener noreferrer" aria-label={`Ouvrir la capture en grand : ${shot.caption}`}>
+                  <picture>
+                    <source type="image/webp" srcSet={withBase(shot.src.replace(/\.jpg$/, ".webp"))} />
+                    <img src={withBase(shot.src)} alt={shot.caption} width={590} height={989} loading="lazy" className="block w-full rounded-[22px] border-[5px] border-ink bg-ink shadow-[0_18px_40px_-18px_rgba(11,12,16,0.45)]" />
+                  </picture>
+                </a>
+                <p className="caption">{shot.caption}</p>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 
